@@ -1,0 +1,1031 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>BrandAboutMe - Admin</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700&family=Public+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --purple:#8c74c8; --purple-deep:#6f57ab; --purple-soft:#e9e3f6;
+    --green:#c9f59b; --green-deep:#3f6b1c; --linkedin:#0A66C2;
+    --pos:#2e8b57; --neg:#c7503f; --warn:#c98a1b;
+    --r-lg:16px; --r-md:12px; --r-sm:9px;
+    --fs-h1:1.5rem; --fs-h2:1.12rem; --fs-h3:.96rem; --fs-body:.9rem; --fs-sm:.82rem; --fs-xs:.74rem;
+    font-size:16px;
+  }
+  :root[data-theme="light"]{
+    --bg:#f7f5fb; --panel:#ffffff; --panel-2:#faf9fd; --ink:#111315; --mut:#5b5766; --faint:#8b8797;
+    --line:#e7e4f0; --line-strong:#d8d4e6; --side:#111315; --side-ink:#ffffff; --side-mut:#a7a3b4;
+    --sh-card:0 1px 2px rgba(17,19,21,.05); --sh-pop:0 16px 40px rgba(17,19,21,.16);
+    --pos-soft:#e4f3ea; --neg-soft:#f8ebe9; --warn-soft:#fbf2dd;
+  }
+  :root[data-theme="dark"]{
+    --bg:#0e0f11; --panel:#17191c; --panel-2:#1d2024; --ink:#f3f2f6; --mut:#a7a3b4; --faint:#7d7989;
+    --line:#2a2d31; --line-strong:#363a3f; --side:#070808; --side-ink:#ffffff; --side-mut:#8d8998;
+    --sh-card:0 1px 2px rgba(0,0,0,.4); --sh-pop:0 16px 40px rgba(0,0,0,.6);
+    --purple-soft:#2b2544; --green:#c9f59b; --green-deep:#c9f59b;
+    --pos-soft:#15301f; --neg-soft:#331814; --warn-soft:#33280f;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html,body{height:100%}
+  body{font-family:'Public Sans',system-ui,sans-serif;background:var(--bg);color:var(--ink);-webkit-font-smoothing:antialiased;transition:background .25s,color .25s}
+  h1,h2,h3,h4,.serif{font-family:'Fraunces',serif;font-weight:600;letter-spacing:-.01em}
+  button{font:inherit;cursor:pointer}
+  button:focus-visible,[tabindex]:focus-visible,input:focus-visible,textarea:focus-visible,select:focus-visible{outline:2px solid var(--purple);outline-offset:2px}
+  .kicker{font-size:.66rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--faint)}
+  .mut{color:var(--mut)} .faint{color:var(--faint)}
+
+  .btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;border:0;border-radius:var(--r-md);padding:11px 20px;font-weight:600;font-size:var(--fs-body);line-height:1;transition:background .15s,box-shadow .15s,transform .1s,border-color .15s}
+  .btn:active{transform:scale(.985)}
+  .btn-primary{background:var(--purple);color:#fff} .btn-primary:hover{background:var(--purple-deep)}
+  .btn-ghost{background:var(--panel);border:1.5px solid var(--line-strong);color:var(--ink)} .btn-ghost:hover{border-color:var(--purple);color:var(--purple-deep)}
+  .btn-sm{padding:8px 13px;font-size:var(--fs-sm);border-radius:var(--r-sm)}
+  .link{background:none;border:0;color:var(--purple-deep);font-weight:600;font-size:var(--fs-sm)} .link:hover{text-decoration:underline;text-underline-offset:3px}
+
+  .pill-stat{display:inline-flex;align-items:center;gap:4px;font-size:var(--fs-xs);font-weight:700;padding:3px 8px;border-radius:999px}
+  .pill-pos{background:var(--pos-soft);color:var(--pos)} .pill-neg{background:var(--neg-soft);color:var(--neg)}
+  .banner{font-size:.68rem;font-weight:700;letter-spacing:.04em;padding:4px 10px;border-radius:999px;display:inline-flex;align-items:center;gap:5px}
+  .banner::before{content:"";width:6px;height:6px;border-radius:50%}
+  .banner-yes{background:var(--pos-soft);color:var(--pos)} .banner-yes::before{background:var(--pos)}
+  .banner-no{background:var(--neg-soft);color:var(--neg)} .banner-no::before{background:var(--neg)}
+  .banner-purple{background:var(--purple-soft);color:var(--purple-deep)} .banner-purple::before{background:var(--purple)}
+  .banner-warn{background:var(--warn-soft);color:var(--warn)} .banner-warn::before{background:var(--warn)}
+
+  /* shell */
+  .app{display:grid;grid-template-columns:238px 1fr;grid-template-rows:60px 1fr;grid-template-areas:"side top" "side main";min-height:100vh}
+  .side{grid-area:side;background:var(--side);color:var(--side-ink);padding:20px 12px 16px;display:flex;flex-direction:column;position:sticky;top:0;height:100vh}
+  .side .logo{color:#fff;padding:2px 12px 16px;font:700 1.1rem 'Fraunces'} .side .logo .dot{color:var(--green)}
+  .role-switch{display:flex;gap:4px;background:rgba(255,255,255,.06);border-radius:var(--r-sm);padding:4px;margin:0 6px 14px}
+  .role-switch button{flex:1;border:0;background:none;color:var(--side-mut);font-size:var(--fs-xs);font-weight:700;padding:7px;border-radius:7px}
+  .role-switch button.on{background:var(--purple);color:#fff}
+  .side .sect{font-size:.6rem;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:#6f6b7c;padding:10px 12px 7px}
+  .nav{list-style:none;display:flex;flex-direction:column;gap:2px}
+  .nav button{position:relative;display:flex;align-items:center;gap:11px;width:100%;background:none;border:0;color:var(--side-mut);padding:10px 12px;border-radius:var(--r-sm);font-size:.88rem;font-weight:500;text-align:left;transition:background .15s,color .15s}
+  .nav button:hover{background:rgba(255,255,255,.07);color:#fff}
+  .nav button.active{background:rgba(140,116,200,.3);color:#fff;font-weight:600}
+  .nav button.active::before{content:"";position:absolute;left:-12px;top:8px;bottom:8px;width:3px;border-radius:2px;background:var(--green)}
+  .nav .ic{width:20px;text-align:center;flex-shrink:0;opacity:.85;font-size:.85rem}
+  .nav.writer-nav{display:none}
+  body[data-role="writer"] .nav.admin-nav{display:none}
+  body[data-role="writer"] .nav.writer-nav{display:flex}
+  .side-foot{margin-top:auto;border-top:1px solid rgba(255,255,255,.08);padding-top:10px}
+  .admin-chip{display:flex;align-items:center;gap:10px;padding:9px 10px;border-radius:var(--r-sm)}
+  .admin-chip .av{width:32px;height:32px;border-radius:50%;background:var(--purple);color:#fff;display:flex;align-items:center;justify-content:center;font:600 .76rem 'Fraunces';flex-shrink:0}
+  .admin-chip b{font-size:var(--fs-sm);display:block;color:#fff} .admin-chip span{font-size:var(--fs-xs);color:var(--side-mut)}
+
+  .top{grid-area:top;background:var(--panel);border-bottom:1px solid var(--line);display:flex;align-items:center;gap:14px;padding:0 24px;transition:background .25s,border-color .25s}
+  .top .ptitle{font:600 1rem 'Fraunces';letter-spacing:-.01em}
+  .top .spacer{flex:1}
+  .icon-btn{position:relative;width:38px;height:38px;border-radius:var(--r-sm);border:1.5px solid var(--line-strong);background:var(--panel);color:var(--ink);display:flex;align-items:center;justify-content:center;font-size:1rem;transition:border-color .15s}
+  .icon-btn:hover{border-color:var(--purple);color:var(--purple-deep)}
+  .icon-btn .dot{position:absolute;top:7px;right:8px;width:8px;height:8px;border-radius:50%;background:var(--neg);border:2px solid var(--panel)}
+  .switch-view{background:none;border:1.5px solid var(--line-strong);color:var(--mut);border-radius:var(--r-sm);padding:8px 13px;font-weight:600;font-size:var(--fs-sm)}
+  .switch-view:hover{border-color:var(--purple);color:var(--purple-deep)}
+  .notif{position:absolute;top:52px;right:24px;width:320px;background:var(--panel);border:1px solid var(--line-strong);border-radius:var(--r-md);box-shadow:var(--sh-pop);z-index:120;display:none;overflow:hidden}
+  .notif.open{display:block}
+  .notif h4{font-size:var(--fs-sm);padding:14px 16px;border-bottom:1px solid var(--line)}
+  .notif .item{display:flex;gap:11px;padding:12px 16px;border-bottom:1px solid var(--line);font-size:var(--fs-sm)}
+  .notif .item:last-child{border:0}
+  .notif .ni{width:30px;height:30px;border-radius:8px;background:var(--purple-soft);color:var(--purple-deep);display:flex;align-items:center;justify-content:center;font-size:.8rem;flex-shrink:0}
+  .notif .item b{display:block;font-weight:600} .notif .item span{color:var(--faint);font-size:var(--fs-xs)}
+
+  .main{grid-area:main;padding:26px clamp(20px,3vw,40px) 48px;overflow-x:hidden}
+  .page{display:none;animation:fade .25s ease}
+  .page.on{display:block}
+  @keyframes fade{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+  @media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+  .page-head{margin-bottom:22px;display:flex;justify-content:space-between;align-items:flex-end;gap:16px;flex-wrap:wrap}
+  .page-head h2{font-size:var(--fs-h1);margin-bottom:5px} .page-head p{color:var(--mut);font-size:var(--fs-body);line-height:1.6;max-width:72ch}
+  .card{background:var(--panel);border:1px solid var(--line);border-radius:var(--r-lg);padding:20px;box-shadow:var(--sh-card);transition:background .25s,border-color .25s}
+
+  .metric-row{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:14px;margin-bottom:22px}
+  .metric{background:var(--panel);border:1px solid var(--line);border-radius:var(--r-lg);padding:18px;box-shadow:var(--sh-card)}
+  .metric .lbl{font-size:var(--fs-sm);color:var(--mut);margin-bottom:8px;display:flex;align-items:center;gap:6px}
+  .metric .val{font:600 1.7rem 'Fraunces';letter-spacing:-.02em;line-height:1}
+  .metric .ctx{display:flex;align-items:center;gap:8px;margin-top:9px;font-size:var(--fs-xs);color:var(--faint)}
+  .metric.action{border-color:var(--purple);background:linear-gradient(180deg,var(--purple-soft),transparent 60%)}
+  .metric.action .cta{margin-top:11px}
+
+  .two-col{display:grid;grid-template-columns:1.6fr 1fr;gap:18px;align-items:start}
+  @media (max-width:1000px){.two-col{grid-template-columns:1fr}}
+
+  .barchart{display:flex;align-items:flex-end;gap:12px;height:200px;padding-top:10px}
+  .barchart .col{flex:1;display:flex;flex-direction:column;align-items:center;gap:8px;height:100%}
+  .barchart .bars{flex:1;width:100%;display:flex;align-items:flex-end;justify-content:center;gap:5px}
+  .barchart .b{width:34%;border-radius:4px 4px 0 0;transition:height .4s ease}
+  .barchart .b.prev{background:var(--line-strong)} .barchart .b.cur{background:var(--purple)}
+  .barchart .lab{font-size:var(--fs-xs);color:var(--faint)}
+  .legend{display:flex;gap:16px;margin-top:12px;font-size:var(--fs-xs);color:var(--mut)}
+  .legend span{display:flex;align-items:center;gap:6px} .legend i{width:11px;height:11px;border-radius:3px}
+
+  .insight{display:flex;gap:11px;padding:13px 0;border-bottom:1px solid var(--line);font-size:var(--fs-sm);line-height:1.5}
+  .insight:last-child{border:0}
+  .insight .ic{width:28px;height:28px;border-radius:8px;display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:.8rem;font-weight:700}
+  .insight .up{background:var(--pos-soft);color:var(--pos)} .insight .down{background:var(--neg-soft);color:var(--neg)} .insight .flat{background:var(--warn-soft);color:var(--warn)}
+
+  /* tables */
+  .toolbar{display:flex;gap:12px;align-items:center;margin-bottom:16px;flex-wrap:wrap}
+  .search{flex:1;min-width:200px;max-width:360px;display:flex;align-items:center;gap:8px;background:var(--panel);border:1.5px solid var(--line-strong);border-radius:var(--r-sm);padding:9px 13px}
+  .search input{border:0;background:none;outline:none;flex:1;font:400 var(--fs-body) 'Public Sans';color:var(--ink)}
+  .search .mag{color:var(--faint)}
+  .tbl-wrap{background:var(--panel);border:1px solid var(--line);border-radius:var(--r-lg);overflow:hidden;box-shadow:var(--sh-card)}
+  table{width:100%;border-collapse:collapse}
+  thead th{text-align:left;font-size:var(--fs-xs);font-weight:700;letter-spacing:.04em;text-transform:uppercase;color:var(--faint);padding:13px 16px;border-bottom:1px solid var(--line);background:var(--panel-2);white-space:nowrap}
+  tbody td{padding:13px 16px;border-bottom:1px solid var(--line);font-size:var(--fs-sm);vertical-align:middle}
+  tbody tr:last-child td{border-bottom:0}
+  tbody tr{transition:background .12s} tbody tr:hover{background:var(--panel-2)}
+  .cell-name{display:flex;align-items:center;gap:10px}
+  .cell-name .av{width:32px;height:32px;border-radius:50%;background:var(--purple-soft);color:var(--purple-deep);display:flex;align-items:center;justify-content:center;font:600 .72rem 'Fraunces';flex-shrink:0}
+  .cell-name b{font-weight:600;font-size:var(--fs-sm)} .cell-name span{font-size:var(--fs-xs);color:var(--faint);display:block}
+  .meeting{font-size:var(--fs-sm)} .meeting span{display:block;font-size:var(--fs-xs);color:var(--faint)}
+  select.writer{border:1.5px solid var(--line-strong);background:var(--panel);color:var(--ink);border-radius:var(--r-sm);padding:7px 10px;font:600 var(--fs-sm) 'Public Sans';cursor:pointer}
+  select.writer:hover{border-color:var(--purple)}
+  .row-actions{position:relative}
+  .row-actions .dots{border:0;background:none;color:var(--faint);font-size:1.1rem;padding:4px 8px;border-radius:6px}
+  .row-actions .dots:hover{background:var(--panel-2);color:var(--ink)}
+  .menu{position:absolute;right:12px;top:40px;background:var(--panel);border:1px solid var(--line-strong);border-radius:var(--r-sm);box-shadow:var(--sh-pop);z-index:50;min-width:210px;display:none;overflow:hidden}
+  .menu.open{display:block}
+  .menu button{display:flex;gap:9px;align-items:center;width:100%;text-align:left;border:0;background:none;padding:10px 13px;font-size:var(--fs-sm);color:var(--ink)}
+  .menu button:hover{background:var(--panel-2)}
+  .menu button.danger{color:var(--neg)}
+  .menu .sep{height:1px;background:var(--line);margin:2px 0}
+  .empty-row td{text-align:center;color:var(--faint);padding:34px;font-size:var(--fs-sm)}
+
+  /* modal */
+  .modal-bg{position:fixed;inset:0;background:rgba(17,19,21,.5);z-index:200;display:none;align-items:center;justify-content:center;padding:20px}
+  .modal-bg.open{display:flex;animation:fade .2s ease}
+  .modal{background:var(--panel);border:1px solid var(--line);border-radius:var(--r-lg);max-width:460px;width:100%;padding:26px;box-shadow:var(--sh-pop);max-height:92vh;overflow-y:auto}
+  .modal.wide{max-width:980px}
+  .modal h3{font-size:1.2rem;margin-bottom:4px} .modal .msub{font-size:var(--fs-sm);color:var(--mut);margin-bottom:18px}
+  .field{margin-bottom:14px}
+  .field label{display:block;font-size:var(--fs-sm);font-weight:600;margin-bottom:6px}
+  .field input,.field textarea,.field select{width:100%;padding:11px 13px;border:1.5px solid var(--line-strong);border-radius:var(--r-sm);font:400 var(--fs-body) 'Public Sans';background:var(--panel);color:var(--ink)}
+  .field textarea:focus,.field input:focus,.field select:focus{outline:none;border-color:var(--purple);box-shadow:0 0 0 3px var(--purple-soft)}
+  .field-2{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+  .modal-foot{display:flex;gap:10px;justify-content:flex-end;margin-top:20px}
+  .invite-box{background:var(--panel-2);border:1px solid var(--line);border-radius:var(--r-sm);padding:12px;display:flex;gap:10px;align-items:center;margin-top:8px}
+  .invite-box code{font-size:var(--fs-xs);color:var(--mut);flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;font-family:ui-monospace,monospace}
+
+  /* composer */
+  .composer-grid{display:grid;grid-template-columns:1fr 300px 300px;gap:18px;align-items:start}
+  @media (max-width:1100px){.composer-grid{grid-template-columns:1fr}}
+  .composer textarea{width:100%;min-height:180px;border:1.5px solid var(--line-strong);border-radius:var(--r-md);padding:14px;font:400 var(--fs-body)/1.65 'Public Sans';background:var(--panel);color:var(--ink);resize:vertical}
+  .composer textarea:focus{outline:none;border-color:var(--purple)}
+  .attach-row{display:flex;gap:10px;margin-top:12px;flex-wrap:wrap}
+  .attach-chip{display:flex;align-items:center;gap:7px;border:1.5px dashed var(--line-strong);border-radius:var(--r-sm);padding:9px 13px;font-size:var(--fs-sm);font-weight:600;color:var(--mut)}
+  .attach-chip:hover{border-color:var(--purple);color:var(--purple-deep)}
+  .attached{display:none;align-items:center;gap:10px;margin-top:12px;background:var(--panel-2);border:1px solid var(--line);border-radius:var(--r-sm);padding:10px 13px;font-size:var(--fs-sm)}
+  .attached.show{display:flex}
+  .attached .thumb{width:34px;height:34px;border-radius:7px;background:var(--purple-soft);color:var(--purple-deep);display:flex;align-items:center;justify-content:center;font-size:.9rem}
+  .attached button{margin-left:auto;border:0;background:none;color:var(--faint);font-size:1rem}
+  .col-label{font-size:var(--fs-xs);font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--faint);margin-bottom:8px}
+  .lp-preview{border:1px solid var(--line);border-radius:var(--r-md);overflow:hidden}
+  .lp-head{display:flex;gap:10px;align-items:center;padding:14px}
+  .lp-head .av{width:40px;height:40px;border-radius:50%;background:var(--purple);color:#fff;display:flex;align-items:center;justify-content:center;font:600 .82rem 'Fraunces'}
+  .lp-head b{font-size:var(--fs-sm);display:block} .lp-head span{font-size:var(--fs-xs);color:var(--faint)}
+  .lp-body{padding:0 14px 14px;font-size:var(--fs-sm);line-height:1.6;white-space:pre-wrap;min-height:40px;color:var(--ink)}
+  .lp-media{height:130px;background:var(--panel-2);border-top:1px solid var(--line);border-bottom:1px solid var(--line);display:none;align-items:center;justify-content:center;color:var(--faint);font-size:var(--fs-sm)}
+  .lp-media.show{display:flex}
+  .lp-foot{display:flex;gap:18px;padding:10px 14px;color:var(--faint);font-size:var(--fs-xs)}
+
+  /* mini AI chat (composer + studio share styles) */
+  .chat{display:flex;flex-direction:column;border:1px solid var(--line);border-radius:var(--r-md);background:var(--panel-2);overflow:hidden;height:440px}
+  .chat-head{display:flex;align-items:center;gap:8px;padding:10px 12px;border-bottom:1px solid var(--line);background:var(--panel)}
+  .chat-head select{border:1.5px solid var(--line-strong);background:var(--panel);color:var(--ink);border-radius:var(--r-sm);padding:6px 9px;font:600 var(--fs-xs) 'Public Sans'}
+  .chat-stream{flex:1;overflow-y:auto;padding:14px;display:flex;flex-direction:column;gap:12px}
+  .cmsg{display:flex;gap:9px;max-width:92%}
+  .cmsg .mav{width:26px;height:26px;border-radius:7px;flex-shrink:0;display:flex;align-items:center;justify-content:center;font:700 .64rem 'Fraunces'}
+  .cmsg.user{align-self:flex-end;flex-direction:row-reverse} .cmsg.user .mav{background:var(--purple);color:#fff}
+  .cmsg.ai .mav{background:#111315;color:var(--green)}
+  :root[data-theme="dark"] .cmsg.ai .mav{background:#000}
+  .cmsg .bub{background:var(--panel);border:1px solid var(--line);border-radius:var(--r-sm);padding:9px 12px;font-size:var(--fs-sm);line-height:1.55}
+  .cmsg.user .bub{background:var(--purple);color:#fff;border-color:var(--purple)}
+  .cmsg .bub .use{display:block;margin-top:8px;font-size:var(--fs-xs);font-weight:700;color:var(--purple-deep)}
+  .chat-in{border-top:1px solid var(--line);padding:10px 12px;display:flex;gap:8px;align-items:flex-end;background:var(--panel)}
+  .chat-in textarea{flex:1;border:1.5px solid var(--line-strong);border-radius:var(--r-sm);padding:9px 11px;font:400 var(--fs-sm)/1.5 'Public Sans';background:var(--panel);color:var(--ink);resize:none;max-height:90px}
+  .chat-in textarea:focus{outline:none;border-color:var(--purple)}
+
+  /* AI studio */
+  .studio-grid{display:grid;grid-template-columns:240px 1fr;gap:18px;align-items:start}
+  @media (max-width:820px){.studio-grid{grid-template-columns:1fr}}
+  .hist{background:var(--panel);border:1px solid var(--line);border-radius:var(--r-lg);box-shadow:var(--sh-card);overflow:hidden}
+  .hist h4{font-size:var(--fs-sm);padding:14px 16px;border-bottom:1px solid var(--line);display:flex;justify-content:space-between;align-items:center}
+  .hist .new{border:0;background:var(--purple-soft);color:var(--purple-deep);border-radius:6px;padding:4px 9px;font-size:var(--fs-xs);font-weight:700}
+  .hist-item{display:block;width:100%;text-align:left;border:0;background:none;padding:11px 16px;border-bottom:1px solid var(--line);font-size:var(--fs-sm);color:var(--ink)}
+  .hist-item:last-child{border:0}
+  .hist-item:hover{background:var(--panel-2)}
+  .hist-item.active{background:var(--purple-soft)}
+  .hist-item b{display:block;font-weight:600;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+  .hist-item span{font-size:var(--fs-xs);color:var(--faint)}
+  .ai-wrap{display:flex;flex-direction:column;height:calc(100vh - 200px);min-height:420px;background:var(--panel);border:1px solid var(--line);border-radius:var(--r-lg);box-shadow:var(--sh-card);overflow:hidden}
+  .ai-head{display:flex;align-items:center;gap:12px;padding:14px 18px;border-bottom:1px solid var(--line)}
+  .ai-head .lbl{font-size:var(--fs-sm);color:var(--mut)}
+  .ai-provider{border:1.5px solid var(--line-strong);background:var(--panel);color:var(--ink);border-radius:var(--r-sm);padding:8px 12px;font:600 var(--fs-sm) 'Public Sans';cursor:pointer}
+  .ai-stream{flex:1;overflow-y:auto;padding:20px;display:flex;flex-direction:column;gap:16px}
+  .msg{display:flex;gap:12px;max-width:85%}
+  .msg .mav{width:30px;height:30px;border-radius:8px;flex-shrink:0;display:flex;align-items:center;justify-content:center;font:700 .72rem 'Fraunces'}
+  .msg.user{align-self:flex-end;flex-direction:row-reverse} .msg.user .mav{background:var(--purple);color:#fff}
+  .msg.ai .mav{background:#111315;color:var(--green)} :root[data-theme="dark"] .msg.ai .mav{background:#000}
+  .msg .bubble{background:var(--panel-2);border:1px solid var(--line);border-radius:var(--r-md);padding:12px 15px;font-size:var(--fs-body);line-height:1.6;white-space:pre-wrap}
+  .msg.user .bubble{background:var(--purple);color:#fff;border-color:var(--purple)}
+  .ai-input{border-top:1px solid var(--line);padding:14px 18px;display:flex;gap:10px;align-items:flex-end}
+  .ai-input textarea{flex:1;border:1.5px solid var(--line-strong);border-radius:var(--r-md);padding:11px 14px;font:400 var(--fs-body)/1.5 'Public Sans';background:var(--panel);color:var(--ink);resize:none;max-height:120px}
+  .ai-input textarea:focus{outline:none;border-color:var(--purple)}
+  .suggest-row{display:flex;gap:8px;flex-wrap:wrap;margin-top:14px}
+  .suggest-row button{border:1.5px solid var(--line-strong);background:var(--panel);border-radius:999px;padding:7px 13px;font-size:var(--fs-xs);font-weight:600;color:var(--mut)}
+  .suggest-row button:hover{border-color:var(--purple);color:var(--purple-deep)}
+
+  /* client detail page */
+  .detail-head{display:flex;align-items:center;gap:16px;margin-bottom:20px;flex-wrap:wrap}
+  .detail-head .av{width:60px;height:60px;border-radius:50%;background:var(--purple);color:#fff;display:flex;align-items:center;justify-content:center;font:600 1.3rem 'Fraunces'}
+  .detail-head h2{font-size:1.4rem} .detail-head .sub{color:var(--mut);font-size:var(--fs-sm)}
+  .back-link{border:0;background:none;color:var(--mut);font-size:var(--fs-sm);font-weight:600;margin-bottom:14px;display:inline-flex;gap:6px;align-items:center}
+  .back-link:hover{color:var(--purple-deep)}
+  .rate-row{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:14px;margin-bottom:18px}
+  .rate{background:var(--panel);border:1px solid var(--line);border-radius:var(--r-md);padding:16px;box-shadow:var(--sh-card)}
+  .rate .v{font:600 1.5rem 'Fraunces'} .rate .l{font-size:var(--fs-xs);color:var(--mut);margin-top:3px}
+
+  /* sub-tabs (brand identity / status) */
+  .subtabs{display:flex;gap:4px;border-bottom:1px solid var(--line);margin-bottom:20px;overflow-x:auto}
+  .subtab{background:none;border:0;padding:10px 14px;font-size:var(--fs-sm);font-weight:600;color:var(--mut);border-bottom:2px solid transparent;white-space:nowrap}
+  .subtab:hover{color:var(--ink)} .subtab.active{color:var(--purple-deep);border-bottom-color:var(--purple)}
+  .subpanel{display:none} .subpanel.on{display:block}
+  .bi-field{margin-bottom:16px}
+  .bi-field label{display:block;font-size:var(--fs-sm);font-weight:600;margin-bottom:6px}
+  .bi-field textarea,.bi-field input{width:100%;padding:11px 13px;border:1.5px solid var(--line-strong);border-radius:var(--r-sm);font:400 var(--fs-body)/1.6 'Public Sans';background:var(--panel);color:var(--ink);resize:vertical}
+  .bi-field textarea:focus,.bi-field input:focus{outline:none;border-color:var(--purple)}
+  .chips{display:flex;flex-wrap:wrap;gap:8px;margin-top:4px}
+  .chip-tog{border:1.5px solid var(--line-strong);background:var(--panel);border-radius:999px;padding:8px 14px;font-size:var(--fs-sm);font-weight:600;color:var(--ink)}
+  .chip-tog.on{background:var(--purple);border-color:var(--purple);color:#fff}
+
+  /* settings */
+  .set-grid{display:grid;grid-template-columns:200px 1fr;gap:24px;align-items:start}
+  @media (max-width:820px){.set-grid{grid-template-columns:1fr}}
+  .set-nav{list-style:none;display:flex;flex-direction:column;gap:3px;position:sticky;top:80px}
+  .set-nav button{width:100%;text-align:left;background:none;border:0;padding:10px 13px;border-radius:var(--r-sm);font-size:var(--fs-sm);font-weight:600;color:var(--mut)}
+  .set-nav button:hover{background:var(--panel-2);color:var(--ink)} .set-nav button.active{background:var(--purple-soft);color:var(--purple-deep)}
+  .set-panel{display:none} .set-panel.on{display:block}
+  .team-row{display:flex;align-items:center;gap:12px;padding:13px 0;border-bottom:1px solid var(--line)}
+  .team-row:last-child{border:0}
+  .team-row .av{width:36px;height:36px;border-radius:50%;background:var(--purple-soft);color:var(--purple-deep);display:flex;align-items:center;justify-content:center;font:600 .76rem 'Fraunces'}
+  .team-row b{font-size:var(--fs-sm);display:block} .team-row span{font-size:var(--fs-xs);color:var(--faint)}
+  .role-tag{margin-left:auto;font-size:var(--fs-xs);font-weight:700;background:var(--panel-2);border:1px solid var(--line);color:var(--mut);padding:5px 10px;border-radius:999px}
+  .plan{border:1.5px solid var(--line-strong);border-radius:var(--r-md);padding:18px;display:flex;flex-direction:column;gap:4px}
+  .plan.current{border-color:var(--purple);background:var(--purple-soft)}
+  .plan .nm{font:600 var(--fs-h3) 'Fraunces'} .plan .pr{font:600 1.4rem 'Fraunces';letter-spacing:-.02em}
+  .plan .pr small{font:400 var(--fs-xs) 'Public Sans';color:var(--faint)}
+  .plan ul{list-style:none;margin:8px 0 12px;font-size:var(--fs-sm);color:var(--mut)} .plan li{padding:4px 0;display:flex;gap:8px}
+  .plan-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:14px}
+
+  .toast{position:fixed;bottom:24px;left:50%;transform:translateX(-50%) translateY(20px);background:var(--ink);color:var(--bg);padding:12px 20px;border-radius:var(--r-md);font-size:var(--fs-sm);font-weight:600;box-shadow:var(--sh-pop);opacity:0;pointer-events:none;transition:opacity .25s,transform .25s;z-index:300}
+  .toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
+
+  @media (max-width:900px){
+    .app{grid-template-columns:1fr;grid-template-rows:auto 60px 1fr;grid-template-areas:"side" "top" "main"}
+    .side{height:auto;position:static;flex-direction:row;align-items:center;gap:4px;padding:10px 12px;overflow-x:auto}
+    .side .logo,.side .sect{padding:0 8px 0 0;white-space:nowrap} .side .sect,.role-switch{display:none}
+    .nav{flex-direction:row} .nav button{white-space:nowrap;padding:8px 10px} .nav button.active::before{display:none} .nav .lbl{display:none}
+    .side-foot{display:none}
+    .two-col{grid-template-columns:1fr}
+    .tbl-wrap{overflow-x:auto} table{min-width:720px}
+  }
+</style>
+</head>
+<body data-role="admin">
+<div class="app">
+
+  <!-- sidebar -->
+  <aside class="side">
+    <div class="logo">BrandAbout<span class="dot">Me</span></div>
+    <div class="role-switch">
+      <button class="on" id="roleAdmin">Admin</button>
+      <button id="roleWriter">Writer</button>
+    </div>
+    <div class="sect">Menu</div>
+    <ul class="nav admin-nav" id="navAdmin">
+      <li><button class="active" data-page="dashboard"><span class="ic">▦</span><span class="lbl">Dashboard</span></button></li>
+      <li><button data-page="analytics"><span class="ic">◷</span><span class="lbl">Analytics</span></button></li>
+      <li><button data-page="content"><span class="ic">▤</span><span class="lbl">Content Manager</span></button></li>
+      <li><button data-page="clients"><span class="ic">◉</span><span class="lbl">Client Management</span></button></li>
+      <li><button data-page="ai"><span class="ic">✦</span><span class="lbl">AI Studio</span></button></li>
+      <li><button data-page="settings"><span class="ic">⚙</span><span class="lbl">Settings</span></button></li>
+    </ul>
+    <ul class="nav writer-nav" id="navWriter">
+      <li><button class="active" data-page="dashboard"><span class="ic">▦</span><span class="lbl">My Dashboard</span></button></li>
+      <li><button data-page="content"><span class="ic">▤</span><span class="lbl">Content Manager</span></button></li>
+      <li><button data-page="clients"><span class="ic">◉</span><span class="lbl">My Clients</span></button></li>
+      <li><button data-page="ai"><span class="ic">✦</span><span class="lbl">AI Studio</span></button></li>
+    </ul>
+    <div class="side-foot">
+      <div class="admin-chip" id="roleChip"><div class="av" id="roleAv">RK</div><div><b id="roleName">Rhea K.</b><span id="roleDesc">Admin · BAM team</span></div></div>
+    </div>
+  </aside>
+
+  <!-- topbar -->
+  <header class="top">
+    <div class="ptitle" id="pageTitle">Dashboard</div>
+    <div class="spacer"></div>
+    <button class="switch-view" id="switchView">↪ Switch to user view</button>
+    <button class="icon-btn" id="themeBtn" title="Toggle theme">☾</button>
+    <button class="icon-btn" id="bellBtn" title="Notifications"><span>◔</span><span class="dot"></span></button>
+  </header>
+
+  <div class="notif" id="notif">
+    <h4>Notifications</h4>
+    <div class="item"><div class="ni">✎</div><div><b>3 drafts awaiting client approval</b><span>Northwind, Vero, Lumen · 2h ago</span></div></div>
+    <div class="item"><div class="ni">◉</div><div><b>New client added - Priya Nair</b><span>Assigned to Matvei · 5h ago</span></div></div>
+    <div class="item"><div class="ni">▲</div><div><b>Vero's last post hit 32k reach</b><span>+140% vs their baseline · yesterday</span></div></div>
+  </div>
+
+  <main class="main">
+
+    <!-- ===================== DASHBOARD ===================== -->
+    <section class="page on" id="p-dashboard">
+      <div class="page-head"><div><h2 id="dashTitle">Dashboard</h2><p id="dashSub">Platform health and the things that need you today.</p></div>
+        <button class="btn btn-primary btn-sm" data-page="content">+ New post</button></div>
+
+      <!-- actionable stat cards -->
+      <div class="metric-row">
+        <div class="metric action"><div class="lbl">Pending approvals</div><div class="val">23</div><div class="ctx"><span class="pill-stat pill-neg">▲ 5</span> oldest 4 days</div><button class="btn btn-primary btn-sm cta" data-page="content">Review queue →</button></div>
+        <div class="metric action"><div class="lbl">Clients going quiet</div><div class="val">4</div><div class="ctx">No post in 10+ days</div><button class="btn btn-ghost btn-sm cta" data-page="clients">See clients →</button></div>
+        <div class="metric action"><div class="lbl">Unassigned clients</div><div class="val">1</div><div class="ctx">Needs a writer</div><button class="btn btn-ghost btn-sm cta" data-page="clients">Assign →</button></div>
+        <div class="metric"><div class="lbl">Approval rate (30d)</div><div class="val">88%</div><div class="ctx"><span class="pill-stat pill-pos">▲ 4pt</span> vs prev · healthy &gt;80%</div></div>
+      </div>
+
+      <div class="two-col">
+        <div class="card">
+          <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;gap:12px;flex-wrap:wrap">
+            <h3 class="serif" style="font-size:var(--fs-h2)">Reach vs. expected</h3>
+            <select class="ai-provider" id="dashClient"></select>
+          </div>
+          <div class="barchart" id="dashChart"></div>
+          <div class="legend"><span><i style="background:var(--line-strong)"></i> Expected (baseline)</span><span><i style="background:var(--purple)"></i> Actual</span></div>
+        </div>
+        <div class="card">
+          <h3 class="serif" style="font-size:var(--fs-h2);margin-bottom:10px">Needs your attention</h3>
+          <div class="insight"><div class="ic down">!</div><div><b>23 posts pending approval</b> across 11 clients — oldest is 4 days.</div></div>
+          <div class="insight"><div class="ic flat">⌁</div><div><b>Lumen Partners</b> hasn't posted in 12 days. Nudge their writer?</div></div>
+          <div class="insight"><div class="ic up">▲</div><div><b>Vero Studio</b> is outperforming baseline by 140% — worth a case study.</div></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===================== ANALYTICS ===================== -->
+    <section class="page" id="p-analytics">
+      <div class="page-head"><div><h2>Analytics</h2><p>Numbers only mean something next to a baseline. Everything here is framed against what you'd expect — previous period and each client's own normal.</p></div>
+        <select class="ai-provider"><option>Last 30 days</option><option>Last 7 days</option><option>Last quarter</option></select></div>
+      <div class="metric-row">
+        <div class="metric"><div class="lbl">Total reach</div><div class="val">612k</div><div class="ctx"><span class="pill-stat pill-pos">▲ 24%</span> vs prev · baseline 490k</div></div>
+        <div class="metric"><div class="lbl">Engagement rate</div><div class="val">4.8%</div><div class="ctx"><span class="pill-stat pill-pos">▲ 0.9pt</span> vs prev · industry avg 3.1%</div></div>
+        <div class="metric"><div class="lbl">Profile visits</div><div class="val">28.4k</div><div class="ctx"><span class="pill-stat pill-neg">▼ 6%</span> vs prev · still 2× baseline</div></div>
+        <div class="metric"><div class="lbl">New followers</div><div class="val">9.1k</div><div class="ctx"><span class="pill-stat pill-pos">▲ 31%</span> vs prev 30d</div></div>
+      </div>
+      <div class="two-col">
+        <div class="card">
+          <div style="display:flex;justify-content:space-between;align-items:baseline;margin-bottom:4px"><h3 class="serif" style="font-size:var(--fs-h2)">Reach vs. expected</h3><span class="kicker">30-day trend</span></div>
+          <div class="barchart">
+            <div class="col"><div class="bars"><div class="b prev" style="height:50%"></div><div class="b cur" style="height:64%"></div></div><div class="lab">Wk 1</div></div>
+            <div class="col"><div class="bars"><div class="b prev" style="height:52%"></div><div class="b cur" style="height:58%"></div></div><div class="lab">Wk 2</div></div>
+            <div class="col"><div class="bars"><div class="b prev" style="height:48%"></div><div class="b cur" style="height:78%"></div></div><div class="lab">Wk 3</div></div>
+            <div class="col"><div class="bars"><div class="b prev" style="height:55%"></div><div class="b cur" style="height:92%"></div></div><div class="lab">Wk 4</div></div>
+          </div>
+          <div class="legend"><span><i style="background:var(--line-strong)"></i> Expected (baseline)</span><span><i style="background:var(--purple)"></i> Actual</span></div>
+        </div>
+        <div class="card">
+          <h3 class="serif" style="font-size:var(--fs-h2);margin-bottom:10px">What this means</h3>
+          <div class="insight"><div class="ic up">▲</div><div>Reach is <b>24% above the prior period</b> and <b>25% above baseline</b> — the content mix is working.</div></div>
+          <div class="insight"><div class="ic up">▲</div><div>Engagement at <b>4.8%</b> beats the <b>3.1% industry average</b> by over half.</div></div>
+          <div class="insight"><div class="ic down">▼</div><div>Profile visits dipped 6% — but still <b>double baseline</b>. Likely a quiet posting week, not a problem.</div></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===================== CONTENT MANAGER ===================== -->
+    <section class="page" id="p-content">
+      <div class="page-head"><div><h2>Content Manager</h2><p>Plan, write and schedule LinkedIn posts for every client from one place.</p></div>
+        <button class="btn btn-primary btn-sm" id="openComposer">＋ Create post</button></div>
+      <div class="toolbar">
+        <div class="search"><span class="mag">⌕</span><input id="contentSearch" placeholder="Search by company, client or date…"></div>
+        <select class="ai-provider" id="contentFilter"><option>All statuses</option><option>Scheduled</option><option>Draft</option><option>Published</option></select>
+      </div>
+      <div class="tbl-wrap">
+        <table id="contentTable">
+          <thead><tr><th>Company name</th><th>Client name</th><th>Post content</th><th>Publication date</th><th>Status</th><th></th></tr></thead>
+          <tbody id="contentBody"></tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- ===================== CLIENT MANAGEMENT ===================== -->
+    <section class="page" id="p-clients">
+      <div class="page-head"><div><h2 id="clientsTitle">Client Management</h2><p id="clientsSub">Every client, their writer, meetings and subscription — plus their brand identity and post history.</p></div>
+        <button class="btn btn-primary btn-sm" id="openAddClient">＋ Add new client</button></div>
+
+      <div class="subtabs" id="clientTabs">
+        <button class="subtab active" data-ct="status">Status &amp; roster</button>
+        <button class="subtab" data-ct="brand">Brand identity</button>
+      </div>
+
+      <!-- status & roster -->
+      <div class="subpanel on" id="ct-status">
+        <div class="toolbar"><div class="search"><span class="mag">⌕</span><input id="clientSearch" placeholder="Search clients by name or company…"></div></div>
+        <div class="tbl-wrap">
+          <table id="clientTable">
+            <thead><tr><th>Client name</th><th>Active</th><th>Meeting slot</th><th>Writer</th><th>Subscription</th><th></th></tr></thead>
+            <tbody id="clientBody"></tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- brand identity -->
+      <div class="subpanel" id="ct-brand">
+        <div class="toolbar">
+          <select class="ai-provider" id="brandClientPick"></select>
+          <span class="mut" style="font-size:var(--fs-sm)">Set the brand identity BAM uses to draft this client's posts.</span>
+        </div>
+        <div class="card" style="max-width:820px">
+          <div class="bi-field"><label>One-line positioning</label><input id="bi-pos" value="Finance leader who makes complex decisions feel human."></div>
+          <div class="bi-field"><label>Tone of voice</label>
+            <div class="chips" id="bi-tone">
+              <button class="chip-tog on">Warm</button><button class="chip-tog on">Direct</button><button class="chip-tog">Playful</button><button class="chip-tog">Authoritative</button><button class="chip-tog on">Story-led</button><button class="chip-tog">Data-backed</button>
+            </div>
+          </div>
+          <div class="bi-field"><label>Content pillars</label>
+            <div class="chips" id="bi-pillars">
+              <button class="chip-tog on">Career wisdom</button><button class="chip-tog on">Client stories</button><button class="chip-tog on">Industry analysis</button><button class="chip-tog">Leadership</button><button class="chip-tog">Hiring</button>
+            </div>
+          </div>
+          <div class="bi-field"><label>What to avoid</label><textarea rows="2">No jargon, no humble-brags, no generic motivational quotes.</textarea></div>
+          <div class="bi-field"><label>Signature phrases &amp; notes</label><textarea rows="2">Often opens with a confession. Likes closing on a question. Writes warmest in the morning.</textarea></div>
+          <button class="btn btn-primary btn-sm" id="saveBrand">Save brand identity</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===================== CLIENT DETAIL ===================== -->
+    <section class="page" id="p-clientdetail">
+      <button class="back-link" data-page="clients">← Back to Client Management</button>
+      <div class="detail-head">
+        <div class="av" id="cdAv">LM</div>
+        <div><h2 class="serif" id="cdName">Lena M.</h2><div class="sub" id="cdSub">Vero Studio · Writer: Matvei</div></div>
+        <div style="margin-left:auto;display:flex;gap:8px"><span class="banner banner-yes" id="cdActive">Active</span><span class="banner banner-yes" id="cdSubsc">Subscribed</span></div>
+      </div>
+
+      <div class="rate-row">
+        <div class="rate"><div class="v">42</div><div class="l">Posts published</div></div>
+        <div class="rate"><div class="v" style="color:var(--pos)">88%</div><div class="l">Approval rate</div></div>
+        <div class="rate"><div class="v" style="color:var(--neg)">12%</div><div class="l">Decline rate</div></div>
+        <div class="rate"><div class="v">186k</div><div class="l">Total reach</div></div>
+        <div class="rate"><div class="v">6.2%</div><div class="l">Avg engagement</div></div>
+      </div>
+
+      <div class="two-col">
+        <div class="card">
+          <h3 class="serif" style="font-size:var(--fs-h2);margin-bottom:12px">Post history</h3>
+          <div class="tbl-wrap" style="box-shadow:none;border:0">
+            <table>
+              <thead><tr><th>Post</th><th>Date</th><th>Decision</th><th>Reach</th></tr></thead>
+              <tbody id="cdHistory"></tbody>
+            </table>
+          </div>
+        </div>
+        <div class="card">
+          <h3 class="serif" style="font-size:var(--fs-h2);margin-bottom:10px">Engagement trend</h3>
+          <div class="barchart">
+            <div class="col"><div class="bars"><div class="b prev" style="height:40%"></div><div class="b cur" style="height:58%"></div></div><div class="lab">Wk 1</div></div>
+            <div class="col"><div class="bars"><div class="b prev" style="height:48%"></div><div class="b cur" style="height:70%"></div></div><div class="lab">Wk 2</div></div>
+            <div class="col"><div class="bars"><div class="b prev" style="height:52%"></div><div class="b cur" style="height:82%"></div></div><div class="lab">Wk 3</div></div>
+            <div class="col"><div class="bars"><div class="b prev" style="height:50%"></div><div class="b cur" style="height:94%"></div></div><div class="lab">Wk 4</div></div>
+          </div>
+          <div class="legend"><span><i style="background:var(--line-strong)"></i> Baseline</span><span><i style="background:var(--purple)"></i> Actual</span></div>
+          <div class="insight" style="margin-top:12px"><div class="ic up">▲</div><div>Consistently beating baseline — this client is a strong reference candidate.</div></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===================== AI STUDIO ===================== -->
+    <section class="page" id="p-ai">
+      <div class="page-head"><div><h2>AI Studio</h2><p>Draft, rewrite and brainstorm with any provider. Compare outputs before they reach a client.</p></div></div>
+      <div class="studio-grid">
+        <div class="hist">
+          <h4>History <button class="new" id="newChat">＋ New</button></h4>
+          <div id="histList"></div>
+        </div>
+        <div>
+          <div class="ai-wrap">
+            <div class="ai-head">
+              <span class="lbl">Provider</span>
+              <select class="ai-provider" id="aiProvider"><option>Claude Opus 4.8</option><option>Claude Sonnet 5.5</option><option>GPT-5.1</option><option>Gemini 2.5 Pro</option><option>Llama 4</option></select>
+              <div class="spacer" style="flex:1"></div>
+              <button class="btn btn-ghost btn-sm" id="clearChat">Clear</button>
+            </div>
+            <div class="ai-stream" id="aiStream"></div>
+            <div class="ai-input">
+              <textarea id="aiInput" rows="1" placeholder="Ask the model to draft a post for a client…"></textarea>
+              <button class="btn btn-primary" id="aiSend">Send</button>
+            </div>
+          </div>
+          <div class="suggest-row">
+            <button class="ai-suggest">Draft a post for Vero Studio about hiring</button>
+            <button class="ai-suggest">Rewrite this in a warmer tone</button>
+            <button class="ai-suggest">5 content angles for a finance consultant</button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===================== SETTINGS ===================== -->
+    <section class="page" id="p-settings">
+      <div class="page-head"><div><h2>Settings</h2><p>Team, billing and integrations.</p></div></div>
+      <div class="set-grid">
+        <ul class="set-nav" id="setNav">
+          <li><button class="active" data-set="team">Team management</button></li>
+          <li><button data-set="billing">Subscription &amp; billing</button></li>
+          <li><button data-set="integrations">Integrations</button></li>
+        </ul>
+        <div>
+          <div class="set-panel on" id="set-team">
+            <div class="card">
+              <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px">
+                <h3 class="serif" style="font-size:var(--fs-h2)">Team members</h3>
+                <button class="btn btn-primary btn-sm" id="addMemberBtn">＋ Invite member</button>
+              </div>
+              <div id="teamList">
+                <div class="team-row"><div class="av">RK</div><div><b>Rhea K.</b><span>rhea@bam.co</span></div><span class="role-tag">Admin</span></div>
+                <div class="team-row"><div class="av">M</div><div><b>Matvei</b><span>matvei@bam.co</span></div><span class="role-tag">Writer</span></div>
+                <div class="team-row"><div class="av">TA</div><div><b>Tunde A.</b><span>tunde@bam.co</span></div><span class="role-tag">Writer</span></div>
+                <div class="team-row"><div class="av">JL</div><div><b>Jia L.</b><span>jia@bam.co</span></div><span class="role-tag">Writer</span></div>
+              </div>
+            </div>
+          </div>
+          <div class="set-panel" id="set-billing">
+            <div class="card" style="margin-bottom:16px">
+              <h3 class="serif" style="font-size:var(--fs-h2);margin-bottom:12px">Your plan</h3>
+              <div class="plan-grid">
+                <div class="plan"><div class="nm">Starter</div><div class="pr">$0<small>/mo</small></div><ul><li>Up to 5 clients</li><li>1 writer seat</li></ul><button class="btn btn-ghost btn-sm">Downgrade</button></div>
+                <div class="plan current"><div class="nm">Growth</div><div class="pr">$249<small>/mo</small></div><ul><li>Up to 50 clients</li><li>5 writer seats</li><li>All AI providers</li></ul><button class="btn btn-primary btn-sm">Current plan</button></div>
+                <div class="plan"><div class="nm">Scale</div><div class="pr">$699<small>/mo</small></div><ul><li>Unlimited clients</li><li>Unlimited seats</li><li>Priority support</li></ul><button class="btn btn-ghost btn-sm">Upgrade</button></div>
+              </div>
+            </div>
+            <div class="card">
+              <h3 class="serif" style="font-size:var(--fs-h2);margin-bottom:12px">Payment method</h3>
+              <div style="display:flex;align-items:center;gap:12px;font-size:var(--fs-sm)">
+                <div style="width:44px;height:30px;border-radius:6px;background:var(--purple-soft);color:var(--purple-deep);display:flex;align-items:center;justify-content:center;font-weight:700;font-size:.7rem">VISA</div>
+                <div><b>•••• 4242</b><div style="color:var(--faint);font-size:var(--fs-xs)">Expires 08/27</div></div>
+                <button class="btn btn-ghost btn-sm" style="margin-left:auto">Update</button>
+              </div>
+            </div>
+          </div>
+          <div class="set-panel" id="set-integrations">
+            <div class="card">
+              <h3 class="serif" style="font-size:var(--fs-h2);margin-bottom:4px">Connected accounts</h3>
+              <p style="font-size:var(--fs-sm);color:var(--mut);margin-bottom:16px">Connect LinkedIn to publish on behalf of your clients.</p>
+              <div class="team-row" style="border:1px solid var(--line);border-radius:var(--r-md);padding:14px;margin-bottom:10px">
+                <div style="width:36px;height:36px;border-radius:9px;background:var(--linkedin);color:#fff;display:flex;align-items:center;justify-content:center;font:700 1rem 'Fraunces'">in</div>
+                <div><b>LinkedIn</b><span>Publishing &amp; analytics</span></div>
+                <span class="banner banner-yes" style="margin-left:auto">Connected</span>
+              </div>
+              <div class="team-row" style="border:1px solid var(--line);border-radius:var(--r-md);padding:14px">
+                <div style="width:36px;height:36px;border-radius:9px;background:var(--purple-soft);color:var(--purple-deep);display:flex;align-items:center;justify-content:center;font:700 .9rem 'Fraunces'">◴</div>
+                <div><b>Google Calendar</b><span>Sync meeting slots</span></div>
+                <button class="btn btn-ghost btn-sm" style="margin-left:auto">Connect</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </main>
+</div>
+
+<!-- Add Client modal -->
+<div class="modal-bg" id="addClientModal">
+  <div class="modal" role="dialog" aria-label="Add new client">
+    <h3 class="serif">Add new client</h3>
+    <div class="msub">We'll email them a link to onboard to their own dashboard.</div>
+    <div class="field"><label for="ac-name">Full name</label><input id="ac-name" placeholder="e.g. Priya Nair"></div>
+    <div class="field"><label for="ac-email">Email</label><input id="ac-email" type="email" placeholder="priya@company.com"></div>
+    <div class="field"><label for="ac-company">Company name</label><input id="ac-company" placeholder="e.g. Northwind Co."></div>
+    <div class="field-2">
+      <div class="field"><label for="ac-staff">Staff / seat</label><select id="ac-staff"><option>Standard seat</option><option>Executive seat</option><option>Team seat</option></select></div>
+      <div class="field"><label for="ac-writer">Assigned writer</label><select id="ac-writer"><option>Matvei</option><option>Tunde A.</option><option>Jia L.</option></select></div>
+    </div>
+    <div class="modal-foot">
+      <button class="btn btn-ghost" id="cancelAddClient">Cancel</button>
+      <button class="btn btn-primary" id="saveAddClient">Add client &amp; send invite</button>
+    </div>
+  </div>
+</div>
+
+<!-- Invite-link modal (shown after add) -->
+<div class="modal-bg" id="inviteModal">
+  <div class="modal" role="dialog" aria-label="Invite link">
+    <h3 class="serif">Invite sent ✓</h3>
+    <div class="msub" id="inviteSub">An onboarding email is on its way. You can also share this personal link directly.</div>
+    <label style="display:block;font-size:var(--fs-sm);font-weight:600;margin-bottom:6px">Personal onboarding link</label>
+    <div class="invite-box"><code id="inviteLink">https://app.brandaboutme.co/onboard/ab12cd34</code><button class="btn btn-ghost btn-sm" id="copyInvite">Copy</button></div>
+    <div class="modal-foot"><button class="btn btn-primary" id="closeInvite">Done</button></div>
+  </div>
+</div>
+
+<!-- Reminder modal -->
+<div class="modal-bg" id="reminderModal">
+  <div class="modal" role="dialog" aria-label="Send reminder">
+    <h3 class="serif">Send onboarding reminder</h3>
+    <div class="msub" id="remSub">This client hasn't activated yet. Send a nudge or copy their link for a personal note.</div>
+    <div class="field"><label>Message preview</label><textarea rows="3" id="remMsg">Hi — it's been 3 days and your BrandAboutMe account isn't active yet. Here's your link to pick up where you left off. Takes 3 minutes.</textarea></div>
+    <label style="display:block;font-size:var(--fs-sm);font-weight:600;margin-bottom:6px">Personal onboarding link</label>
+    <div class="invite-box"><code id="remLink">https://app.brandaboutme.co/onboard/ab12cd34</code><button class="btn btn-ghost btn-sm" id="copyRem">Copy</button></div>
+    <div class="modal-foot"><button class="btn btn-ghost" id="cancelRem">Cancel</button><button class="btn btn-primary" id="sendRem">Send reminder</button></div>
+  </div>
+</div>
+
+<!-- Create Post composer modal -->
+<div class="modal-bg" id="composerModal">
+  <div class="modal wide" role="dialog" aria-label="Create post">
+    <h3 class="serif">Create post</h3>
+    <div class="msub">Write it yourself, brainstorm with AI on the right, preview as the client, then schedule.</div>
+    <div class="composer-grid">
+      <div class="composer">
+        <div class="field" style="margin-bottom:12px"><label for="cp-client">Post for client</label>
+          <select id="cp-client"><option>Vero Studio — Lena M.</option><option>Northwind Co. — Priya Nair</option><option>Lumen Partners — Sam O.</option></select>
+        </div>
+        <label style="display:block;font-size:var(--fs-sm);font-weight:600;margin-bottom:6px">Content</label>
+        <textarea id="cp-text" placeholder="Write the post…">Twenty years in finance taught me one uncomfortable truth: the spreadsheet is never the decision. The decision is always about people.</textarea>
+        <div class="attach-row">
+          <button class="attach-chip" data-attach="image">⇧ Attach image</button>
+          <button class="attach-chip" data-attach="video">▷ Attach video</button>
+          <button class="attach-chip" data-attach="library">▧ From library</button>
+        </div>
+        <div class="attached" id="attached"><div class="thumb" id="attThumb">▧</div><div><b id="attName">image.jpg</b><div style="color:var(--faint);font-size:var(--fs-xs)">Attached</div></div><button id="removeAtt">✕</button></div>
+        <div class="field-2" style="margin-top:16px">
+          <div class="field"><label for="cp-date">Schedule date</label><input id="cp-date" type="date"></div>
+          <div class="field"><label for="cp-time">Time</label><input id="cp-time" type="time" value="09:00"></div>
+        </div>
+        <div class="field"><label for="cp-vis">Visibility</label><select id="cp-vis"><option>Client approval required (recommended)</option><option>Auto-publish on schedule</option><option>Draft only — don't schedule</option></select></div>
+      </div>
+
+      <div>
+        <div class="col-label">Brainstorm with AI</div>
+        <div class="chat">
+          <div class="chat-head">
+            <select id="cpAiProvider"><option>Claude Opus 4.8</option><option>Claude Sonnet 5.5</option><option>GPT-5.1</option><option>Gemini 2.5 Pro</option></select>
+            <span class="mut" style="font-size:var(--fs-xs);margin-left:auto">Uses brand identity</span>
+          </div>
+          <div class="chat-stream" id="cpChatStream">
+            <div class="cmsg ai"><div class="mav">AI</div><div class="bub">Tell me the angle and I'll draft it in this client's voice. You can send any draft straight to the editor.</div></div>
+          </div>
+          <div class="chat-in">
+            <textarea id="cpChatInput" rows="1" placeholder="e.g. a post about hiring for culture…"></textarea>
+            <button class="btn btn-primary btn-sm" id="cpChatSend">Send</button>
+          </div>
+        </div>
+      </div>
+
+      <div>
+        <div class="col-label">Live preview</div>
+        <div class="lp-preview">
+          <div class="lp-head"><div class="av">LM</div><div><b id="lpName">Lena M.</b><span>Founder, Vero Studio · now</span></div></div>
+          <div class="lp-body" id="lpBody"></div>
+          <div class="lp-media" id="lpMedia">Media attached</div>
+          <div class="lp-foot"><span>♡ Like</span><span>↺ Repost</span><span>➤ Send</span></div>
+        </div>
+      </div>
+    </div>
+    <div class="modal-foot">
+      <button class="btn btn-ghost" id="cancelComposer">Cancel</button>
+      <button class="btn btn-primary" id="saveComposer">Schedule post</button>
+    </div>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+const root=document.documentElement;
+document.getElementById('themeBtn').onclick=function(){
+  const dark=root.getAttribute('data-theme')==='dark';
+  root.setAttribute('data-theme',dark?'light':'dark'); this.textContent=dark?'☾':'☀';
+};
+let toastTimer;
+function toast(msg){ const t=document.getElementById('toast'); t.textContent=msg; t.classList.add('show'); clearTimeout(toastTimer); toastTimer=setTimeout(()=>t.classList.remove('show'),2600); }
+function esc(s){ const d=document.createElement('div'); d.textContent=s; return d.innerHTML; }
+function initials(n){ return n.split(' ').map(w=>w[0]).join('').slice(0,2).toUpperCase(); }
+
+/* ===== role switch (admin / writer) ===== */
+const body=document.body;
+const roleAdmin=document.getElementById('roleAdmin'), roleWriter=document.getElementById('roleWriter');
+function setRole(role){
+  body.setAttribute('data-role',role);
+  roleAdmin.classList.toggle('on',role==='admin'); roleWriter.classList.toggle('on',role==='writer');
+  if(role==='writer'){
+    document.getElementById('roleAv').textContent='M'; document.getElementById('roleName').textContent='Matvei';
+    document.getElementById('roleDesc').textContent='Writer · 6 clients';
+    document.getElementById('dashTitle').textContent='My Dashboard';
+    document.getElementById('dashSub').textContent='Your clients and what needs you today.';
+    document.getElementById('clientsTitle').textContent='My Clients';
+    document.getElementById('clientsSub').textContent='The clients assigned to you — their brand identity, history and status.';
+    writerFilter='Matvei';
+  } else {
+    document.getElementById('roleAv').textContent='RK'; document.getElementById('roleName').textContent='Rhea K.';
+    document.getElementById('roleDesc').textContent='Admin · BAM team';
+    document.getElementById('dashTitle').textContent='Dashboard';
+    document.getElementById('dashSub').textContent='Platform health and the things that need you today.';
+    document.getElementById('clientsTitle').textContent='Client Management';
+    document.getElementById('clientsSub').textContent='Every client, their writer, meetings and subscription — plus their brand identity and post history.';
+    writerFilter=null;
+  }
+  goPage('dashboard'); renderClients(); renderContent(); fillClientPickers();
+}
+roleAdmin.onclick=()=>setRole('admin');
+roleWriter.onclick=()=>setRole('writer');
+let writerFilter=null;
+
+/* ===== nav ===== */
+const pages=document.querySelectorAll('.page');
+const titles={dashboard:'Dashboard',analytics:'Analytics',content:'Content Manager',clients:'Client Management',clientdetail:'Client Detail',ai:'AI Studio',settings:'Settings'};
+function goPage(name){
+  pages.forEach(p=>p.classList.toggle('on',p.id==='p-'+name));
+  document.querySelectorAll('.nav button').forEach(b=>b.classList.toggle('active',b.dataset.page===name));
+  document.getElementById('pageTitle').textContent=(body.getAttribute('data-role')==='writer'&&name==='clients')?'My Clients':(titles[name]||'');
+  window.scrollTo({top:0});
+}
+document.querySelectorAll('[data-page]').forEach(el=>el.addEventListener('click',()=>goPage(el.dataset.page)));
+
+/* ===== notifications ===== */
+const bell=document.getElementById('bellBtn'), notif=document.getElementById('notif');
+bell.onclick=e=>{ e.stopPropagation(); notif.classList.toggle('open'); };
+document.addEventListener('click',e=>{ if(!e.target.closest('#notif')&&!e.target.closest('#bellBtn')) notif.classList.remove('open'); });
+document.getElementById('switchView').onclick=()=>toast('Switching to user view…');
+
+/* ===== data ===== */
+const writers=['Matvei','Tunde A.','Jia L.','Unassigned'];
+let clients=[
+  {name:'Lena M.',company:'Vero Studio',active:true,meet:'20 Aug · 10:00',writer:'Matvei',sub:true,link:'ab12cd34'},
+  {name:'Priya Nair',company:'Northwind Co.',active:true,meet:'21 Aug · 14:30',writer:'Tunde A.',sub:true,link:'ef56gh78'},
+  {name:'Sam O.',company:'Lumen Partners',active:false,meet:'—',writer:'Jia L.',sub:false,link:'ij90kl12'},
+  {name:'David R.',company:'Cedar & Co.',active:true,meet:'24 Aug · 09:00',writer:'Matvei',sub:true,link:'mn34op56'},
+  {name:'Amara B.',company:'Flux Health',active:true,meet:'25 Aug · 11:30',writer:'Unassigned',sub:true,link:'qr78st90'},
+  {name:'Ken T.',company:'Orbit Labs',active:false,meet:'—',writer:'Tunde A.',sub:false,link:'uv12wx34'}
+];
+function visibleClients(){ return writerFilter?clients.filter(c=>c.writer===writerFilter):clients; }
+
+/* ===== dashboard per-client chart ===== */
+const chartData={
+  'All clients':[[50,64],[52,58],[48,78],[55,92]],
+  'Vero Studio':[[45,72],[50,80],[48,90],[52,96]],
+  'Northwind Co.':[[55,62],[52,66],[58,70],[60,74]],
+  'Lumen Partners':[[60,52],[58,50],[62,48],[64,46]],
+  'Cedar & Co.':[[48,60],[50,64],[46,68],[52,72]],
+  'Flux Health':[[42,58],[46,62],[48,66],[50,70]],
+  'Orbit Labs':[[50,44],[48,46],[52,42],[50,48]]
+};
+function renderDashChart(key){
+  const data=chartData[key]||chartData['All clients'];
+  document.getElementById('dashChart').innerHTML=data.map((d,i)=>
+    `<div class="col"><div class="bars"><div class="b prev" style="height:${d[0]}%"></div><div class="b cur" style="height:${d[1]}%"></div></div><div class="lab">Wk ${i+1}</div></div>`
+  ).join('');
+}
+function fillClientPickers(){
+  const vis=visibleClients();
+  const dash=document.getElementById('dashClient');
+  dash.innerHTML='<option>All clients</option>'+vis.map(c=>`<option>${c.company}</option>`).join('');
+  renderDashChart('All clients');
+  const bp=document.getElementById('brandClientPick');
+  bp.innerHTML=vis.map(c=>`<option>${c.company} — ${c.name}</option>`).join('');
+}
+document.getElementById('dashClient').onchange=e=>renderDashChart(e.target.value);
+
+/* ===== client table ===== */
+let openMenu=null;
+function closeMenus(){ document.querySelectorAll('.menu.open').forEach(m=>m.classList.remove('open')); openMenu=null; }
+document.addEventListener('click',e=>{ if(!e.target.closest('.row-actions')) closeMenus(); });
+function renderClients(filter=''){
+  const body=document.getElementById('clientBody');
+  const rows=visibleClients().filter(c=>(c.name+' '+c.company).toLowerCase().includes(filter.toLowerCase()));
+  if(!rows.length){ body.innerHTML='<tr class="empty-row"><td colspan="6">No clients match.</td></tr>'; return; }
+  body.innerHTML=rows.map(c=>{
+    const idx=clients.indexOf(c);
+    const opts=writers.map(w=>`<option ${w===c.writer?'selected':''}>${w}</option>`).join('');
+    const inactiveItem=!c.active?`<button data-act="remind" data-idx="${idx}">✉ Send onboarding reminder</button><div class="sep"></div>`:'';
+    return `<tr>
+      <td><div class="cell-name"><span class="av">${initials(c.name)}</span><div><b>${esc(c.name)}</b><span>${esc(c.company)}</span></div></div></td>
+      <td><span class="banner ${c.active?'banner-yes':'banner-no'}">${c.active?'Yes':'No'}</span></td>
+      <td class="meeting">${c.meet==='—'?'<span>No meeting set</span>':c.meet}</td>
+      <td><select class="writer" data-idx="${idx}">${opts}</select></td>
+      <td><span class="banner ${c.sub?'banner-yes':'banner-no'}">${c.sub?'Active':'Inactive'}</span></td>
+      <td class="row-actions">
+        <button class="dots" data-idx="${idx}">⋯</button>
+        <div class="menu">
+          <button data-act="view" data-idx="${idx}">◉ View client page</button>
+          <button data-act="copy" data-idx="${idx}">⧉ Copy invite link</button>
+          <div class="sep"></div>
+          ${inactiveItem}
+          <button class="danger" data-act="deactivate" data-idx="${idx}">⊘ Deactivate</button>
+        </div>
+      </td>
+    </tr>`;
+  }).join('');
+  body.querySelectorAll('select.writer').forEach(s=>s.onchange=()=>{ clients[+s.dataset.idx].writer=s.value; toast('Writer reassigned to '+s.value); });
+  body.querySelectorAll('.dots').forEach(d=>d.onclick=e=>{
+    e.stopPropagation();
+    const menu=d.nextElementSibling, wasOpen=menu.classList.contains('open');
+    closeMenus(); if(!wasOpen){ menu.classList.add('open'); openMenu=menu; }
+  });
+  body.querySelectorAll('.menu button').forEach(b=>b.onclick=()=>{
+    const c=clients[+b.dataset.idx];
+    closeMenus();
+    if(b.dataset.act==='view') openClientDetail(c);
+    else if(b.dataset.act==='copy'){ copyText('https://app.brandaboutme.co/onboard/'+c.link); toast('Invite link copied'); }
+    else if(b.dataset.act==='remind') openReminder(c);
+    else if(b.dataset.act==='deactivate'){ c.active=false; c.sub=false; renderClients(document.getElementById('clientSearch').value); toast(c.name+' deactivated'); }
+  });
+}
+document.getElementById('clientSearch').oninput=e=>renderClients(e.target.value);
+
+/* client sub-tabs */
+document.querySelectorAll('#clientTabs .subtab').forEach(b=>b.onclick=()=>{
+  document.querySelectorAll('#clientTabs .subtab').forEach(x=>x.classList.toggle('active',x===b));
+  document.querySelectorAll('#p-clients .subpanel').forEach(p=>p.classList.toggle('on',p.id==='ct-'+b.dataset.ct));
+});
+document.getElementById('saveBrand').onclick=()=>toast('Brand identity saved');
+document.querySelectorAll('.chip-tog').forEach(c=>c.onclick=()=>c.classList.toggle('on'));
+
+/* ===== client detail ===== */
+const histories={
+  'Lena M.':[['The spreadsheet is never the decision…','18 Aug','approve','32k'],['Why I still take notes by hand…','14 Aug','approve','21k'],['A hiring mistake I made at 30…','10 Aug','decline','—'],['What actually matters at 45…','6 Aug','approve','44k']],
+};
+function openClientDetail(c){
+  document.getElementById('cdAv').textContent=initials(c.name);
+  document.getElementById('cdName').textContent=c.name;
+  document.getElementById('cdSub').textContent=c.company+' · Writer: '+c.writer;
+  document.getElementById('cdActive').textContent=c.active?'Active':'Inactive';
+  document.getElementById('cdActive').className='banner '+(c.active?'banner-yes':'banner-no');
+  document.getElementById('cdSubsc').textContent=c.sub?'Subscribed':'Not subscribed';
+  document.getElementById('cdSubsc').className='banner '+(c.sub?'banner-yes':'banner-no');
+  const h=histories[c.name]||[['Sample post one…','18 Aug','approve','28k'],['Sample post two…','12 Aug','decline','—'],['Sample post three…','7 Aug','approve','19k']];
+  document.getElementById('cdHistory').innerHTML=h.map(r=>`<tr>
+    <td style="max-width:230px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${esc(r[0])}</td>
+    <td>${r[1]}</td>
+    <td>${r[2]==='approve'?'<span class="banner banner-yes">Approved</span>':'<span class="banner banner-no">Declined</span>'}</td>
+    <td>${r[3]}</td></tr>`).join('');
+  goPage('clientdetail'); document.getElementById('pageTitle').textContent='Client Detail';
+}
+
+/* add client → invite modal */
+const acModal=document.getElementById('addClientModal'), inviteModal=document.getElementById('inviteModal');
+document.getElementById('openAddClient').onclick=()=>acModal.classList.add('open');
+document.getElementById('cancelAddClient').onclick=()=>acModal.classList.remove('open');
+acModal.onclick=e=>{ if(e.target===acModal) acModal.classList.remove('open'); };
+document.getElementById('saveAddClient').onclick=()=>{
+  const name=document.getElementById('ac-name').value.trim(), company=document.getElementById('ac-company').value.trim();
+  if(!name||!company){ toast('Add at least a name and company'); return; }
+  const link=Math.random().toString(36).slice(2,10);
+  clients.unshift({name,company,active:false,meet:'—',writer:document.getElementById('ac-writer').value,sub:false,link});
+  renderClients(); fillClientPickers(); acModal.classList.remove('open');
+  ['ac-name','ac-email','ac-company'].forEach(id=>document.getElementById(id).value='');
+  document.getElementById('inviteLink').textContent='https://app.brandaboutme.co/onboard/'+link;
+  document.getElementById('inviteSub').textContent='An onboarding email is on its way to '+name+'. You can also share this personal link directly.';
+  inviteModal.classList.add('open');
+};
+document.getElementById('closeInvite').onclick=()=>inviteModal.classList.remove('open');
+document.getElementById('copyInvite').onclick=()=>{ copyText(document.getElementById('inviteLink').textContent); toast('Link copied'); };
+
+/* reminder modal */
+const remModal=document.getElementById('reminderModal');
+function openReminder(c){
+  document.getElementById('remSub').textContent=c.name+" hasn't activated yet. Send a nudge or copy their link for a personal note.";
+  document.getElementById('remLink').textContent='https://app.brandaboutme.co/onboard/'+c.link;
+  remModal.classList.add('open');
+}
+document.getElementById('cancelRem').onclick=()=>remModal.classList.remove('open');
+remModal.onclick=e=>{ if(e.target===remModal) remModal.classList.remove('open'); };
+document.getElementById('copyRem').onclick=()=>{ copyText(document.getElementById('remLink').textContent); toast('Link copied'); };
+document.getElementById('sendRem').onclick=()=>{ remModal.classList.remove('open'); toast('Reminder sent'); };
+
+function copyText(t){ navigator.clipboard&&navigator.clipboard.writeText(t).catch(()=>{}); }
+
+/* ===== content table ===== */
+let posts=[
+  {company:'Vero Studio',client:'Lena M.',writer:'Matvei',content:'The spreadsheet is never the decision…',date:'20 Aug 2026',status:'Scheduled'},
+  {company:'Northwind Co.',client:'Priya Nair',writer:'Tunde A.',content:'Most onboarding fails for one reason…',date:'21 Aug 2026',status:'Draft'},
+  {company:'Cedar & Co.',client:'David R.',writer:'Matvei',content:'I used to think busy meant important…',date:'18 Aug 2026',status:'Published'},
+  {company:'Flux Health',client:'Amara B.',writer:'Unassigned',content:'What 10 years in healthcare taught me…',date:'22 Aug 2026',status:'Scheduled'},
+  {company:'Lumen Partners',client:'Sam O.',writer:'Jia L.',content:'A client asked me why I still take notes…',date:'19 Aug 2026',status:'Draft'}
+];
+function statusBanner(s){
+  if(s==='Scheduled')return '<span class="banner banner-purple">Scheduled</span>';
+  if(s==='Published')return '<span class="banner banner-yes">Published</span>';
+  return '<span class="banner banner-warn">Draft</span>';
+}
+function renderContent(filter='',status='All statuses'){
+  const body=document.getElementById('contentBody');
+  let rows=posts.filter(p=>!writerFilter||p.writer===writerFilter);
+  rows=rows.filter(p=>(p.company+' '+p.client+' '+p.date).toLowerCase().includes(filter.toLowerCase()));
+  if(status!=='All statuses') rows=rows.filter(p=>p.status===status);
+  if(!rows.length){ body.innerHTML='<tr class="empty-row"><td colspan="6">No posts match.</td></tr>'; return; }
+  body.innerHTML=rows.map(p=>`<tr>
+    <td><b>${esc(p.company)}</b></td><td>${esc(p.client)}</td>
+    <td style="color:var(--mut);max-width:280px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${esc(p.content)}</td>
+    <td>${esc(p.date)}</td><td>${statusBanner(p.status)}</td>
+    <td class="row-actions"><button class="dots" style="pointer-events:none">✎</button></td></tr>`).join('');
+}
+document.getElementById('contentSearch').oninput=e=>renderContent(e.target.value,document.getElementById('contentFilter').value);
+document.getElementById('contentFilter').onchange=e=>renderContent(document.getElementById('contentSearch').value,e.target.value);
+
+/* ===== composer ===== */
+const cpModal=document.getElementById('composerModal');
+function openComposer(){ cpModal.classList.add('open'); syncPreview(); }
+document.getElementById('openComposer').onclick=openComposer;
+document.getElementById('cancelComposer').onclick=()=>cpModal.classList.remove('open');
+cpModal.onclick=e=>{ if(e.target===cpModal) cpModal.classList.remove('open'); };
+const cpText=document.getElementById('cp-text'), lpBody=document.getElementById('lpBody'),
+      cpClient=document.getElementById('cp-client'), lpName=document.getElementById('lpName');
+function syncPreview(){ lpBody.textContent=cpText.value||'Your post will appear here…'; lpName.textContent=cpClient.value.split('—')[1]?.trim()||'Client'; }
+cpText.oninput=syncPreview; cpClient.onchange=syncPreview;
+document.querySelectorAll('.attach-chip').forEach(b=>b.onclick=()=>{
+  const kind=b.dataset.attach;
+  document.getElementById('attThumb').textContent=kind==='video'?'▷':'▧';
+  document.getElementById('attName').textContent=kind==='video'?'clip.mp4':'image.jpg';
+  document.getElementById('attached').classList.add('show');
+  document.getElementById('lpMedia').classList.add('show');
+});
+document.getElementById('removeAtt').onclick=()=>{ document.getElementById('attached').classList.remove('show'); document.getElementById('lpMedia').classList.remove('show'); };
+document.getElementById('saveComposer').onclick=()=>{
+  const vis=document.getElementById('cp-vis').value;
+  const [company,client]=cpClient.value.split('—').map(s=>s.trim());
+  const status=vis.startsWith('Draft')?'Draft':'Scheduled';
+  const d=document.getElementById('cp-date').value;
+  posts.unshift({company,client,writer:writerFilter||'Matvei',content:cpText.value.slice(0,60)+'…',date:d?new Date(d).toLocaleDateString('en-GB',{day:'numeric',month:'short',year:'numeric'}):'22 Aug 2026',status});
+  renderContent(); cpModal.classList.remove('open');
+  toast(status==='Draft'?'Saved as draft':'Post scheduled for '+client);
+};
+/* composer AI chat */
+const cpStream=document.getElementById('cpChatStream'), cpInput=document.getElementById('cpChatInput');
+function cpAddMsg(role,text,withUse){
+  const m=document.createElement('div'); m.className='cmsg '+role;
+  m.innerHTML=`<div class="mav">${role==='user'?'RK':'AI'}</div><div class="bub">${esc(text)}${withUse?'<button class="use link" style="font-size:var(--fs-xs)">↑ Use this draft</button>':''}</div>`;
+  cpStream.appendChild(m); cpStream.scrollTop=cpStream.scrollHeight;
+  if(withUse) m.querySelector('.use').onclick=()=>{ cpText.value=text; syncPreview(); toast('Draft moved to editor'); };
+}
+function cpSend(){
+  const v=cpInput.value.trim(); if(!v)return;
+  cpAddMsg('user',v); cpInput.value=''; cpInput.style.height='auto';
+  const client=cpClient.value.split('—')[1]?.trim()||'this client';
+  setTimeout(()=>cpAddMsg('ai',`Here's a draft for ${client}, in their voice:\n\nI used to believe ${v.toLowerCase()} was simple. Fifteen years in, I know better. Here's what changed my mind — and the one question I now ask first.`,true),500);
+}
+document.getElementById('cpChatSend').onclick=cpSend;
+cpInput.addEventListener('keydown',e=>{ if(e.key==='Enter'&&!e.shiftKey){ e.preventDefault(); cpSend(); } });
+cpInput.addEventListener('input',()=>{ cpInput.style.height='auto'; cpInput.style.height=Math.min(cpInput.scrollHeight,90)+'px'; });
+
+/* ===== AI studio with history ===== */
+let chats=[
+  {title:'Hiring post — Vero',when:'Today',msgs:[{r:'user',t:'Draft a hiring post for Vero'},{r:'ai',t:'Here\u2019s a draft for Vero Studio, in Lena\u2019s voice: hiring for culture over credentials…'}]},
+  {title:'Rewrite warmer — Northwind',when:'Yesterday',msgs:[{r:'user',t:'Make this warmer'},{r:'ai',t:'Softened the opening and added a personal line…'}]},
+  {title:'5 angles — finance',when:'2 days ago',msgs:[{r:'user',t:'5 content angles for a finance consultant'},{r:'ai',t:'1) The advice I\u2019d give my 30-year-old self…'}]}
+];
+let activeChat=0;
+const stream=document.getElementById('aiStream'), aiInput=document.getElementById('aiInput');
+function renderHistory(){
+  document.getElementById('histList').innerHTML=chats.map((c,i)=>
+    `<button class="hist-item ${i===activeChat?'active':''}" data-i="${i}"><b>${esc(c.title)}</b><span>${c.when}</span></button>`
+  ).join('');
+  document.querySelectorAll('.hist-item').forEach(b=>b.onclick=()=>{ activeChat=+b.dataset.i; renderHistory(); renderChat(); });
+}
+function renderChat(){
+  const c=chats[activeChat];
+  stream.innerHTML=c.msgs.length?c.msgs.map(m=>`<div class="msg ${m.r}"><div class="mav">${m.r==='user'?'RK':'AI'}</div><div class="bubble">${esc(m.t)}</div></div>`).join('')
+    :'<div class="msg ai"><div class="mav">AI</div><div class="bubble">New chat — what would you like to work on?</div></div>';
+  stream.scrollTop=stream.scrollHeight;
+}
+function aiSend(){
+  const v=aiInput.value.trim(); if(!v)return;
+  const c=chats[activeChat];
+  c.msgs.push({r:'user',t:v});
+  if(c.title.startsWith('New chat')||c.msgs.length===1){ c.title=v.slice(0,28); renderHistory(); }
+  aiInput.value=''; aiInput.style.height='auto'; renderChat();
+  const provider=document.getElementById('aiProvider').value;
+  setTimeout(()=>{ c.msgs.push({r:'ai',t:`(via ${provider})\n\nHere's a draft: open with a hook, land one clear insight, close with a question. Want it tailored to a specific client's voice?`}); renderChat(); },500);
+}
+document.getElementById('aiSend').onclick=aiSend;
+aiInput.addEventListener('keydown',e=>{ if(e.key==='Enter'&&!e.shiftKey){ e.preventDefault(); aiSend(); } });
+aiInput.addEventListener('input',()=>{ aiInput.style.height='auto'; aiInput.style.height=Math.min(aiInput.scrollHeight,120)+'px'; });
+document.querySelectorAll('.ai-suggest').forEach(b=>b.onclick=()=>{ aiInput.value=b.textContent; aiSend(); });
+document.getElementById('newChat').onclick=()=>{ chats.unshift({title:'New chat',when:'Now',msgs:[]}); activeChat=0; renderHistory(); renderChat(); };
+document.getElementById('clearChat').onclick=()=>{ chats[activeChat].msgs=[]; renderChat(); };
+
+/* settings sub-nav */
+document.querySelectorAll('#setNav button').forEach(b=>b.onclick=()=>{
+  document.querySelectorAll('#setNav button').forEach(x=>x.classList.toggle('active',x===b));
+  document.querySelectorAll('.set-panel').forEach(p=>p.classList.toggle('on',p.id==='set-'+b.dataset.set));
+});
+document.getElementById('addMemberBtn').onclick=()=>toast('Invite flow opens here');
+
+/* init */
+renderClients(); renderContent(); fillClientPickers(); renderHistory(); renderChat();
+</script>
+</body>
+</html>
