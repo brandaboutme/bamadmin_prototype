@@ -372,13 +372,30 @@
   .ico{width:1em;height:1em;display:inline-block;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;flex-shrink:0;vertical-align:-0.14em}
   .nav .ic .ico{width:17px;height:17px} .icon-btn .ico{width:18px;height:18px} .search .mag .ico{width:16px;height:16px;display:block}
   .pipe-item .clock .ico{width:15px;height:15px} .health-txt .delta .ico{width:14px;height:14px;margin-right:3px}
-  /* shadcn-style date picker */
-  .date-picker{display:inline-flex;align-items:center;gap:8px;border:1.5px solid var(--line-strong);background:var(--panel);border-radius:var(--r-sm);padding:0 10px 0 12px;height:38px;transition:border-color .15s,box-shadow .15s}
-  .date-picker:hover{border-color:var(--purple)}
-  .date-picker:focus-within{border-color:var(--purple);box-shadow:0 0 0 3px var(--purple-soft)}
-  .date-picker .cal{color:var(--mut);display:flex} .date-picker .cal .ico{width:16px;height:16px}
-  .date-picker .chev{color:var(--faint);display:flex} .date-picker .chev .ico{width:15px;height:15px}
-  .date-picker select{appearance:none;-webkit-appearance:none;border:0;background:none;outline:none;font:600 var(--fs-sm) 'Public Sans';color:var(--ink);padding:0 2px;cursor:pointer}
+  /* shadcn-style date picker (popover) */
+  .date-picker{position:relative}
+  .dp-trigger{display:inline-flex;align-items:center;gap:8px;border:1.5px solid var(--line-strong);background:var(--panel);border-radius:var(--r-sm);padding:0 10px 0 12px;height:38px;cursor:pointer;font:600 var(--fs-sm) 'Public Sans';color:var(--ink);transition:border-color .15s,box-shadow .15s}
+  .dp-trigger:hover{border-color:var(--purple)}
+  .date-picker.open .dp-trigger{border-color:var(--purple);box-shadow:0 0 0 3px var(--purple-soft)}
+  .dp-trigger .cal{color:var(--mut);display:flex} .dp-trigger .cal .ico{width:16px;height:16px}
+  .dp-trigger .dp-label{white-space:nowrap}
+  .dp-trigger .chev{color:var(--faint);display:flex;transition:transform .15s} .dp-trigger .chev .ico{width:15px;height:15px}
+  .date-picker.open .dp-trigger .chev{transform:rotate(180deg)}
+  .dp-panel{position:absolute;top:calc(100% + 8px);right:0;width:300px;background:var(--panel);border:1px solid var(--line-strong);border-radius:var(--r-md);box-shadow:var(--sh-pop);padding:8px;z-index:150;display:none}
+  .date-picker.open .dp-panel{display:block;animation:fade .15s ease}
+  .dp-opt{display:block;width:100%;text-align:left;border:0;background:none;padding:11px 12px;border-radius:var(--r-sm);font-size:var(--fs-body);font-weight:500;color:var(--ink);cursor:pointer}
+  .dp-opt:hover{background:var(--panel-2)}
+  .dp-opt.active{background:var(--purple-soft);color:var(--purple-deep);font-weight:600}
+  .dp-sep{height:1px;background:var(--line);margin:8px 4px}
+  .dp-custom-lbl{font-size:.64rem;font-weight:700;letter-spacing:.09em;text-transform:uppercase;color:var(--faint);padding:2px 12px 8px}
+  .dp-field{display:flex;align-items:center;gap:12px;padding:4px 12px 10px}
+  .dp-field label{font-size:var(--fs-sm);color:var(--mut);width:36px;flex-shrink:0}
+  .dp-field input{flex:1;border:1.5px solid var(--line-strong);border-radius:var(--r-sm);padding:9px 11px;font:500 var(--fs-sm) 'Public Sans';background:var(--panel);color:var(--ink)}
+  .dp-field input:focus{outline:none;border-color:var(--purple);box-shadow:0 0 0 3px var(--purple-soft)}
+  .dp-apply{display:block;width:calc(100% - 16px);margin:4px 8px 10px;border:0;background:var(--purple);color:#fff;border-radius:var(--r-sm);padding:12px;font-weight:600;font-size:var(--fs-sm);cursor:pointer;transition:background .15s}
+  .dp-apply:hover{background:var(--purple-deep)}
+  .dp-compare{display:flex;align-items:center;gap:9px;padding:4px 12px 8px;font-size:var(--fs-sm);color:var(--ink);cursor:pointer}
+  .dp-compare input{width:18px;height:18px;accent-color:var(--purple);cursor:pointer;flex-shrink:0}
 
   .subtabs{display:flex;gap:2px;border-bottom:1px solid var(--line);margin-bottom:20px;overflow-x:auto}
   .subtab{background:none;border:0;padding:10px 14px;font-size:var(--fs-sm);font-weight:600;color:var(--mut);border-bottom:2px solid transparent;white-space:nowrap}
@@ -701,10 +718,24 @@
           <button class="subtab" data-cd="stats">Statistics</button>
           <button class="subtab" data-cd="team">Customer team</button>
         </div>
-        <div class="date-picker">
-          <span class="cal"><svg class="ico" viewBox="0 0 24 24"><rect width="18" height="18" x="3" y="4" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg></span>
-          <select id="cdPeriod"><option>This month</option><option>Last 30 days</option><option>Last quarter</option></select>
-          <span class="chev"><svg class="ico" viewBox="0 0 24 24"><path d="m6 9 6 6 6-6"/></svg></span>
+        <div class="date-picker" id="cdDate">
+          <button class="dp-trigger" id="cdDateBtn" type="button" aria-haspopup="true">
+            <span class="cal"><svg class="ico" viewBox="0 0 24 24"><rect width="18" height="18" x="3" y="4" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg></span>
+            <span class="dp-label" id="cdDateLabel">This month</span>
+            <span class="chev"><svg class="ico" viewBox="0 0 24 24"><path d="m6 9 6 6 6-6"/></svg></span>
+          </button>
+          <div class="dp-panel" id="cdDatePanel" role="menu">
+            <button class="dp-opt active" data-period="This month">This month</button>
+            <button class="dp-opt" data-period="Last 30 days">Last 30 days</button>
+            <button class="dp-opt" data-period="Last 90 days">Last 90 days</button>
+            <button class="dp-opt" data-period="Since start">Since start</button>
+            <div class="dp-sep"></div>
+            <div class="dp-custom-lbl">Custom range</div>
+            <div class="dp-field"><label for="cdFrom">From</label><input type="date" id="cdFrom" value="2026-07-01"></div>
+            <div class="dp-field"><label for="cdTo">To</label><input type="date" id="cdTo" value="2026-09-30"></div>
+            <button class="dp-apply" id="cdApply">Apply custom range</button>
+            <label class="dp-compare"><input type="checkbox" id="cdCompare" checked><span>Compare with previous period</span></label>
+          </div>
         </div>
       </div>
       <div class="period-note" id="cdPeriodNote">Showing 1 Oct – 16 Oct 2026 · compared with 1 Sep – 30 Sep</div>
@@ -1135,9 +1166,40 @@ document.querySelectorAll('#cdTabs .subtab').forEach(b=>b.onclick=()=>{
 });
 document.getElementById('saveBrand').onclick=()=>toast('Brand identity saved');
 document.querySelectorAll('.chip-tog').forEach(c=>c.onclick=()=>c.classList.toggle('on'));
-document.getElementById('cdPeriod').onchange=function(){
-  const map={'This month':'Showing 1 Oct – 16 Oct 2026 · compared with 1 Sep – 30 Sep','Last 30 days':'Showing 22 Sep – 22 Oct 2026 · compared with 23 Aug – 21 Sep','Last quarter':'Showing 1 Aug – 31 Oct 2026 · compared with 1 May – 31 Jul'};
-  document.getElementById('cdPeriodNote').textContent=map[this.value]||'';
+/* ===== date-picker popover ===== */
+const cdDate=document.getElementById('cdDate'), cdDateBtn=document.getElementById('cdDateBtn');
+const periodMap={
+  'This month':'Showing 1 Oct – 16 Oct 2026 · compared with 1 Sep – 30 Sep',
+  'Last 30 days':'Showing 22 Sep – 22 Oct 2026 · compared with 23 Aug – 21 Sep',
+  'Last 90 days':'Showing 24 Jul – 22 Oct 2026 · compared with 25 Apr – 23 Jul',
+  'Since start':'Showing 1 Feb – 22 Oct 2026 · all time'
+};
+function setPeriodNote(text){
+  const cmp=document.getElementById('cdCompare').checked;
+  document.getElementById('cdPeriodNote').textContent=cmp?text:text.replace(/ · compared with .*/,'').replace(/ · all time/,'');
+}
+cdDateBtn.onclick=e=>{ e.stopPropagation(); cdDate.classList.toggle('open'); };
+document.addEventListener('click',e=>{ if(!e.target.closest('#cdDate')) cdDate.classList.remove('open'); });
+document.querySelectorAll('#cdDatePanel .dp-opt').forEach(o=>o.onclick=()=>{
+  document.querySelectorAll('#cdDatePanel .dp-opt').forEach(x=>x.classList.toggle('active',x===o));
+  const p=o.dataset.period;
+  document.getElementById('cdDateLabel').textContent=p;
+  setPeriodNote(periodMap[p]||'');
+  cdDate.classList.remove('open');
+});
+document.getElementById('cdApply').onclick=()=>{
+  const from=document.getElementById('cdFrom').value, to=document.getElementById('cdTo').value;
+  if(!from||!to){ toast('Pick both a start and end date'); return; }
+  const fmt=d=>new Date(d).toLocaleDateString('en-GB',{day:'numeric',month:'short',year:'numeric'});
+  document.querySelectorAll('#cdDatePanel .dp-opt').forEach(x=>x.classList.remove('active'));
+  document.getElementById('cdDateLabel').textContent='Custom';
+  const cmp=document.getElementById('cdCompare').checked;
+  document.getElementById('cdPeriodNote').textContent='Showing '+fmt(from)+' – '+fmt(to)+(cmp?' · compared with previous period':'');
+  cdDate.classList.remove('open');
+};
+document.getElementById('cdCompare').onchange=()=>{
+  const active=document.querySelector('#cdDatePanel .dp-opt.active');
+  if(active) setPeriodNote(periodMap[active.dataset.period]||'');
 };
 
 /* post stats modal */
