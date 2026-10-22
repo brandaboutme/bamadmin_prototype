@@ -12,13 +12,14 @@
     --green:#c9f59b; --green-deep:#3f6b1c; --linkedin:#0A66C2;
     --pos:#2e8b57; --neg:#c7503f; --warn:#c98a1b;
     --r-lg:16px; --r-md:12px; --r-sm:9px;
-    --fs-h1:1.5rem; --fs-h2:1.12rem; --fs-h3:.96rem; --fs-body:.9rem; --fs-sm:.82rem; --fs-xs:.74rem;
+    --fs-h1:1.5rem; --fs-h2:1.1rem; --fs-h3:.95rem; --fs-body:.9rem; --fs-sm:.82rem; --fs-xs:.74rem;
+    --gap:18px;
     font-size:16px;
   }
   :root[data-theme="light"]{
-    --bg:#f7f5fb; --panel:#ffffff; --panel-2:#faf9fd; --ink:#111315; --mut:#5b5766; --faint:#8b8797;
+    --bg:#f6f4fb; --panel:#ffffff; --panel-2:#faf9fd; --ink:#111315; --mut:#5b5766; --faint:#8b8797;
     --line:#e7e4f0; --line-strong:#d8d4e6; --side:#111315; --side-ink:#ffffff; --side-mut:#a7a3b4;
-    --sh-card:0 1px 2px rgba(17,19,21,.05); --sh-pop:0 16px 40px rgba(17,19,21,.16);
+    --sh-card:0 1px 2px rgba(17,19,21,.04),0 1px 1px rgba(17,19,21,.03); --sh-pop:0 16px 40px rgba(17,19,21,.16);
     --pos-soft:#e4f3ea; --neg-soft:#f8ebe9; --warn-soft:#fbf2dd;
   }
   :root[data-theme="dark"]{
@@ -53,7 +54,6 @@
   .banner-purple{background:var(--purple-soft);color:var(--purple-deep)} .banner-purple::before{background:var(--purple)}
   .banner-warn{background:var(--warn-soft);color:var(--warn)} .banner-warn::before{background:var(--warn)}
 
-  /* info tooltip */
   .info{position:relative;display:inline-flex;align-items:center;justify-content:center;width:15px;height:15px;border-radius:50%;border:1.3px solid var(--faint);color:var(--faint);font-size:.6rem;font-weight:700;cursor:help;margin-left:5px;flex-shrink:0}
   .info:hover{border-color:var(--purple);color:var(--purple)}
   .info .tip{position:absolute;bottom:130%;left:50%;transform:translateX(-50%);background:var(--ink);color:var(--bg);font-size:var(--fs-xs);font-weight:500;line-height:1.5;letter-spacing:0;text-transform:none;padding:9px 11px;border-radius:8px;width:230px;box-shadow:var(--sh-pop);opacity:0;pointer-events:none;transition:opacity .15s;z-index:140;text-align:left}
@@ -74,6 +74,7 @@
   .nav button.active{background:rgba(140,116,200,.3);color:#fff;font-weight:600}
   .nav button.active::before{content:"";position:absolute;left:-12px;top:8px;bottom:8px;width:3px;border-radius:2px;background:var(--green)}
   .nav .ic{width:20px;text-align:center;flex-shrink:0;opacity:.85;font-size:.85rem}
+  .nav .tag{margin-left:auto;background:var(--neg);color:#fff;font-size:.6rem;font-weight:700;border-radius:9px;padding:1px 6px}
   .nav.writer-nav{display:none}
   body[data-role="writer"] .nav.admin-nav{display:none}
   body[data-role="writer"] .nav.writer-nav{display:flex}
@@ -92,11 +93,9 @@
   .notif{position:absolute;top:52px;right:24px;width:330px;background:var(--panel);border:1px solid var(--line-strong);border-radius:var(--r-md);box-shadow:var(--sh-pop);z-index:120;display:none;overflow:hidden}
   .notif.open{display:block}
   .notif h4{font-size:var(--fs-sm);padding:14px 16px;border-bottom:1px solid var(--line);display:flex;justify-content:space-between;align-items:center}
-  .notif h4 .link{font-size:var(--fs-xs)}
   .notif .item{display:flex;gap:11px;padding:12px 16px;border-bottom:1px solid var(--line);font-size:var(--fs-sm);position:relative}
   .notif .item:last-child{border:0}
   .notif .item.unread{background:var(--purple-soft)}
-  .notif .item.unread::before{content:"";position:absolute;left:6px;top:50%;transform:translateY(-50%);width:5px;height:5px;border-radius:50%;background:var(--purple)}
   .notif .ni{width:30px;height:30px;border-radius:8px;background:var(--panel-2);color:var(--purple-deep);display:flex;align-items:center;justify-content:center;font-size:.8rem;flex-shrink:0}
   .notif .item b{display:block;font-weight:600} .notif .item span{color:var(--faint);font-size:var(--fs-xs)}
 
@@ -106,23 +105,23 @@
   @keyframes fade{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
   @media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
   .page-head{margin-bottom:22px;display:flex;justify-content:space-between;align-items:flex-end;gap:16px;flex-wrap:wrap}
-  .page-head h2{font-size:var(--fs-h1);margin-bottom:5px} .page-head p{color:var(--mut);font-size:var(--fs-body);line-height:1.6;max-width:74ch}
+  .page-head h2{font-size:var(--fs-h1)} .page-head p{color:var(--mut);font-size:var(--fs-body);line-height:1.6;max-width:74ch;margin-top:5px}
   .card{background:var(--panel);border:1px solid var(--line);border-radius:var(--r-lg);padding:20px;box-shadow:var(--sh-card);transition:background .25s,border-color .25s}
   .card-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:14px;gap:12px}
   .card-head h3{font-size:var(--fs-h2);display:flex;align-items:center}
+  .count-chip{background:var(--panel-2);border:1px solid var(--line);color:var(--mut);font-size:var(--fs-xs);font-weight:700;padding:3px 9px;border-radius:999px}
 
-  /* dashboard feed layout */
-  .feed-grid{display:grid;grid-template-columns:1.5fr 1fr;gap:18px;align-items:start}
+  /* dashboard */
+  .feed-grid{display:grid;grid-template-columns:1.5fr 1fr;gap:var(--gap);align-items:start}
   @media (max-width:1000px){.feed-grid{grid-template-columns:1fr}}
-  .stack{display:flex;flex-direction:column;gap:18px}
+  .stack{display:flex;flex-direction:column;gap:var(--gap)}
 
   .attn{display:flex;gap:12px;padding:14px 0;border-bottom:1px solid var(--line);font-size:var(--fs-sm);line-height:1.5;align-items:flex-start}
   .attn:last-child{border:0}
   .attn .ic{width:30px;height:30px;border-radius:9px;display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:.82rem;font-weight:700}
   .attn .up{background:var(--pos-soft);color:var(--pos)} .attn .down{background:var(--neg-soft);color:var(--neg)} .attn .flat{background:var(--warn-soft);color:var(--warn)}
   .attn .body{flex:1}
-  .attn .go{border:0;background:none;color:var(--purple-deep);font-weight:700;font-size:var(--fs-sm);white-space:nowrap;align-self:center}
-  .attn .go:hover{text-decoration:underline}
+  .attn .go{border:0;background:none;color:var(--purple-deep);font-weight:700;font-size:var(--fs-sm);white-space:nowrap;align-self:center} .attn .go:hover{text-decoration:underline}
 
   .mini-row{display:flex;align-items:center;gap:11px;padding:11px 0;border-bottom:1px solid var(--line);font-size:var(--fs-sm)}
   .mini-row:last-child{border:0}
@@ -132,10 +131,29 @@
 
   .feed-item{display:flex;gap:11px;padding:12px 0;border-bottom:1px solid var(--line);font-size:var(--fs-sm);line-height:1.5}
   .feed-item:last-child{border:0}
-  .feed-item .dot{width:8px;height:8px;border-radius:50%;background:var(--purple);margin-top:6px;flex-shrink:0}
+  .feed-item .ic{width:26px;height:26px;border-radius:7px;background:var(--panel-2);display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:.75rem;color:var(--purple-deep)}
   .feed-item .when{font-size:var(--fs-xs);color:var(--faint)}
 
-  .count-chip{background:var(--panel-2);border:1px solid var(--line);color:var(--mut);font-size:var(--fs-xs);font-weight:700;padding:3px 9px;border-radius:999px}
+  /* pipeline goal tracking */
+  .pipe-row{padding:12px 0;border-bottom:1px solid var(--line)}
+  .pipe-row:last-child{border:0}
+  .pipe-top{display:flex;align-items:center;gap:10px;margin-bottom:8px}
+  .pipe-top .av{width:28px;height:28px;border-radius:50%;background:var(--purple-soft);color:var(--purple-deep);display:flex;align-items:center;justify-content:center;font:600 .66rem 'Fraunces';flex-shrink:0}
+  .pipe-top b{font-size:var(--fs-sm);font-weight:600}
+  .pipe-top .goal{margin-left:auto;font-size:var(--fs-xs);font-weight:700;color:var(--mut)}
+  .pipe-bar{height:9px;border-radius:5px;background:var(--panel-2);overflow:hidden;display:flex;gap:2px}
+  .pipe-seg{height:100%} .pipe-seg.done{background:var(--green)} .pipe-seg.sched{background:var(--purple)} .pipe-seg.gap{background:var(--line-strong)}
+  .pipe-legend{display:flex;gap:14px;margin-top:10px;font-size:var(--fs-xs);color:var(--mut)}
+  .pipe-legend span{display:flex;align-items:center;gap:6px} .pipe-legend i{width:10px;height:10px;border-radius:3px}
+
+  /* new-comments community card */
+  .comment-alert{display:flex;gap:11px;padding:12px 0;border-bottom:1px solid var(--line);font-size:var(--fs-sm)}
+  .comment-alert:last-child{border:0}
+  .comment-alert .av{width:30px;height:30px;border-radius:50%;background:var(--panel-2);display:flex;align-items:center;justify-content:center;font:600 .68rem 'Fraunces';color:var(--purple-deep);flex-shrink:0}
+  .comment-alert .body{flex:1;line-height:1.45}
+  .comment-alert .who{font-weight:600}
+  .comment-alert .ctx{font-size:var(--fs-xs);color:var(--faint)}
+  .comment-alert .go{border:0;background:none;color:var(--purple-deep);font-weight:700;font-size:var(--fs-xs);align-self:center;white-space:nowrap}
 
   /* tables */
   .toolbar{display:flex;gap:12px;align-items:center;margin-bottom:16px;flex-wrap:wrap}
@@ -146,31 +164,28 @@
   .tbl-wrap{background:var(--panel);border:1px solid var(--line);border-radius:var(--r-lg);overflow:hidden;box-shadow:var(--sh-card)}
   table{width:100%;border-collapse:collapse}
   thead th{text-align:left;font-size:var(--fs-xs);font-weight:700;letter-spacing:.04em;text-transform:uppercase;color:var(--faint);padding:13px 16px;border-bottom:1px solid var(--line);background:var(--panel-2);white-space:nowrap}
-  thead th.sortable{cursor:pointer} thead th.sortable:hover{color:var(--purple-deep)}
   tbody td{padding:13px 16px;border-bottom:1px solid var(--line);font-size:var(--fs-sm);vertical-align:middle}
   tbody tr:last-child td{border-bottom:0}
   tbody tr{transition:background .12s} tbody tr:hover{background:var(--panel-2)}
+  tr.clickable{cursor:pointer}
   .cell-name{display:flex;align-items:center;gap:10px}
   .cell-name .av{width:32px;height:32px;border-radius:50%;background:var(--purple-soft);color:var(--purple-deep);display:flex;align-items:center;justify-content:center;font:600 .72rem 'Fraunces';flex-shrink:0}
-  .cell-name b{font-weight:600;font-size:var(--fs-sm)} .cell-name span{font-size:var(--fs-xs);color:var(--faint);display:block}
+  .cell-name b{font-weight:600;font-size:var(--fs-sm);color:var(--purple-deep)} .cell-name span{font-size:var(--fs-xs);color:var(--faint);display:block}
+  tr:hover .cell-name b{text-decoration:underline}
   .meeting span{display:block;font-size:var(--fs-xs);color:var(--faint)}
   select.writer{border:1.5px solid var(--line-strong);background:var(--panel);color:var(--ink);border-radius:var(--r-sm);padding:7px 10px;font:600 var(--fs-sm) 'Public Sans';cursor:pointer}
   select.writer:hover{border-color:var(--purple)}
-  .row-actions{position:relative}
-  .row-actions .dots{border:0;background:none;color:var(--faint);font-size:1.1rem;padding:4px 8px;border-radius:6px}
-  .row-actions .dots:hover{background:var(--panel-2);color:var(--ink)}
-  .menu{position:absolute;right:12px;top:40px;background:var(--panel);border:1px solid var(--line-strong);border-radius:var(--r-sm);box-shadow:var(--sh-pop);z-index:50;min-width:210px;display:none;overflow:hidden}
-  .menu.open{display:block}
-  .menu button{display:flex;gap:9px;align-items:center;width:100%;text-align:left;border:0;background:none;padding:10px 13px;font-size:var(--fs-sm);color:var(--ink)}
-  .menu button:hover{background:var(--panel-2)} .menu button.danger{color:var(--neg)}
-  .menu .sep{height:1px;background:var(--line);margin:2px 0}
+  .pipe-mini{display:flex;align-items:center;gap:8px}
+  .pipe-mini .track{width:70px;height:7px;border-radius:4px;background:var(--panel-2);overflow:hidden;display:flex;gap:2px}
+  .pipe-mini .track i{height:100%} .pipe-mini .track .done{background:var(--green)} .pipe-mini .track .sched{background:var(--purple)}
+  .pipe-mini b{font-size:var(--fs-xs);font-weight:700;color:var(--mut)}
   .empty-row td{text-align:center;color:var(--faint);padding:34px;font-size:var(--fs-sm)}
 
   /* modal */
   .modal-bg{position:fixed;inset:0;background:rgba(17,19,21,.5);z-index:200;display:none;align-items:center;justify-content:center;padding:20px}
   .modal-bg.open{display:flex;animation:fade .2s ease}
   .modal{background:var(--panel);border:1px solid var(--line);border-radius:var(--r-lg);max-width:460px;width:100%;padding:26px;box-shadow:var(--sh-pop);max-height:92vh;overflow-y:auto}
-  .modal.wide{max-width:980px}
+  .modal.wide{max-width:980px} .modal.mid{max-width:620px}
   .modal h3{font-size:1.2rem;margin-bottom:4px} .modal .msub{font-size:var(--fs-sm);color:var(--mut);margin-bottom:18px}
   .field{margin-bottom:14px}
   .field label{display:block;font-size:var(--fs-sm);font-weight:600;margin-bottom:6px}
@@ -218,14 +233,65 @@
   .chat-in textarea{flex:1;border:1.5px solid var(--line-strong);border-radius:var(--r-sm);padding:9px 11px;font:400 var(--fs-sm)/1.5 'Public Sans';background:var(--panel);color:var(--ink);resize:none;max-height:90px}
   .chat-in textarea:focus{outline:none;border-color:var(--purple)}
 
-  /* content manager tabs */
+  /* tabs */
   .tabs{display:flex;gap:2px;border-bottom:1px solid var(--line);margin-bottom:18px;overflow-x:auto}
   .tab{background:none;border:0;padding:10px 15px;font-size:var(--fs-sm);font-weight:600;color:var(--mut);border-bottom:2px solid transparent;white-space:nowrap;display:flex;align-items:center;gap:7px}
   .tab:hover{color:var(--ink)} .tab.active{color:var(--purple-deep);border-bottom-color:var(--purple)}
   .tab .cnt{font-size:.64rem;font-weight:700;background:var(--panel-2);border:1px solid var(--line);color:var(--mut);border-radius:999px;padding:2px 7px;min-width:20px;text-align:center}
   .tab.active .cnt{background:var(--purple-soft);border-color:var(--purple-soft);color:var(--purple-deep)}
 
-  /* AI studio */
+  .draft-list{display:grid;grid-template-columns:repeat(auto-fit,minmax(290px,1fr));gap:15px;align-items:start}
+  .idea-card{background:var(--panel);border:1px solid var(--line);border-left:3px solid var(--purple);border-radius:0 var(--r-lg) var(--r-lg) 0;padding:18px;box-shadow:var(--sh-card)}
+  .idea-card .who{display:flex;align-items:center;gap:9px;margin-bottom:9px}
+  .idea-card .who .av{width:28px;height:28px;border-radius:50%;background:var(--purple-soft);color:var(--purple-deep);display:flex;align-items:center;justify-content:center;font:600 .66rem 'Fraunces'}
+  .idea-card h4{font-size:var(--fs-h3);margin-bottom:6px} .idea-card p{font-size:var(--fs-sm);color:var(--mut);line-height:1.5;margin-bottom:12px}
+  .media-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(148px,1fr));gap:13px}
+  .media-item{background:var(--panel);border:1px solid var(--line);border-radius:var(--r-md);overflow:hidden;box-shadow:var(--sh-card)}
+  .media-thumb{height:92px;display:flex;align-items:center;justify-content:center;font:700 .68rem 'Public Sans';color:var(--purple-deep);background:var(--purple-soft);letter-spacing:.08em}
+  .media-item .cap{padding:9px 11px;font-size:var(--fs-xs);color:var(--faint)} .media-item .cap b{display:block;color:var(--ink);font-size:var(--fs-xs);font-weight:600;margin-bottom:2px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+
+  /* ===== comments manager ===== */
+  .cm-grid{display:grid;grid-template-columns:330px 1fr;gap:18px;align-items:start;height:calc(100vh - 210px);min-height:460px}
+  @media (max-width:860px){.cm-grid{grid-template-columns:1fr;height:auto}}
+  .cm-list{background:var(--panel);border:1px solid var(--line);border-radius:var(--r-lg);box-shadow:var(--sh-card);overflow:hidden;display:flex;flex-direction:column;height:100%}
+  .cm-list .filters{display:flex;gap:6px;padding:12px;border-bottom:1px solid var(--line);overflow-x:auto}
+  .cm-list .filters button{border:1.5px solid var(--line-strong);background:var(--panel);border-radius:999px;padding:6px 12px;font-size:var(--fs-xs);font-weight:700;color:var(--mut);white-space:nowrap}
+  .cm-list .filters button.on{background:var(--purple);border-color:var(--purple);color:#fff}
+  .cm-threads{flex:1;overflow-y:auto}
+  .cm-thread{display:block;width:100%;text-align:left;border:0;background:none;padding:13px 15px;border-bottom:1px solid var(--line);position:relative}
+  .cm-thread:hover{background:var(--panel-2)} .cm-thread.active{background:var(--purple-soft)}
+  .cm-thread .t1{display:flex;align-items:center;gap:8px;margin-bottom:3px}
+  .cm-thread .av{width:26px;height:26px;border-radius:50%;background:var(--purple-soft);color:var(--purple-deep);display:flex;align-items:center;justify-content:center;font:600 .64rem 'Fraunces';flex-shrink:0}
+  .cm-thread b{font-size:var(--fs-sm);font-weight:600}
+  .cm-thread .unread{margin-left:auto;background:var(--neg);color:#fff;font-size:.6rem;font-weight:700;border-radius:9px;padding:1px 6px;min-width:17px;text-align:center}
+  .cm-thread .snippet{font-size:var(--fs-xs);color:var(--faint);line-height:1.4;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;padding-left:34px}
+  .cm-thread .meta{font-size:.68rem;color:var(--faint);padding-left:34px;margin-top:3px}
+
+  .cm-panel{background:var(--panel);border:1px solid var(--line);border-radius:var(--r-lg);box-shadow:var(--sh-card);display:flex;flex-direction:column;height:100%;overflow:hidden}
+  .cm-ctx{padding:16px 18px;border-bottom:1px solid var(--line);background:var(--panel-2)}
+  .cm-ctx .lbl{font-size:var(--fs-xs);color:var(--faint);margin-bottom:5px}
+  .cm-ctx .post{font-size:var(--fs-sm);line-height:1.5}
+  .cm-ctx .sub{font-size:var(--fs-xs);color:var(--faint);margin-top:6px;display:flex;gap:10px;flex-wrap:wrap}
+  .cm-sync{display:flex;gap:8px;align-items:center;font-size:var(--fs-xs);color:var(--purple-deep);background:var(--purple-soft);padding:7px 12px;border-radius:999px;font-weight:600;width:fit-content;margin-top:8px}
+  .cm-stream{flex:1;overflow-y:auto;padding:18px;display:flex;flex-direction:column;gap:14px}
+  .cm-msg{display:flex;gap:10px;max-width:82%}
+  .cm-msg .av{width:30px;height:30px;border-radius:50%;display:flex;align-items:center;justify-content:center;font:600 .66rem 'Fraunces';flex-shrink:0}
+  .cm-msg.client .av{background:var(--purple-soft);color:var(--purple-deep)}
+  .cm-msg.editor{align-self:flex-end;flex-direction:row-reverse} .cm-msg.editor .av{background:var(--dark,#111315);color:var(--green)}
+  :root[data-theme="dark"] .cm-msg.editor .av{background:#000}
+  .cm-msg .wrap{display:flex;flex-direction:column;gap:3px}
+  .cm-msg .role{font-size:.66rem;font-weight:700;color:var(--faint);text-transform:uppercase;letter-spacing:.05em}
+  .cm-msg.editor .role{text-align:right}
+  .cm-msg .bub{border-radius:var(--r-md);padding:10px 13px;font-size:var(--fs-sm);line-height:1.55}
+  .cm-msg.client .bub{background:var(--panel-2);border:1px solid var(--line)}
+  .cm-msg.editor .bub{background:var(--purple);color:#fff}
+  .cm-msg .time{font-size:.66rem;color:var(--faint)} .cm-msg.editor .time{text-align:right}
+  .cm-reply{border-top:1px solid var(--line);padding:14px 18px;display:flex;gap:10px;align-items:flex-end}
+  .cm-reply textarea{flex:1;border:1.5px solid var(--line-strong);border-radius:var(--r-md);padding:11px 14px;font:400 var(--fs-body)/1.5 'Public Sans';background:var(--panel);color:var(--ink);resize:none;max-height:120px}
+  .cm-reply textarea:focus{outline:none;border-color:var(--purple)}
+  .cm-empty{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;color:var(--faint);gap:10px;text-align:center;padding:40px}
+
+  /* ai studio */
   .studio-grid{display:grid;grid-template-columns:240px 1fr;gap:18px;align-items:start}
   @media (max-width:820px){.studio-grid{grid-template-columns:1fr}}
   .hist{background:var(--panel);border:1px solid var(--line);border-radius:var(--r-lg);box-shadow:var(--sh-card);overflow:hidden}
@@ -234,7 +300,7 @@
   .hist-item{display:block;width:100%;text-align:left;border:0;background:none;padding:11px 16px;border-bottom:1px solid var(--line);font-size:var(--fs-sm);color:var(--ink)}
   .hist-item:last-child{border:0} .hist-item:hover{background:var(--panel-2)} .hist-item.active{background:var(--purple-soft)}
   .hist-item b{display:block;font-weight:600;overflow:hidden;text-overflow:ellipsis;white-space:nowrap} .hist-item span{font-size:var(--fs-xs);color:var(--faint)}
-  .ai-wrap{display:flex;flex-direction:column;height:calc(100vh - 200px);min-height:420px;background:var(--panel);border:1px solid var(--line);border-radius:var(--r-lg);box-shadow:var(--sh-card);overflow:hidden}
+  .ai-wrap{display:flex;flex-direction:column;height:calc(100vh - 230px);min-height:420px;background:var(--panel);border:1px solid var(--line);border-radius:var(--r-lg);box-shadow:var(--sh-card);overflow:hidden}
   .ai-head{display:flex;align-items:center;gap:12px;padding:14px 18px;border-bottom:1px solid var(--line)}
   .ai-head .lbl{font-size:var(--fs-sm);color:var(--mut)}
   .ai-provider{border:1.5px solid var(--line-strong);background:var(--panel);color:var(--ink);border-radius:var(--r-sm);padding:8px 12px;font:600 var(--fs-sm) 'Public Sans';cursor:pointer}
@@ -266,6 +332,14 @@
   .subtab{background:none;border:0;padding:10px 14px;font-size:var(--fs-sm);font-weight:600;color:var(--mut);border-bottom:2px solid transparent;white-space:nowrap}
   .subtab:hover{color:var(--ink)} .subtab.active{color:var(--purple-deep);border-bottom-color:var(--purple)}
   .subpanel{display:none} .subpanel.on{display:block}
+
+  /* brand identity (rich) */
+  .bi-summary{background:var(--panel-2);border:1px solid var(--line);border-radius:var(--r-md);padding:18px;margin-bottom:20px;display:flex;gap:16px;flex-wrap:wrap;align-items:flex-start}
+  .bi-summary .av{width:52px;height:52px;border-radius:50%;background:var(--purple);color:#fff;display:flex;align-items:center;justify-content:center;font:600 1.1rem 'Fraunces';flex-shrink:0}
+  .bi-summary .pos{font:600 var(--fs-h3) 'Fraunces';margin-bottom:4px}
+  .bi-summary .pills{display:flex;flex-wrap:wrap;gap:6px;margin-top:8px}
+  .bi-summary .pills span{background:var(--purple-soft);color:var(--purple-deep);border-radius:999px;padding:5px 11px;font-size:var(--fs-xs);font-weight:600}
+  .bi-cols{display:grid;grid-template-columns:repeat(auto-fit,minmax(320px,1fr));gap:16px;align-items:start}
   .bi-field{margin-bottom:18px}
   .bi-field label{display:flex;align-items:center;font-size:var(--fs-sm);font-weight:600;margin-bottom:6px}
   .bi-field textarea,.bi-field input{width:100%;padding:11px 13px;border:1.5px solid var(--line-strong);border-radius:var(--r-sm);font:400 var(--fs-body)/1.6 'Public Sans';background:var(--panel);color:var(--ink);resize:vertical}
@@ -273,11 +347,35 @@
   .chips{display:flex;flex-wrap:wrap;gap:8px;margin-top:4px}
   .chip-tog{border:1.5px solid var(--line-strong);background:var(--panel);border-radius:999px;padding:8px 14px;font-size:var(--fs-sm);font-weight:600;color:var(--ink)}
   .chip-tog.on{background:var(--purple);border-color:var(--purple);color:#fff}
-  .bi-summary{background:var(--panel-2);border:1px solid var(--line);border-radius:var(--r-md);padding:18px;margin-bottom:20px;display:flex;gap:16px;flex-wrap:wrap;align-items:flex-start}
-  .bi-summary .av{width:52px;height:52px;border-radius:50%;background:var(--purple);color:#fff;display:flex;align-items:center;justify-content:center;font:600 1.1rem 'Fraunces';flex-shrink:0}
-  .bi-summary .pos{font:600 var(--fs-h3) 'Fraunces';margin-bottom:4px}
-  .bi-summary .pills{display:flex;flex-wrap:wrap;gap:6px;margin-top:8px}
-  .bi-summary .pills span{background:var(--purple-soft);color:var(--purple-deep);border-radius:999px;padding:5px 11px;font-size:var(--fs-xs);font-weight:600}
+  /* content pillars with explanations */
+  .pillar{border:1.5px solid var(--line-strong);border-radius:var(--r-md);padding:14px;margin-bottom:10px;background:var(--panel)}
+  .pillar .ph{display:flex;align-items:center;gap:10px;margin-bottom:8px}
+  .pillar .ph .nm{font-weight:700;font-size:var(--fs-sm)}
+  .pillar .ph .pct{margin-left:auto;font-size:var(--fs-xs);font-weight:700;color:var(--purple-deep);background:var(--purple-soft);padding:3px 9px;border-radius:999px}
+  .pillar textarea{width:100%;border:1px solid var(--line);border-radius:var(--r-sm);padding:9px 11px;font:400 var(--fs-sm)/1.55 'Public Sans';background:var(--panel-2);color:var(--mut);resize:vertical}
+  .pillar textarea:focus{outline:none;border-color:var(--purple);background:var(--panel)}
+  .add-pillar{border:1.5px dashed var(--line-strong);background:none;border-radius:var(--r-md);padding:12px;width:100%;font-weight:600;font-size:var(--fs-sm);color:var(--mut)}
+  .add-pillar:hover{border-color:var(--purple);color:var(--purple-deep)}
+
+  /* per-client pipeline */
+  .goal-head{display:flex;align-items:center;gap:14px;flex-wrap:wrap;margin-bottom:16px}
+  .goal-ring{width:72px;height:72px;border-radius:50%;background:conic-gradient(var(--green) var(--deg,270deg),var(--panel-2) 0);display:flex;align-items:center;justify-content:center;flex-shrink:0}
+  .goal-ring i{width:54px;height:54px;border-radius:50%;background:var(--panel);display:flex;align-items:center;justify-content:center;font:600 .9rem 'Fraunces';font-style:normal}
+  .goal-steps{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px}
+  .goal-step{flex:1;min-width:130px;border:1.5px solid var(--line-strong);border-radius:var(--r-md);padding:12px;display:flex;gap:10px;align-items:center}
+  .goal-step.done{border-color:var(--green);background:var(--pos-soft)}
+  .goal-step.sched{border-color:var(--purple);background:var(--purple-soft)}
+  .goal-step .k{width:26px;height:26px;border-radius:50%;display:flex;align-items:center;justify-content:center;font:700 .7rem 'Fraunces';flex-shrink:0;background:var(--panel);color:var(--mut)}
+  .goal-step.done .k{background:var(--green);color:var(--green-deep)} .goal-step.sched .k{background:var(--purple);color:#fff}
+  .goal-step b{font-size:var(--fs-sm);display:block} .goal-step span{font-size:var(--fs-xs);color:var(--faint)}
+
+  /* customer team sub-view */
+  .team-row{display:flex;align-items:center;gap:12px;padding:13px 0;border-bottom:1px solid var(--line)}
+  .team-row:last-child{border:0}
+  .team-row .av{width:36px;height:36px;border-radius:50%;background:var(--purple-soft);color:var(--purple-deep);display:flex;align-items:center;justify-content:center;font:600 .76rem 'Fraunces'}
+  .team-row b{font-size:var(--fs-sm);display:block} .team-row span{font-size:var(--fs-xs);color:var(--faint)}
+  .team-row .role-sel{margin-left:auto}
+  .role-tag{margin-left:auto;font-size:var(--fs-xs);font-weight:700;background:var(--panel-2);border:1px solid var(--line);color:var(--mut);padding:5px 10px;border-radius:999px}
 
   /* settings */
   .set-grid{display:grid;grid-template-columns:200px 1fr;gap:24px;align-items:start}
@@ -286,17 +384,28 @@
   .set-nav button{width:100%;text-align:left;background:none;border:0;padding:10px 13px;border-radius:var(--r-sm);font-size:var(--fs-sm);font-weight:600;color:var(--mut)}
   .set-nav button:hover{background:var(--panel-2);color:var(--ink)} .set-nav button.active{background:var(--purple-soft);color:var(--purple-deep)}
   .set-panel{display:none} .set-panel.on{display:block}
-  .team-row{display:flex;align-items:center;gap:12px;padding:13px 0;border-bottom:1px solid var(--line)}
-  .team-row:last-child{border:0}
-  .team-row .av{width:36px;height:36px;border-radius:50%;background:var(--purple-soft);color:var(--purple-deep);display:flex;align-items:center;justify-content:center;font:600 .76rem 'Fraunces'}
-  .team-row b{font-size:var(--fs-sm);display:block} .team-row span{font-size:var(--fs-xs);color:var(--faint)}
-  .role-tag{margin-left:auto;font-size:var(--fs-xs);font-weight:700;background:var(--panel-2);border:1px solid var(--line);color:var(--mut);padding:5px 10px;border-radius:999px}
+  .perm-row{display:flex;align-items:center;gap:12px;padding:12px 0;border-bottom:1px solid var(--line);font-size:var(--fs-sm)}
+  .perm-row:last-child{border:0}
+  .perm-row .toggle{margin-left:auto;width:38px;height:22px;border-radius:999px;background:var(--line-strong);position:relative;flex-shrink:0;cursor:pointer;transition:background .15s}
+  .perm-row .toggle.on{background:var(--purple)}
+  .perm-row .toggle::after{content:"";position:absolute;top:2px;left:2px;width:18px;height:18px;border-radius:50%;background:#fff;transition:left .15s}
+  .perm-row .toggle.on::after{left:18px}
   .plan{border:1.5px solid var(--line-strong);border-radius:var(--r-md);padding:18px;display:flex;flex-direction:column;gap:4px}
   .plan.current{border-color:var(--purple);background:var(--purple-soft)}
   .plan .nm{font:600 var(--fs-h3) 'Fraunces'} .plan .pr{font:600 1.4rem 'Fraunces';letter-spacing:-.02em}
   .plan .pr small{font:400 var(--fs-xs) 'Public Sans';color:var(--faint)}
   .plan ul{list-style:none;margin:8px 0 12px;font-size:var(--fs-sm);color:var(--mut)} .plan li{padding:4px 0;display:flex;gap:8px}
   .plan-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:14px}
+
+  /* post deep-stats modal */
+  .ps-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(120px,1fr));gap:12px;margin:16px 0}
+  .ps-stat{background:var(--panel-2);border:1px solid var(--line);border-radius:var(--r-md);padding:14px}
+  .ps-stat .v{font:600 1.3rem 'Fraunces'} .ps-stat .l{font-size:var(--fs-xs);color:var(--mut);margin-top:3px;display:flex;align-items:center}
+  .ps-bars{display:flex;align-items:flex-end;gap:8px;height:110px;margin-top:10px}
+  .ps-bars .col{flex:1;display:flex;flex-direction:column;align-items:center;gap:6px;height:100%}
+  .ps-bars .bar{flex:1;width:100%;display:flex;align-items:flex-end;justify-content:center}
+  .ps-bars .bar i{width:60%;background:var(--purple);border-radius:4px 4px 0 0}
+  .ps-bars .lab{font-size:var(--fs-xs);color:var(--faint)}
 
   .toast{position:fixed;bottom:24px;left:50%;transform:translateX(-50%) translateY(20px);background:var(--ink);color:var(--bg);padding:12px 20px;border-radius:var(--r-md);font-size:var(--fs-sm);font-weight:600;box-shadow:var(--sh-pop);opacity:0;pointer-events:none;transition:opacity .25s,transform .25s;z-index:300}
   .toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
@@ -305,7 +414,7 @@
     .app{grid-template-columns:1fr;grid-template-rows:auto 60px 1fr;grid-template-areas:"side" "top" "main"}
     .side{height:auto;position:static;flex-direction:row;align-items:center;gap:4px;padding:10px 12px;overflow-x:auto}
     .side .logo,.side .sect{padding:0 8px 0 0;white-space:nowrap} .side .sect,.role-switch{display:none}
-    .nav{flex-direction:row} .nav button{white-space:nowrap;padding:8px 10px} .nav button.active::before{display:none} .nav .lbl{display:none}
+    .nav{flex-direction:row} .nav button{white-space:nowrap;padding:8px 10px} .nav button.active::before{display:none} .nav .lbl{display:none} .nav .tag{display:none}
     .side-foot{display:none}
     .feed-grid{grid-template-columns:1fr}
     .tbl-wrap{overflow-x:auto} table{min-width:720px}
@@ -321,17 +430,16 @@
     <div class="sect">Menu</div>
     <ul class="nav admin-nav" id="navAdmin">
       <li><button class="active" data-page="dashboard"><span class="ic">▦</span><span class="lbl">Dashboard</span></button></li>
-      <li><button data-page="analytics"><span class="ic">◷</span><span class="lbl">Analytics</span></button></li>
       <li><button data-page="content"><span class="ic">▤</span><span class="lbl">Content Manager</span></button></li>
+      <li><button data-page="comments"><span class="ic">◌</span><span class="lbl">Comments Manager</span><span class="tag" id="navCmTag">4</span></button></li>
       <li><button data-page="clients"><span class="ic">◉</span><span class="lbl">Client Management</span></button></li>
-      <li><button data-page="ai"><span class="ic">✦</span><span class="lbl">AI Studio</span></button></li>
       <li><button data-page="settings"><span class="ic">⚙</span><span class="lbl">Settings</span></button></li>
     </ul>
     <ul class="nav writer-nav" id="navWriter">
       <li><button class="active" data-page="dashboard"><span class="ic">▦</span><span class="lbl">My Dashboard</span></button></li>
       <li><button data-page="content"><span class="ic">▤</span><span class="lbl">Content Manager</span></button></li>
+      <li><button data-page="comments"><span class="ic">◌</span><span class="lbl">Comments Manager</span></button></li>
       <li><button data-page="clients"><span class="ic">◉</span><span class="lbl">My Clients</span></button></li>
-      <li><button data-page="ai"><span class="ic">✦</span><span class="lbl">AI Studio</span></button></li>
     </ul>
     <div class="side-foot">
       <div class="admin-chip"><div class="av" id="roleAv">RK</div><div><b id="roleName">Rhea K.</b><span id="roleDesc">Admin · BAM team</span></div></div>
@@ -353,20 +461,37 @@
 
   <main class="main">
 
-    <!-- ===================== DASHBOARD (news feed) ===================== -->
+    <!-- ===================== DASHBOARD ===================== -->
     <section class="page on" id="p-dashboard">
-      <div class="page-head"><div><h2 id="dashTitle">Dashboard</h2><p id="dashSub">Your platform at a glance — what needs you, what's new, and how your clients are doing.</p></div>
-        <button class="btn btn-primary btn-sm" id="openComposer2">＋ New post</button></div>
+      <div class="page-head"><h2 id="dashTitle">Welcome back, Rhea</h2></div>
 
       <div class="feed-grid">
-        <!-- left: work that needs doing -->
+        <!-- LEFT: work -->
         <div class="stack">
           <div class="card">
             <div class="card-head"><h3 class="serif">Needs attention</h3><span class="count-chip">Priority</span></div>
             <div class="attn"><div class="ic down">!</div><div class="body"><b>23 posts pending approval</b> across 11 clients — oldest is 4 days old.</div><button class="go" data-goto="pending">Review →</button></div>
-            <div class="attn"><div class="ic flat">⌁</div><div class="body"><b>4 clients have gone quiet</b> — no post scheduled in 10+ days.</div><button class="go" data-goto="quiet">View →</button></div>
+            <div class="attn"><div class="ic flat">⌁</div><div class="body"><b>4 clients have gone quiet</b> — no post scheduled in 10+ days.</div><button class="go" data-goto="clients">View →</button></div>
             <div class="attn"><div class="ic flat">◐</div><div class="body"><b>1 client is unassigned</b> — Flux Health needs a writer.</div><button class="go" data-goto="clients">Assign →</button></div>
             <div class="attn"><div class="ic down">✎</div><div class="body"><b>6 client ideas are unreviewed</b> — turn them into drafts before they go stale.</div><button class="go" data-goto="ideas">Review →</button></div>
+          </div>
+
+          <!-- content pipeline / goal tracking -->
+          <div class="card">
+            <div class="card-head"><h3 class="serif">Content pipeline <span class="info">i<span class="tip">Each client has a weekly posting goal. This shows approved + scheduled posts against that goal, so you can see at a glance who's on track and who's behind.</span></span></h3><span class="count-chip">This week's goal</span></div>
+            <div class="pipe-row">
+              <div class="pipe-top"><span class="av">VS</span><b>Vero Studio</b><span class="goal">4 / 4 on track</span></div>
+              <div class="pipe-bar"><span class="pipe-seg done" style="width:75%"></span><span class="pipe-seg sched" style="width:25%"></span></div>
+            </div>
+            <div class="pipe-row">
+              <div class="pipe-top"><span class="av">NW</span><b>Northwind Co.</b><span class="goal" style="color:var(--warn)">2 / 4 behind</span></div>
+              <div class="pipe-bar"><span class="pipe-seg done" style="width:25%"></span><span class="pipe-seg sched" style="width:25%"></span><span class="pipe-seg gap" style="width:50%"></span></div>
+            </div>
+            <div class="pipe-row">
+              <div class="pipe-top"><span class="av">LP</span><b>Lumen Partners</b><span class="goal" style="color:var(--neg)">0 / 3 at risk</span></div>
+              <div class="pipe-bar"><span class="pipe-seg gap" style="width:100%"></span></div>
+            </div>
+            <div class="pipe-legend"><span><i style="background:var(--green)"></i> Approved</span><span><i style="background:var(--purple)"></i> Scheduled</span><span><i style="background:var(--line-strong)"></i> Still needed</span></div>
           </div>
 
           <div class="card">
@@ -382,61 +507,36 @@
             <div class="mini-row"><span class="av">AB</span><div><b>Amara B.</b><div class="sub">"A patient story that changed how I lead"</div></div><div class="right"><button class="link" data-goto="ideas">Draft it</button></div></div>
             <div class="mini-row"><span class="av">DR</span><div><b>David R.</b><div class="sub">"Why we killed our best-selling product"</div></div><div class="right"><button class="link" data-goto="ideas">Draft it</button></div></div>
           </div>
-
-          <div class="card">
-            <div class="card-head"><h3 class="serif">Clients to keep an eye on <span class="info">i<span class="tip">Ranked by a simple risk score: days since last post, recent decline rate, and reach falling below baseline. Not a priority list yet — just an early-warning signal.</span></span></h3><span class="count-chip">Watchlist</span></div>
-            <div class="mini-row"><span class="av">LP</span><div><b>Lumen Partners</b><div class="sub">12 days quiet · reach ▼ 12% vs baseline</div></div><div class="right"><span class="banner banner-no">High risk</span></div></div>
-            <div class="mini-row"><span class="av">OL</span><div><b>Orbit Labs</b><div class="sub">Inactive subscription · 2 declines in a row</div></div><div class="right"><span class="banner banner-no">High risk</span></div></div>
-            <div class="mini-row"><span class="av">NW</span><div><b>Northwind Co.</b><div class="sub">Approvals slowing down this week</div></div><div class="right"><span class="banner banner-warn">Watch</span></div></div>
-          </div>
         </div>
 
-        <!-- right: news feed + overview -->
+        <!-- RIGHT: news + community -->
         <div class="stack">
           <div class="card">
             <div class="card-head"><h3 class="serif">Latest activity</h3><button class="link" id="openBell">Notifications →</button></div>
             <div id="feedList"></div>
           </div>
 
+          <!-- community management / new comments -->
           <div class="card">
-            <div class="card-head"><h3 class="serif">Client overview</h3><button class="link" data-page="clients">Manage →</button></div>
-            <div id="dashClientList"></div>
+            <div class="card-head"><h3 class="serif">New comments <span class="info">i<span class="tip">Community management: when a client's audience comments on a published post, or a client replies to an editor, it surfaces here and in Comments Manager.</span></span></h3><button class="link" data-page="comments">Open manager →</button></div>
+            <div class="comment-alert"><span class="av">◌</span><div class="body"><span class="who">New audience comment</span> on Vero Studio's "spreadsheet" post<div class="ctx">"This is exactly why I left banking…" · 20 min ago</div></div><button class="go" data-page="comments">Reply →</button></div>
+            <div class="comment-alert"><span class="av">LM</span><div class="body"><span class="who">Lena M. replied</span> to your note on her draft<div class="ctx">"Can we soften the opening?" · 1h ago</div></div><button class="go" data-page="comments">Open →</button></div>
+            <div class="comment-alert"><span class="av">◌</span><div class="body"><span class="who">3 new comments</span> on Cedar & Co.'s latest post<div class="ctx">Needs a reply from the editor · 2h ago</div></div><button class="go" data-page="comments">Reply →</button></div>
+          </div>
+
+          <div class="card">
+            <div class="card-head"><h3 class="serif">Clients to keep an eye on <span class="info">i<span class="tip">Ranked by a simple risk signal: days since last post, recent decline rate, and engagement falling below the client's own baseline. An early warning, not a priority list yet.</span></span></h3><span class="count-chip">Watchlist</span></div>
+            <div class="mini-row"><span class="av">LP</span><div><b>Lumen Partners</b><div class="sub">12 days quiet · engagement ▼ 12% vs baseline</div></div><div class="right"><span class="banner banner-no">High risk</span></div></div>
+            <div class="mini-row"><span class="av">OL</span><div><b>Orbit Labs</b><div class="sub">Inactive subscription · 2 declines in a row</div></div><div class="right"><span class="banner banner-no">High risk</span></div></div>
+            <div class="mini-row"><span class="av">NW</span><div><b>Northwind Co.</b><div class="sub">Approvals slowing down this week</div></div><div class="right"><span class="banner banner-warn">Watch</span></div></div>
           </div>
         </div>
       </div>
     </section>
 
-    <!-- ===================== ANALYTICS ===================== -->
-    <section class="page" id="p-analytics">
-      <div class="page-head"><div><h2>Analytics</h2><p>Per-client by default. Every figure is shown against a baseline, with an info icon explaining what it measures and why it moved.</p></div>
-        <div style="display:flex;gap:10px;flex-wrap:wrap">
-          <select class="filter-sel" id="anClient"></select>
-          <select class="filter-sel"><option>Last 30 days</option><option>Last 7 days</option><option>Last quarter</option></select>
-        </div></div>
-
-      <div class="card" style="margin-bottom:18px;display:flex;gap:12px;align-items:flex-start;background:var(--panel-2)">
-        <div class="info" style="margin:2px 0 0">i<span class="tip">Baseline is this client's own trailing 90-day median, adjusted for their company size band and industry. It is not a flat industry number — it answers "what's normal for them?"</span></div>
-        <div style="font-size:var(--fs-sm);line-height:1.6;color:var(--mut)"><b style="color:var(--ink)">About the baseline:</b> each client's baseline is their trailing 90-day median, weighted for company-size band and industry — so "above baseline" means "above what's normal for a client like this," not a flat industry average. Hover any <span class="info" style="width:14px;height:14px">i</span> for the definition of that metric.</div>
-      </div>
-
-      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:14px;margin-bottom:22px">
-        <div class="card"><div class="mut" style="font-size:var(--fs-sm);display:flex;align-items:center;margin-bottom:8px">Total reach<span class="info">i<span class="tip">Unique LinkedIn members who saw this client's posts. Up 24% — driven mostly by two posts that were reshared by larger accounts.</span></span></div><div style="font:600 1.7rem 'Fraunces'">186k</div><div style="font-size:var(--fs-xs);color:var(--faint);margin-top:9px"><span class="pill-stat pill-pos">▲ 140%</span> vs baseline 78k</div></div>
-        <div class="card"><div class="mut" style="font-size:var(--fs-sm);display:flex;align-items:center;margin-bottom:8px">Engagement rate<span class="info">i<span class="tip">Reactions + comments + reshares ÷ impressions. A better quality signal than reach — it says people acted, not just scrolled past.</span></span></div><div style="font:600 1.7rem 'Fraunces'">6.2%</div><div style="font-size:var(--fs-xs);color:var(--faint);margin-top:9px"><span class="pill-stat pill-pos">▲ 1.4pt</span> vs baseline 4.8%</div></div>
-        <div class="card"><div class="mut" style="font-size:var(--fs-sm);display:flex;align-items:center;margin-bottom:8px">Reach efficiency<span class="info">i<span class="tip">Reach per post, relative to follower count. Shows whether content is traveling beyond existing followers (>1.0 means it is). This client sits at 1.8× — posts are reaching well past their own network.</span></span></div><div style="font:600 1.7rem 'Fraunces'">1.8×</div><div style="font-size:var(--fs-xs);color:var(--faint);margin-top:9px"><span class="pill-stat pill-pos">▲ 0.3×</span> vs baseline 1.5×</div></div>
-        <div class="card"><div class="mut" style="font-size:var(--fs-sm);display:flex;align-items:center;margin-bottom:8px">Approval rate<span class="info">i<span class="tip">Share of drafts this client approved without changes. Low rate = drafts aren't landing in their voice. Pair it with revisions below.</span></span></div><div style="font:600 1.7rem 'Fraunces'">88%</div><div style="font-size:var(--fs-xs);color:var(--faint);margin-top:9px"><span class="pill-stat pill-pos">▲ 4pt</span> · healthy &gt;80%</div></div>
-      </div>
-
-      <div class="card">
-        <div class="card-head"><h3 class="serif">What this means for this client</h3></div>
-        <div class="attn"><div class="ic up">▲</div><div class="body">Reach is <b>140% above their baseline</b> — two posts were reshared by larger accounts, which is doing most of the lift.</div></div>
-        <div class="attn"><div class="ic up">▲</div><div class="body">Engagement at <b>6.2%</b> means people are reacting, not just scrolling — the voice is landing.</div></div>
-        <div class="attn"><div class="ic flat">⌁</div><div class="body">Reach efficiency of <b>1.8×</b> says content is traveling past their own followers. Worth doubling down on the formats that caused it.</div></div>
-      </div>
-    </section>
-
     <!-- ===================== CONTENT MANAGER ===================== -->
     <section class="page" id="p-content">
-      <div class="page-head"><div><h2>Content Manager</h2><p>Plan, write and schedule posts for every client. Sorted by most recent activity.</p></div>
+      <div class="page-head"><div><h2>Content Manager</h2><p>Plan, write and schedule posts for every client. Content ideas, media and the AI studio all live here.</p></div>
         <button class="btn btn-primary btn-sm" id="openComposer">＋ Create post</button></div>
 
       <div class="tabs" id="contentTabs">
@@ -445,10 +545,12 @@
         <button class="tab" data-tab="Approved">Approved <span class="cnt" id="cApproved">0</span></button>
         <button class="tab" data-tab="Published">Published <span class="cnt" id="cPublished">0</span></button>
         <button class="tab" data-tab="Declined">Declined <span class="cnt" id="cDeclined">0</span></button>
-        <button class="tab" data-tab="Comments">Comments <span class="cnt" id="cComments">0</span></button>
-        <button class="tab" data-tab="Studio">Studio</button>
+        <button class="tab" data-tab="Ideas">Content ideas <span class="cnt" id="cIdeas">3</span></button>
+        <button class="tab" data-tab="Media">Media library</button>
+        <button class="tab" data-tab="Studio">AI studio</button>
       </div>
 
+      <!-- table view -->
       <div id="contentTableWrap">
         <div class="toolbar">
           <div class="search"><span class="mag">⌕</span><input id="contentSearch" placeholder="Search by company, client, content or date…"></div>
@@ -456,13 +558,27 @@
           <select class="filter-sel" id="filterSort"><option>Sort: Most recent</option><option>Sort: Oldest</option><option>Sort: Company A–Z</option></select>
         </div>
         <div class="tbl-wrap">
-          <table>
-            <thead><tr><th>Company</th><th>Client</th><th>Post content</th><th>Publication date</th><th>Status</th><th></th></tr></thead>
-            <tbody id="contentBody"></tbody>
-          </table>
+          <table><thead><tr><th>Company</th><th>Client</th><th>Post content</th><th>Publication date</th><th>Status</th></tr></thead><tbody id="contentBody"></tbody></table>
         </div>
       </div>
 
+      <!-- ideas view -->
+      <div id="contentIdeasWrap" style="display:none">
+        <p class="mut" style="font-size:var(--fs-sm);margin-bottom:16px">Ideas clients submitted from their own dashboard. Turn one into a draft and it moves into the pipeline.</p>
+        <div class="draft-list">
+          <div class="idea-card"><div class="who"><span class="av">LM</span><b style="font-size:var(--fs-sm)">Lena M. · Vero Studio</b></div><h4>"Panel I spoke on about AI in finance"</h4><p>Amazing insights on the future of automation — worth a reflective post.</p><button class="btn btn-primary btn-sm" onclick="toast('Drafting in Lena’s voice…')">Turn into draft</button></div>
+          <div class="idea-card"><div class="who"><span class="av">AB</span><b style="font-size:var(--fs-sm)">Amara B. · Flux Health</b></div><h4>"A patient story that changed how I lead"</h4><p>Anonymized, but a strong leadership angle from the clinic floor.</p><button class="btn btn-primary btn-sm" onclick="toast('Drafting in Amara’s voice…')">Turn into draft</button></div>
+          <div class="idea-card"><div class="who"><span class="av">DR</span><b style="font-size:var(--fs-sm)">David R. · Cedar & Co.</b></div><h4>"Why we killed our best-selling product"</h4><p>Contrarian take — high engagement potential.</p><button class="btn btn-primary btn-sm" onclick="toast('Drafting in David’s voice…')">Turn into draft</button></div>
+        </div>
+      </div>
+
+      <!-- media view -->
+      <div id="contentMediaWrap" style="display:none">
+        <div class="toolbar"><div class="search"><span class="mag">⌕</span><input placeholder="Search media…"></div><button class="btn btn-primary btn-sm" onclick="toast('Upload opens here')">Upload media</button></div>
+        <div class="media-grid" id="mediaGrid"></div>
+      </div>
+
+      <!-- studio view -->
       <div id="contentStudioWrap" style="display:none">
         <div class="studio-grid">
           <div class="hist"><h4>Saved drafts</h4>
@@ -475,7 +591,7 @@
                 <select class="ai-provider"><option>Claude Opus 4.8</option><option>Claude Sonnet 5.5</option><option>GPT-5.1</option></select>
                 <span class="mut" style="font-size:var(--fs-xs);margin-left:auto">Drafts use the client's brand identity</span>
               </div>
-              <div class="ai-stream"><div class="msg ai"><div class="mav">AI</div><div class="bubble">This is the same AI workspace that lives inside Create Post — brainstorm freely here, then move any draft into a scheduled post.</div></div></div>
+              <div class="ai-stream"><div class="msg ai"><div class="mav">AI</div><div class="bubble">This is the same AI workspace that lives inside Create Post. Brainstorm freely here, then move any draft into a scheduled post.</div></div></div>
               <div class="ai-input"><textarea rows="1" placeholder="Draft or brainstorm a post…"></textarea><button class="btn btn-primary">Send</button></div>
             </div>
           </div>
@@ -483,153 +599,179 @@
       </div>
     </section>
 
+    <!-- ===================== COMMENTS MANAGER ===================== -->
+    <section class="page" id="p-comments">
+      <div class="page-head"><div><h2>Comments Manager</h2><p>One shared thread per post. Comments from the client, their audience and your editors all appear here — in sync with what the client sees on their side.</p></div></div>
+      <div class="cm-grid">
+        <div class="cm-list">
+          <div class="filters" id="cmFilters">
+            <button class="on" data-f="all">All</button>
+            <button data-f="unread">Unread</button>
+            <button data-f="reply">Needs reply</button>
+            <button data-f="audience">Audience</button>
+          </div>
+          <div class="cm-threads" id="cmThreads"></div>
+        </div>
+        <div class="cm-panel" id="cmPanel"></div>
+      </div>
+    </section>
+
     <!-- ===================== CLIENT MANAGEMENT ===================== -->
     <section class="page" id="p-clients">
-      <div class="page-head"><div><h2 id="clientsTitle">Client Management</h2><p id="clientsSub">Everything for a client in one place — status, writer, brand identity, history and statistics.</p></div>
+      <div class="page-head"><div><h2 id="clientsTitle">Client Management</h2><p id="clientsSub">Everything about a client in one place — status, writer, pipeline, brand identity, post history and their team.</p></div>
         <button class="btn btn-primary btn-sm" id="openAddClient">＋ Add new client</button></div>
       <div class="toolbar"><div class="search"><span class="mag">⌕</span><input id="clientSearch" placeholder="Search clients by name or company…"></div>
         <select class="filter-sel" id="clientWriterFilter"><option>All writers</option><option>Matvei</option><option>Tunde A.</option><option>Jia L.</option><option>Unassigned</option></select>
       </div>
+      <p class="mut" style="font-size:var(--fs-xs);margin-bottom:10px">Tip: select a client's name to open their full workspace.</p>
       <div class="tbl-wrap">
-        <table>
-          <thead><tr><th>Client name</th><th>Active</th><th>Meeting slot</th><th>Writer</th><th>Subscription</th><th></th></tr></thead>
-          <tbody id="clientBody"></tbody>
-        </table>
+        <table><thead><tr><th>Client name</th><th>Active</th><th>Pipeline (this week)</th><th>Writer</th></tr></thead><tbody id="clientBody"></tbody></table>
       </div>
     </section>
 
-    <!-- ===================== CLIENT DETAIL (full workspace) ===================== -->
+    <!-- ===================== CLIENT DETAIL ===================== -->
     <section class="page" id="p-clientdetail">
       <button class="back-link" data-page="clients">← Back to Client Management</button>
       <div class="detail-head">
         <div class="av" id="cdAv">LM</div>
         <div><h2 class="serif" id="cdName">Lena M.</h2><div class="sub" id="cdSub">Vero Studio · Writer: Matvei</div></div>
-        <div style="margin-left:auto;display:flex;gap:8px;flex-wrap:wrap"><span class="banner banner-yes" id="cdActive">Active</span><span class="banner banner-yes" id="cdSubsc">Subscribed</span>
-          <button class="btn btn-primary btn-sm" id="cdNewPost">＋ New post</button></div>
+        <div style="margin-left:auto;display:flex;gap:8px;flex-wrap:wrap;align-items:center">
+          <span class="banner banner-yes" id="cdActive">Active</span><span class="banner banner-yes" id="cdSubsc">Subscribed</span>
+          <button class="btn btn-ghost btn-sm" id="cdCopy">⧉ Copy invite link</button>
+          <button class="btn btn-primary btn-sm" id="cdNewPost">＋ New post</button>
+        </div>
       </div>
 
       <div class="subtabs" id="cdTabs">
         <button class="subtab active" data-cd="overview">Overview</button>
+        <button class="subtab" data-cd="pipeline">Pipeline</button>
         <button class="subtab" data-cd="brand">Brand identity</button>
         <button class="subtab" data-cd="history">Post history</button>
-        <button class="subtab" data-cd="stats">Statistics</button>
+        <button class="subtab" data-cd="team">Customer team</button>
       </div>
 
       <!-- overview -->
       <div class="subpanel on" id="cd-overview">
         <div class="rate-row">
           <div class="rate"><div class="v">42</div><div class="l">Posts published</div></div>
-          <div class="rate"><div class="v" style="color:var(--pos)">88%</div><div class="l">Approval rate <span class="info">i<span class="tip">Drafts approved without changes, out of all drafts sent.</span></span></div></div>
+          <div class="rate"><div class="v" style="color:var(--pos)">88%</div><div class="l">Approval rate <span class="info">i<span class="tip">Drafts the client approved without changes, out of all drafts sent.</span></span></div></div>
           <div class="rate"><div class="v" style="color:var(--neg)">12%</div><div class="l">Decline rate</div></div>
-          <div class="rate"><div class="v">1.4</div><div class="l">Revisions / post <span class="info">i<span class="tip">Average number of change requests before a draft is approved. Lower is better — high means drafts aren't landing in their voice.</span></span></div></div>
-          <div class="rate"><div class="v">186k</div><div class="l">Total reach</div></div>
+          <div class="rate"><div class="v">612k</div><div class="l">Total impressions</div></div>
+          <div class="rate"><div class="v">6.2%</div><div class="l">Engagement rate <span class="info">i<span class="tip">Reactions + comments + reshares ÷ impressions.</span></span></div></div>
         </div>
         <div class="card">
           <div class="card-head"><h3 class="serif">Recent activity</h3></div>
           <div class="mini-row"><span class="av">✓</span><div><b>Approved a draft</b><div class="sub">"The spreadsheet is never the decision…"</div></div><div class="right faint" style="font-size:var(--fs-xs)">2 days ago</div></div>
           <div class="mini-row"><span class="av">✕</span><div><b>Declined a draft</b><div class="sub">"A hiring mistake I made at 30…" · asked for a softer tone</div></div><div class="right faint" style="font-size:var(--fs-xs)">6 days ago</div></div>
-          <div class="mini-row"><span class="av">▲</span><div><b>Post hit 44k reach</b><div class="sub">"What actually matters at 45…"</div></div><div class="right faint" style="font-size:var(--fs-xs)">8 days ago</div></div>
+          <div class="mini-row"><span class="av">◌</span><div><b>New audience comment</b><div class="sub">"This is exactly why I left banking…"</div></div><div class="right"><button class="link" data-page="comments">Reply</button></div></div>
         </div>
       </div>
 
-      <!-- brand identity (full, with summary) -->
+      <!-- per-client pipeline -->
+      <div class="subpanel" id="cd-pipeline">
+        <div class="card" style="margin-bottom:16px">
+          <div class="goal-head">
+            <div class="goal-ring" style="--deg:270deg"><i>3 / 4</i></div>
+            <div><h3 class="serif" style="font-size:var(--fs-h2)">On track for this week's goal</h3><div class="mut" style="font-size:var(--fs-sm)">3 approved, 1 scheduled, 0 still needed. Weekly goal: 4 posts.</div></div>
+            <button class="btn btn-ghost btn-sm" style="margin-left:auto" onclick="toast('Goal settings open here')">Edit goal</button>
+          </div>
+          <div class="goal-steps">
+            <div class="goal-step done"><span class="k">✓</span><div><b>Mon</b><span>Approved · published</span></div></div>
+            <div class="goal-step done"><span class="k">✓</span><div><b>Wed</b><span>Approved · published</span></div></div>
+            <div class="goal-step done"><span class="k">✓</span><div><b>Thu</b><span>Approved · scheduled</span></div></div>
+            <div class="goal-step sched"><span class="k">4</span><div><b>Fri</b><span>Scheduled · pending approval</span></div></div>
+          </div>
+        </div>
+        <div class="card">
+          <div class="card-head"><h3 class="serif">Upcoming queue</h3><button class="btn btn-primary btn-sm" onclick="document.getElementById('openComposer').click()">＋ Add to pipeline</button></div>
+          <div class="mini-row"><span class="av" style="background:var(--purple);color:#fff">4</span><div><b>Fri 23 Aug · 09:00</b><div class="sub">"Why I still take notes by hand…" · awaiting approval</div></div><div class="right"><span class="banner banner-warn">Pending</span></div></div>
+          <div class="mini-row"><span class="av" style="background:var(--green);color:var(--green-deep)">5</span><div><b>Mon 26 Aug · 09:00</b><div class="sub">Idea slot — not drafted yet</div></div><div class="right"><button class="link" onclick="toast('Opening AI studio…')">Draft</button></div></div>
+        </div>
+      </div>
+
+      <!-- brand identity (rich, with pillar explanations) -->
       <div class="subpanel" id="cd-brand">
         <div class="bi-summary">
           <div class="av" id="biAv">LM</div>
           <div style="flex:1;min-width:220px">
             <div class="pos">"Finance leader who makes complex decisions feel human."</div>
-            <div class="mut" style="font-size:var(--fs-sm)">How this client sees themselves — mirrors their "My Profile" summary on the client side.</div>
-            <div class="pills"><span>Warm</span><span>Direct</span><span>Story-led</span><span>Career wisdom</span><span>Client stories</span><span>Industry analysis</span></div>
+            <div class="mut" style="font-size:var(--fs-sm)">A mirror of how this client describes themselves on their own "My Profile" page.</div>
+            <div class="pills"><span>Warm</span><span>Direct</span><span>Story-led</span><span>20 years in finance</span><span>Mentor: Grace</span></div>
           </div>
         </div>
-        <div class="card" style="max-width:860px">
-          <div class="bi-field"><label>One-line positioning</label><input value="Finance leader who makes complex decisions feel human."></div>
-          <div class="bi-field"><label>Audience</label><input value="Mid-career professionals, founders and finance teams in growth-stage companies."></div>
-          <div class="bi-field"><label>Tone of voice</label>
-            <div class="chips"><button class="chip-tog on">Warm</button><button class="chip-tog on">Direct</button><button class="chip-tog">Playful</button><button class="chip-tog">Authoritative</button><button class="chip-tog on">Story-led</button><button class="chip-tog">Data-backed</button></div>
-          </div>
-          <div class="bi-field"><label>Content pillars</label>
-            <div class="chips"><button class="chip-tog on">Career wisdom</button><button class="chip-tog on">Client stories</button><button class="chip-tog on">Industry analysis</button><button class="chip-tog">Leadership</button><button class="chip-tog">Hiring</button><button class="chip-tog">Work-life design</button></div>
-          </div>
-          <div class="bi-field"><label>Signature phrases &amp; stories</label><textarea rows="3">Often opens with a confession. Likes closing on a question. Refers back to 20 years in finance. Mentions a mentor named Grace. Writes warmest in the morning.</textarea></div>
-          <div class="bi-field"><label>What to avoid</label><textarea rows="2">No jargon, no humble-brags, no generic motivational quotes, never names clients directly.</textarea></div>
-          <div class="bi-field"><label>Transcripts &amp; samples on file</label><textarea rows="2">3 transcripts · 1 keynote · 2 long-form articles. Last added 4 Oct 2026.</textarea></div>
-          <div class="bi-field"><label>Writer notes (internal)</label><textarea rows="2">Responds fast in the morning. Prefers to see 2 options. Dislikes em-dashes.</textarea></div>
-          <button class="btn btn-primary btn-sm" id="saveBrand">Save brand identity</button>
-        </div>
-      </div>
-
-      <!-- post history -->
-      <div class="subpanel" id="cd-history">
-        <div class="tbl-wrap">
-          <table>
-            <thead><tr><th>Post</th><th>Date</th><th>Decision</th><th>Revisions</th><th>Reach</th></tr></thead>
-            <tbody id="cdHistory"></tbody>
-          </table>
-        </div>
-      </div>
-
-      <!-- statistics -->
-      <div class="subpanel" id="cd-stats">
-        <div class="rate-row">
-          <div class="rate"><div class="v" style="color:var(--pos)">88%</div><div class="l">Approval rate <span class="info">i<span class="tip">Approved without changes ÷ total drafts. Trending up 4pt this quarter.</span></span></div></div>
-          <div class="rate"><div class="v" style="color:var(--neg)">12%</div><div class="l">Decline rate</div></div>
-          <div class="rate"><div class="v">1.4</div><div class="l">Revisions / post <span class="info">i<span class="tip">Average change requests before approval. Falling — drafts are getting closer to their voice.</span></span></div></div>
-          <div class="rate"><div class="v">6.2%</div><div class="l">Engagement <span class="info">i<span class="tip">Reactions + comments + reshares ÷ impressions.</span></span></div></div>
-          <div class="rate"><div class="v">1.8×</div><div class="l">Reach efficiency <span class="info">i<span class="tip">Reach per post relative to followers. >1.0 means content travels beyond existing network.</span></span></div></div>
-        </div>
-        <div class="card">
-          <div class="card-head"><h3 class="serif">How this client responds to drafts, over time</h3><span class="kicker">Last 6 weeks</span></div>
-          <div class="attn"><div class="ic up">▲</div><div class="body">Approval rate climbed from <b>79% → 88%</b> as the voice model improved. Revisions per post fell from <b>2.3 → 1.4</b>.</div></div>
-          <div class="attn"><div class="ic flat">⌁</div><div class="body">The one recent decline asked for a softer tone — logged against the "Warm" voice setting for the writer to watch.</div></div>
-        </div>
-      </div>
-    </section>
-
-    <!-- ===================== AI STUDIO ===================== -->
-    <section class="page" id="p-ai">
-      <div class="page-head"><div><h2>AI Studio</h2><p>Draft, rewrite and brainstorm with any provider. Compare outputs before they reach a client.</p></div></div>
-      <div class="studio-grid">
-        <div class="hist">
-          <h4>History <button class="new" id="newChat">＋ New</button></h4>
-          <div id="histList"></div>
-        </div>
-        <div>
-          <div class="ai-wrap">
-            <div class="ai-head"><span class="lbl">Provider</span>
-              <select class="ai-provider" id="aiProvider"><option>Claude Opus 4.8</option><option>Claude Sonnet 5.5</option><option>GPT-5.1</option><option>Gemini 2.5 Pro</option><option>Llama 4</option></select>
-              <div class="spacer" style="flex:1"></div>
-              <button class="btn btn-ghost btn-sm" id="clearChat">Clear</button>
+        <div class="bi-cols">
+          <div>
+            <div class="bi-field"><label>One-line positioning</label><input value="Finance leader who makes complex decisions feel human."></div>
+            <div class="bi-field"><label>Audience</label><input value="Mid-career professionals, founders and finance teams in growth-stage companies."></div>
+            <div class="bi-field"><label>Tone of voice</label>
+              <div class="chips"><button class="chip-tog on">Warm</button><button class="chip-tog on">Direct</button><button class="chip-tog">Playful</button><button class="chip-tog">Authoritative</button><button class="chip-tog on">Story-led</button><button class="chip-tog">Data-backed</button></div>
             </div>
-            <div class="ai-stream" id="aiStream"></div>
-            <div class="ai-input"><textarea id="aiInput" rows="1" placeholder="Ask the model to draft a post for a client…"></textarea><button class="btn btn-primary" id="aiSend">Send</button></div>
+            <div class="bi-field"><label>Signature phrases &amp; recurring stories</label><textarea rows="3">Often opens with a confession. Likes closing on a question. Refers back to 20 years in finance. Mentions a mentor named Grace. Writes warmest in the morning.</textarea></div>
+            <div class="bi-field"><label>What to avoid</label><textarea rows="2">No jargon, no humble-brags, no generic motivational quotes, never names clients directly, dislikes em-dashes.</textarea></div>
+            <div class="bi-field"><label>Transcripts &amp; samples on file</label><textarea rows="2">3 transcripts · 1 keynote · 2 long-form articles. Last added 4 Oct 2026.</textarea></div>
+            <div class="bi-field"><label>Writer notes (internal)</label><textarea rows="2">Responds fast in the morning. Prefers to see 2 options. Give her the "why" before the ask.</textarea></div>
           </div>
-          <div class="suggest-row">
-            <button class="ai-suggest">Draft a post for Vero Studio about hiring</button>
-            <button class="ai-suggest">Rewrite this in a warmer tone</button>
-            <button class="ai-suggest">5 content angles for a finance consultant</button>
+          <div>
+            <label style="display:flex;align-items:center;font-size:var(--fs-sm);font-weight:600;margin-bottom:8px">Content pillars <span class="info">i<span class="tip">The recurring themes this client posts about. Each pillar carries an explanation so any writer knows exactly what it means and how much to weight it.</span></span></label>
+            <div class="pillar"><div class="ph"><span class="nm">Career wisdom</span><span class="pct">40%</span></div><textarea rows="2">Hard-won lessons from 20 years in finance. Reflective, first-person, usually a mistake she made and what it taught her.</textarea></div>
+            <div class="pillar"><div class="ph"><span class="nm">Client stories</span><span class="pct">35%</span></div><textarea rows="2">Anonymized moments from advisory work. Never names the client. Always ends with a transferable principle.</textarea></div>
+            <div class="pillar"><div class="ph"><span class="nm">Industry analysis</span><span class="pct">25%</span></div><textarea rows="2">Her take on a current finance story. Opinionated but grounded in experience, not hot-takes.</textarea></div>
+            <button class="add-pillar" onclick="toast('Add a pillar')">＋ Add content pillar</button>
           </div>
+        </div>
+        <button class="btn btn-primary btn-sm" id="saveBrand" style="margin-top:8px">Save brand identity</button>
+      </div>
+
+      <!-- post history: clickable, impressions + engagement -->
+      <div class="subpanel" id="cd-history">
+        <p class="mut" style="font-size:var(--fs-sm);margin-bottom:12px">Select any published post for its full statistics.</p>
+        <div class="tbl-wrap">
+          <table><thead><tr><th>Post</th><th>Date</th><th>Decision</th><th>Impressions</th><th>Engagement rate</th></tr></thead><tbody id="cdHistory"></tbody></table>
+        </div>
+      </div>
+
+      <!-- customer team sub-view -->
+      <div class="subpanel" id="cd-team">
+        <div class="card" style="max-width:760px">
+          <div class="card-head"><h3 class="serif">Customer team</h3><button class="btn btn-primary btn-sm" onclick="toast('Add team member modal opens here')">＋ Add member</button></div>
+          <p class="mut" style="font-size:var(--fs-sm);margin-bottom:14px">People on the client's side who can view, comment on or approve content. You manage their access from here.</p>
+          <div class="team-row"><div class="av">LM</div><div><b>Lena M.</b><span>lena@verostudio.com · the client</span></div><span class="role-tag">Owner · approves</span></div>
+          <div class="team-row"><div class="av">RS</div><div><b>Rafi S.</b><span>rafi@verostudio.com · chief of staff</span></div>
+            <select class="writer role-sel"><option>Can approve</option><option selected>Can comment</option><option>View only</option></select></div>
+          <div class="team-row"><div class="av">MO</div><div><b>Mia O.</b><span>mia@verostudio.com · marketing</span></div>
+            <select class="writer role-sel"><option>Can approve</option><option>Can comment</option><option selected>View only</option></select></div>
         </div>
       </div>
     </section>
 
-    <!-- ===================== SETTINGS ===================== -->
+    <!-- ===================== SETTINGS = ADMIN MANAGEMENT ===================== -->
     <section class="page" id="p-settings">
-      <div class="page-head"><div><h2>Settings</h2><p>Team, billing and integrations.</p></div></div>
+      <div class="page-head"><div><h2>Settings</h2><p>Manage your internal admin team, roles and permissions, billing and integrations.</p></div></div>
       <div class="set-grid">
         <ul class="set-nav" id="setNav">
-          <li><button class="active" data-set="team">Team management</button></li>
+          <li><button class="active" data-set="team">Admin team</button></li>
+          <li><button data-set="roles">Roles &amp; permissions</button></li>
           <li><button data-set="billing">Subscription &amp; billing</button></li>
           <li><button data-set="integrations">Integrations</button></li>
         </ul>
         <div>
           <div class="set-panel on" id="set-team">
             <div class="card">
-              <div class="card-head"><h3 class="serif">Team members</h3><button class="btn btn-primary btn-sm" id="addMemberBtn">＋ Invite member</button></div>
+              <div class="card-head"><h3 class="serif">Admin team members</h3><button class="btn btn-primary btn-sm" onclick="toast('Invite flow opens here')">＋ Invite member</button></div>
               <div class="team-row"><div class="av">RK</div><div><b>Rhea K.</b><span>rhea@bam.co</span></div><span class="role-tag">Admin</span></div>
-              <div class="team-row"><div class="av">M</div><div><b>Matvei</b><span>matvei@bam.co</span></div><span class="role-tag">Writer</span></div>
-              <div class="team-row"><div class="av">TA</div><div><b>Tunde A.</b><span>tunde@bam.co</span></div><span class="role-tag">Writer</span></div>
-              <div class="team-row"><div class="av">JL</div><div><b>Jia L.</b><span>jia@bam.co</span></div><span class="role-tag">Writer</span></div>
+              <div class="team-row"><div class="av">M</div><div><b>Matvei</b><span>matvei@bam.co</span></div><span class="role-tag">Writer · 6 clients</span></div>
+              <div class="team-row"><div class="av">TA</div><div><b>Tunde A.</b><span>tunde@bam.co</span></div><span class="role-tag">Writer · 5 clients</span></div>
+              <div class="team-row"><div class="av">JL</div><div><b>Jia L.</b><span>jia@bam.co</span></div><span class="role-tag">Writer · 4 clients</span></div>
+            </div>
+          </div>
+          <div class="set-panel" id="set-roles">
+            <div class="card">
+              <h3 class="serif" style="font-size:var(--fs-h2);margin-bottom:4px">Writer permissions</h3>
+              <p class="mut" style="font-size:var(--fs-sm);margin-bottom:12px">What writers can do without admin sign-off.</p>
+              <div class="perm-row"><div><b style="font-weight:600">Publish approved posts</b><div class="faint" style="font-size:var(--fs-xs)">Send client-approved posts live to LinkedIn</div></div><div class="toggle on" onclick="this.classList.toggle('on')"></div></div>
+              <div class="perm-row"><div><b style="font-weight:600">Edit brand identity</b><div class="faint" style="font-size:var(--fs-xs)">Change tone, pillars and notes on their own clients</div></div><div class="toggle on" onclick="this.classList.toggle('on')"></div></div>
+              <div class="perm-row"><div><b style="font-weight:600">Add or remove clients</b><div class="faint" style="font-size:var(--fs-xs)">Admin-only by default</div></div><div class="toggle" onclick="this.classList.toggle('on')"></div></div>
+              <div class="perm-row"><div><b style="font-weight:600">Manage customer teams</b><div class="faint" style="font-size:var(--fs-xs)">Invite the client's own colleagues</div></div><div class="toggle on" onclick="this.classList.toggle('on')"></div></div>
             </div>
           </div>
           <div class="set-panel" id="set-billing">
@@ -673,14 +815,14 @@
 
 <!-- Add Client modal -->
 <div class="modal-bg" id="addClientModal">
-  <div class="modal" role="dialog" aria-label="Add new client">
+  <div class="modal" role="dialog">
     <h3 class="serif">Add new client</h3>
     <div class="msub">We'll email them a link to onboard to their own dashboard.</div>
     <div class="field"><label for="ac-name">Full name</label><input id="ac-name" placeholder="e.g. Priya Nair"></div>
     <div class="field"><label for="ac-email">Email</label><input id="ac-email" type="email" placeholder="priya@company.com"></div>
     <div class="field"><label for="ac-company">Company name</label><input id="ac-company" placeholder="e.g. Northwind Co."></div>
     <div class="field-2">
-      <div class="field"><label for="ac-staff">Staff / seat</label><select id="ac-staff"><option>Standard seat</option><option>Executive seat</option><option>Team seat</option></select></div>
+      <div class="field"><label for="ac-staff">Weekly posting goal</label><select id="ac-staff"><option>2 posts / week</option><option selected>4 posts / week</option><option>Daily</option></select></div>
       <div class="field"><label for="ac-writer">Assigned writer</label><select id="ac-writer"><option>Matvei</option><option>Tunde A.</option><option>Jia L.</option></select></div>
     </div>
     <div class="modal-foot"><button class="btn btn-ghost" id="cancelAddClient">Cancel</button><button class="btn btn-primary" id="saveAddClient">Add client &amp; send invite</button></div>
@@ -688,7 +830,7 @@
 </div>
 
 <div class="modal-bg" id="inviteModal">
-  <div class="modal" role="dialog" aria-label="Invite link">
+  <div class="modal" role="dialog">
     <h3 class="serif">Invite sent ✓</h3>
     <div class="msub" id="inviteSub">An onboarding email is on its way. You can also share this personal link directly.</div>
     <label style="display:block;font-size:var(--fs-sm);font-weight:600;margin-bottom:6px">Personal onboarding link</label>
@@ -697,20 +839,9 @@
   </div>
 </div>
 
-<div class="modal-bg" id="reminderModal">
-  <div class="modal" role="dialog" aria-label="Send reminder">
-    <h3 class="serif">Send onboarding reminder</h3>
-    <div class="msub" id="remSub">This client hasn't activated yet. Send a nudge or copy their link for a personal note.</div>
-    <div class="field"><label>Message preview</label><textarea rows="3" id="remMsg">Hi — it's been 3 days and your BrandAboutMe account isn't active yet. Here's your link to pick up where you left off. Takes 3 minutes.</textarea></div>
-    <label style="display:block;font-size:var(--fs-sm);font-weight:600;margin-bottom:6px">Personal onboarding link</label>
-    <div class="invite-box"><code id="remLink">https://app.brandaboutme.co/onboard/ab12cd34</code><button class="btn btn-ghost btn-sm" id="copyRem">Copy</button></div>
-    <div class="modal-foot"><button class="btn btn-ghost" id="cancelRem">Cancel</button><button class="btn btn-primary" id="sendRem">Send reminder</button></div>
-  </div>
-</div>
-
 <!-- Composer -->
 <div class="modal-bg" id="composerModal">
-  <div class="modal wide" role="dialog" aria-label="Create post">
+  <div class="modal wide" role="dialog">
     <h3 class="serif">Create post</h3>
     <div class="msub">Write it yourself, brainstorm with AI on the right, preview as the client, then schedule.</div>
     <div class="composer-grid">
@@ -718,7 +849,7 @@
         <div class="field" style="margin-bottom:12px"><label for="cp-client">Post for client</label>
           <select id="cp-client"><option>Vero Studio — Lena M.</option><option>Northwind Co. — Priya Nair</option><option>Lumen Partners — Sam O.</option></select></div>
         <label style="display:block;font-size:var(--fs-sm);font-weight:600;margin-bottom:6px">Content</label>
-        <textarea id="cp-text" placeholder="Write the post…">Twenty years in finance taught me one uncomfortable truth: the spreadsheet is never the decision. The decision is always about people.</textarea>
+        <textarea id="cp-text">Twenty years in finance taught me one uncomfortable truth: the spreadsheet is never the decision. The decision is always about people.</textarea>
         <div class="attach-row"><button class="attach-chip" data-attach="image">⇧ Attach image</button><button class="attach-chip" data-attach="video">▷ Attach video</button><button class="attach-chip" data-attach="library">▧ From library</button></div>
         <div class="attached" id="attached"><div class="thumb" id="attThumb">▧</div><div><b id="attName">image.jpg</b><div style="color:var(--faint);font-size:var(--fs-xs)">Attached</div></div><button id="removeAtt">✕</button></div>
         <div class="field-2" style="margin-top:16px"><div class="field"><label for="cp-date">Schedule date</label><input id="cp-date" type="date"></div><div class="field"><label for="cp-time">Time</label><input id="cp-time" type="time" value="09:00"></div></div>
@@ -738,11 +869,38 @@
           <div class="lp-head"><div class="av">LM</div><div><b id="lpName">Lena M.</b><span>Founder, Vero Studio · now</span></div></div>
           <div class="lp-body" id="lpBody"></div>
           <div class="lp-media" id="lpMedia">Media attached</div>
-          <div class="lp-foot"><span>♡ Like</span><span>↺ Repost</span><span>➤ Send</span></div>
+          <div class="lp-foot"><span>♡ Like</span><span>◌ Comment</span><span>↺ Repost</span></div>
         </div>
       </div>
     </div>
     <div class="modal-foot"><button class="btn btn-ghost" id="cancelComposer">Cancel</button><button class="btn btn-primary" id="saveComposer">Schedule post</button></div>
+  </div>
+</div>
+
+<!-- Post deep-stats modal -->
+<div class="modal-bg" id="postStatsModal">
+  <div class="modal mid" role="dialog">
+    <h3 class="serif" id="psTitle">Post statistics</h3>
+    <div class="msub" id="psSub">Published 18 Aug 2026</div>
+    <div class="ps-grid">
+      <div class="ps-stat"><div class="v" id="psImp">32k</div><div class="l">Impressions</div></div>
+      <div class="ps-stat"><div class="v" id="psEng">7.1%</div><div class="l">Engagement rate <span class="info">i<span class="tip">Reactions + comments + reshares ÷ impressions.</span></span></div></div>
+      <div class="ps-stat"><div class="v">1.2k</div><div class="l">Reactions</div></div>
+      <div class="ps-stat"><div class="v">84</div><div class="l">Comments</div></div>
+      <div class="ps-stat"><div class="v">46</div><div class="l">Reshares</div></div>
+      <div class="ps-stat"><div class="v">+210</div><div class="l">New followers</div></div>
+    </div>
+    <div class="col-label">Impressions over first 7 days</div>
+    <div class="ps-bars">
+      <div class="col"><div class="bar"><i style="height:30%"></i></div><div class="lab">D1</div></div>
+      <div class="col"><div class="bar"><i style="height:70%"></i></div><div class="lab">D2</div></div>
+      <div class="col"><div class="bar"><i style="height:100%"></i></div><div class="lab">D3</div></div>
+      <div class="col"><div class="bar"><i style="height:55%"></i></div><div class="lab">D4</div></div>
+      <div class="col"><div class="bar"><i style="height:35%"></i></div><div class="lab">D5</div></div>
+      <div class="col"><div class="bar"><i style="height:22%"></i></div><div class="lab">D6</div></div>
+      <div class="col"><div class="bar"><i style="height:15%"></i></div><div class="lab">D7</div></div>
+    </div>
+    <div class="modal-foot"><button class="btn btn-ghost" id="closePostStats">Close</button><button class="btn btn-primary" onclick="toast('Opening full report…')">Full report</button></div>
   </div>
 </div>
 
@@ -752,27 +910,22 @@
 const root=document.documentElement;
 document.getElementById('themeBtn').onclick=function(){ const dark=root.getAttribute('data-theme')==='dark'; root.setAttribute('data-theme',dark?'light':'dark'); this.textContent=dark?'☾':'☀'; };
 let toastTimer;
-function toast(m){ const t=document.getElementById('toast'); t.textContent=m; t.classList.add('show'); clearTimeout(toastTimer); toastTimer=setTimeout(()=>t.classList.remove('show'),2600); }
+function toast(m){ const t=document.getElementById('toast'); t.textContent=m; t.classList.add('show'); clearTimeout(toastTimer); toastTimer=setTimeout(()=>t.classList.remove('show'),2500); }
 function esc(s){ const d=document.createElement('div'); d.textContent=s; return d.innerHTML; }
 function initials(n){ return n.split(' ').map(w=>w[0]).join('').slice(0,2).toUpperCase(); }
 
-/* ===== notifications (unread state + latest feed) ===== */
+/* notifications */
 let notifications=[
-  {ic:'✎',title:'3 drafts awaiting client approval',sub:'Northwind, Vero, Lumen · 2h ago',unread:true},
   {ic:'◉',title:'New client added — Priya Nair',sub:'Assigned to Matvei · 5h ago',unread:true},
-  {ic:'▲',title:"Vero's last post hit 32k reach",sub:'+140% vs their baseline · yesterday',unread:true},
-  {ic:'✓',title:'David R. approved a draft',sub:'Cedar & Co. · yesterday',unread:false},
-  {ic:'✉',title:'Reminder sent to Sam O.',sub:'Lumen Partners · 2 days ago',unread:false}
+  {ic:'▲',title:"Vero's last post hit 32k impressions",sub:'+140% vs their baseline · yesterday',unread:true},
+  {ic:'◌',title:'New audience comment on Vero post',sub:'Needs an editor reply · 20 min ago',unread:true},
+  {ic:'✓',title:'David R. approved a draft',sub:'Cedar & Co. · yesterday',unread:false}
 ];
 function renderNotif(){
   const unread=notifications.filter(n=>n.unread).length;
-  const badge=document.getElementById('notifCount');
-  badge.style.display=unread?'flex':'none'; badge.textContent=unread;
-  document.getElementById('notifList').innerHTML=notifications.slice(0,5).map(n=>
-    `<div class="item ${n.unread?'unread':''}"><div class="ni">${n.ic}</div><div><b>${esc(n.title)}</b><span>${esc(n.sub)}</span></div></div>`).join('');
-  // dashboard latest-activity feed = three latest
-  document.getElementById('feedList').innerHTML=notifications.slice(0,4).map(n=>
-    `<div class="feed-item"><div class="dot" style="${n.unread?'':'background:var(--line-strong)'}"></div><div><b style="font-weight:600;font-size:var(--fs-sm)">${esc(n.title)}</b><div class="when">${esc(n.sub)}</div></div></div>`).join('');
+  const badge=document.getElementById('notifCount'); badge.style.display=unread?'flex':'none'; badge.textContent=unread;
+  document.getElementById('notifList').innerHTML=notifications.map(n=>`<div class="item ${n.unread?'unread':''}"><div class="ni">${n.ic}</div><div><b>${esc(n.title)}</b><span>${esc(n.sub)}</span></div></div>`).join('');
+  document.getElementById('feedList').innerHTML=notifications.slice(0,4).map(n=>`<div class="feed-item"><div class="ic">${n.ic}</div><div><b style="font-weight:600;font-size:var(--fs-sm)">${esc(n.title)}</b><div class="when">${esc(n.sub)}</div></div></div>`).join('');
 }
 const bell=document.getElementById('bellBtn'), notif=document.getElementById('notif');
 bell.onclick=e=>{ e.stopPropagation(); notif.classList.toggle('open'); };
@@ -780,31 +933,30 @@ document.getElementById('openBell').onclick=e=>{ e.stopPropagation(); notif.clas
 document.addEventListener('click',e=>{ if(!e.target.closest('#notif')&&!e.target.closest('#bellBtn')&&!e.target.closest('#openBell')) notif.classList.remove('open'); });
 document.getElementById('markRead').onclick=()=>{ notifications.forEach(n=>n.unread=false); renderNotif(); };
 
-/* ===== role switch ===== */
-const body=document.body;
-const roleAdmin=document.getElementById('roleAdmin'), roleWriter=document.getElementById('roleWriter');
+/* role switch */
+const body=document.body, roleAdmin=document.getElementById('roleAdmin'), roleWriter=document.getElementById('roleWriter');
 let writerFilter=null;
 function setRole(role){
   body.setAttribute('data-role',role);
   roleAdmin.classList.toggle('on',role==='admin'); roleWriter.classList.toggle('on',role==='writer');
   if(role==='writer'){
     document.getElementById('roleAv').textContent='M'; document.getElementById('roleName').textContent='Matvei'; document.getElementById('roleDesc').textContent='Writer · 6 clients';
-    document.getElementById('dashTitle').textContent='My Dashboard'; document.getElementById('dashSub').textContent='Your clients and what needs you today.';
-    document.getElementById('clientsTitle').textContent='My Clients'; document.getElementById('clientsSub').textContent='Clients assigned to you — brand identity, history and statistics.';
+    document.getElementById('dashTitle').textContent='Welcome back, Matvei';
+    document.getElementById('clientsTitle').textContent='My Clients'; document.getElementById('clientsSub').textContent='Clients assigned to you — pipeline, brand identity, history and their team.';
     writerFilter='Matvei';
   } else {
     document.getElementById('roleAv').textContent='RK'; document.getElementById('roleName').textContent='Rhea K.'; document.getElementById('roleDesc').textContent='Admin · BAM team';
-    document.getElementById('dashTitle').textContent='Dashboard'; document.getElementById('dashSub').textContent="Your platform at a glance — what needs you, what's new, and how your clients are doing.";
-    document.getElementById('clientsTitle').textContent='Client Management'; document.getElementById('clientsSub').textContent='Everything for a client in one place — status, writer, brand identity, history and statistics.';
+    document.getElementById('dashTitle').textContent='Welcome back, Rhea';
+    document.getElementById('clientsTitle').textContent='Client Management'; document.getElementById('clientsSub').textContent='Everything about a client in one place — status, writer, pipeline, brand identity, post history and their team.';
     writerFilter=null;
   }
-  goPage('dashboard'); renderClients(); renderContent(); renderDashClients(); fillPickers();
+  goPage('dashboard'); renderClients(); renderContent();
 }
 roleAdmin.onclick=()=>setRole('admin'); roleWriter.onclick=()=>setRole('writer');
 
-/* ===== nav ===== */
+/* nav */
 const pages=document.querySelectorAll('.page');
-const titles={dashboard:'Dashboard',analytics:'Analytics',content:'Content Manager',clients:'Client Management',clientdetail:'Client Detail',ai:'AI Studio',settings:'Settings'};
+const titles={dashboard:'Dashboard',content:'Content Manager',comments:'Comments Manager',clients:'Client Management',clientdetail:'Client Detail',settings:'Settings'};
 function goPage(name){
   pages.forEach(p=>p.classList.toggle('on',p.id==='p-'+name));
   document.querySelectorAll('.nav button').forEach(b=>b.classList.toggle('active',b.dataset.page===name));
@@ -812,97 +964,68 @@ function goPage(name){
   window.scrollTo({top:0});
 }
 document.querySelectorAll('[data-page]').forEach(el=>el.addEventListener('click',()=>goPage(el.dataset.page)));
-
-/* dashboard "go to" shortcuts */
 document.querySelectorAll('[data-goto]').forEach(el=>el.addEventListener('click',()=>{
   const g=el.dataset.goto;
   if(g==='pending'){ goPage('content'); setContentTab('Pending'); }
-  else if(g==='ideas'){ goPage('content'); toast('Opening unreviewed client ideas'); }
-  else if(g==='quiet'||g==='clients'){ goPage('clients'); }
+  else if(g==='ideas'){ goPage('content'); setContentTab('Ideas'); }
+  else if(g==='clients'){ goPage('clients'); }
 }));
 document.getElementById('switchView').onclick=()=>toast('Switching to user view…');
 
-/* ===== data ===== */
+/* ===== clients ===== */
 const writers=['Matvei','Tunde A.','Jia L.','Unassigned'];
 let clients=[
-  {name:'Lena M.',company:'Vero Studio',active:true,meet:'20 Aug · 10:00',writer:'Matvei',sub:true,link:'ab12cd34',reach:'186k',rate:'88%'},
-  {name:'Priya Nair',company:'Northwind Co.',active:true,meet:'21 Aug · 14:30',writer:'Tunde A.',sub:true,link:'ef56gh78',reach:'98k',rate:'84%'},
-  {name:'Sam O.',company:'Lumen Partners',active:false,meet:'—',writer:'Jia L.',sub:false,link:'ij90kl12',reach:'44k',rate:'71%'},
-  {name:'David R.',company:'Cedar & Co.',active:true,meet:'24 Aug · 09:00',writer:'Matvei',sub:true,link:'mn34op56',reach:'72k',rate:'90%'},
-  {name:'Amara B.',company:'Flux Health',active:true,meet:'25 Aug · 11:30',writer:'Unassigned',sub:true,link:'qr78st90',reach:'51k',rate:'86%'},
-  {name:'Ken T.',company:'Orbit Labs',active:false,meet:'—',writer:'Tunde A.',sub:false,link:'uv12wx34',reach:'18k',rate:'66%'}
+  {name:'Lena M.',company:'Vero Studio',active:true,writer:'Matvei',sub:true,link:'ab12cd34',goal:4,done:3,sched:1},
+  {name:'Priya Nair',company:'Northwind Co.',active:true,writer:'Tunde A.',sub:true,link:'ef56gh78',goal:4,done:1,sched:1},
+  {name:'Sam O.',company:'Lumen Partners',active:false,writer:'Jia L.',sub:false,link:'ij90kl12',goal:3,done:0,sched:0},
+  {name:'David R.',company:'Cedar & Co.',active:true,writer:'Matvei',sub:true,link:'mn34op56',goal:4,done:4,sched:0},
+  {name:'Amara B.',company:'Flux Health',active:true,writer:'Unassigned',sub:true,link:'qr78st90',goal:2,done:1,sched:1},
+  {name:'Ken T.',company:'Orbit Labs',active:false,writer:'Tunde A.',sub:false,link:'uv12wx34',goal:3,done:0,sched:0}
 ];
 function visibleClients(){ return writerFilter?clients.filter(c=>c.writer===writerFilter):clients; }
-
-/* dashboard client overview */
-function renderDashClients(){
-  document.getElementById('dashClientList').innerHTML=visibleClients().slice(0,6).map(c=>
-    `<div class="mini-row"><span class="av">${initials(c.name)}</span><div><b>${esc(c.name)}</b><div class="sub">${esc(c.company)} · ${c.writer}</div></div>
-     <div class="right"><span class="banner ${c.active?'banner-yes':'banner-no'}">${c.active?'Active':'Inactive'}</span></div></div>`).join('');
+function pipeMini(c){
+  const donePct=Math.round(c.done/c.goal*100), schedPct=Math.round(c.sched/c.goal*100);
+  const label=(c.done+c.sched>=c.goal)?'on track':(c.done+c.sched===0?'at risk':'behind');
+  const col=label==='on track'?'var(--pos)':(label==='at risk'?'var(--neg)':'var(--warn)');
+  return `<div class="pipe-mini"><div class="track"><i class="done" style="width:${donePct}%"></i><i class="sched" style="width:${schedPct}%"></i></div><b style="color:${col}">${c.done+c.sched}/${c.goal} ${label}</b></div>`;
 }
-
-/* fill pickers */
-function fillPickers(){
-  const an=document.getElementById('anClient');
-  an.innerHTML=visibleClients().map(c=>`<option>${c.company} — ${c.name}</option>`).join('');
-}
-/* ===== client table ===== */
-function closeMenus(){ document.querySelectorAll('.menu.open').forEach(m=>m.classList.remove('open')); }
-document.addEventListener('click',e=>{ if(!e.target.closest('.row-actions')) closeMenus(); });
 function renderClients(filter='',wf='All writers'){
   const tbody=document.getElementById('clientBody');
   let rows=visibleClients().filter(c=>(c.name+' '+c.company).toLowerCase().includes(filter.toLowerCase()));
   if(wf!=='All writers') rows=rows.filter(c=>c.writer===wf);
-  if(!rows.length){ tbody.innerHTML='<tr class="empty-row"><td colspan="6">No clients match.</td></tr>'; return; }
-  tbody.innerHTML=rows.map(c=>{
-    const idx=clients.indexOf(c);
-    const opts=writers.map(w=>`<option ${w===c.writer?'selected':''}>${w}</option>`).join('');
-    const inactiveItem=!c.active?`<button data-act="remind" data-idx="${idx}">✉ Send onboarding reminder</button><div class="sep"></div>`:'';
-    return `<tr>
+  if(!rows.length){ tbody.innerHTML='<tr class="empty-row"><td colspan="4">No clients match.</td></tr>'; return; }
+  tbody.innerHTML=rows.map(c=>{ const idx=clients.indexOf(c); const opts=writers.map(w=>`<option ${w===c.writer?'selected':''}>${w}</option>`).join('');
+    return `<tr class="clickable" data-idx="${idx}">
       <td><div class="cell-name"><span class="av">${initials(c.name)}</span><div><b>${esc(c.name)}</b><span>${esc(c.company)}</span></div></div></td>
       <td><span class="banner ${c.active?'banner-yes':'banner-no'}">${c.active?'Yes':'No'}</span></td>
-      <td class="meeting">${c.meet==='—'?'<span>No meeting set</span>':c.meet}</td>
-      <td><select class="writer" data-idx="${idx}">${opts}</select></td>
-      <td><span class="banner ${c.sub?'banner-yes':'banner-no'}">${c.sub?'Active':'Inactive'}</span></td>
-      <td class="row-actions"><button class="dots" data-idx="${idx}">⋯</button>
-        <div class="menu">
-          <button data-act="view" data-idx="${idx}">◉ Open client workspace</button>
-          <button data-act="copy" data-idx="${idx}">⧉ Copy invite link</button>
-          <div class="sep"></div>${inactiveItem}
-          <button class="danger" data-act="deactivate" data-idx="${idx}">⊘ Deactivate</button>
-        </div></td></tr>`;
+      <td>${pipeMini(c)}</td>
+      <td><select class="writer" data-idx="${idx}">${opts}</select></td></tr>`;
   }).join('');
-  tbody.querySelectorAll('select.writer').forEach(s=>s.onchange=()=>{ clients[+s.dataset.idx].writer=s.value; renderDashClients(); toast('Writer reassigned to '+s.value); });
-  tbody.querySelectorAll('.dots').forEach(d=>d.onclick=e=>{ e.stopPropagation(); const m=d.nextElementSibling,o=m.classList.contains('open'); closeMenus(); if(!o)m.classList.add('open'); });
-  tbody.querySelectorAll('.menu button').forEach(b=>b.onclick=()=>{
-    const c=clients[+b.dataset.idx]; closeMenus();
-    if(b.dataset.act==='view') openClientDetail(c);
-    else if(b.dataset.act==='copy'){ copyText('https://app.brandaboutme.co/onboard/'+c.link); toast('Invite link copied'); }
-    else if(b.dataset.act==='remind') openReminder(c);
-    else if(b.dataset.act==='deactivate'){ c.active=false; c.sub=false; renderClients(document.getElementById('clientSearch').value,document.getElementById('clientWriterFilter').value); renderDashClients(); toast(c.name+' deactivated'); }
-  });
+  tbody.querySelectorAll('select.writer').forEach(s=>{ s.onclick=e=>e.stopPropagation(); s.onchange=e=>{ e.stopPropagation(); clients[+s.dataset.idx].writer=s.value; toast('Writer reassigned to '+s.value); }; });
+  tbody.querySelectorAll('tr.clickable').forEach(r=>r.onclick=()=>openClientDetail(clients[+r.dataset.idx]));
 }
 document.getElementById('clientSearch').oninput=e=>renderClients(e.target.value,document.getElementById('clientWriterFilter').value);
 document.getElementById('clientWriterFilter').onchange=e=>renderClients(document.getElementById('clientSearch').value,e.target.value);
 
-/* ===== client detail ===== */
+/* client detail */
 const histories={
-  'Lena M.':[['The spreadsheet is never the decision…','18 Aug','approve','1','32k'],['Why I still take notes by hand…','14 Aug','approve','0','21k'],['A hiring mistake I made at 30…','10 Aug','decline','2','—'],['What actually matters at 45…','6 Aug','approve','1','44k']]
+  'Lena M.':[['The spreadsheet is never the decision…','18 Aug','approve','32k','7.1%'],['Why I still take notes by hand…','14 Aug','approve','21k','5.4%'],['A hiring mistake I made at 30…','10 Aug','decline','—','—'],['What actually matters at 45…','6 Aug','approve','44k','8.3%']]
 };
+let detailClient=null;
 function openClientDetail(c){
-  document.getElementById('cdAv').textContent=initials(c.name);
-  document.getElementById('biAv').textContent=initials(c.name);
-  document.getElementById('cdName').textContent=c.name;
-  document.getElementById('cdSub').textContent=c.company+' · Writer: '+c.writer;
-  document.getElementById('cdActive').textContent=c.active?'Active':'Inactive';
-  document.getElementById('cdActive').className='banner '+(c.active?'banner-yes':'banner-no');
-  document.getElementById('cdSubsc').textContent=c.sub?'Subscribed':'Not subscribed';
-  document.getElementById('cdSubsc').className='banner '+(c.sub?'banner-yes':'banner-no');
-  const h=histories[c.name]||[['Sample post one…','18 Aug','approve','1','28k'],['Sample post two…','12 Aug','decline','2','—'],['Sample post three…','7 Aug','approve','0','19k']];
-  document.getElementById('cdHistory').innerHTML=h.map(r=>`<tr>
-    <td style="max-width:230px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${esc(r[0])}</td><td>${r[1]}</td>
-    <td>${r[2]==='approve'?'<span class="banner banner-yes">Approved</span>':'<span class="banner banner-no">Declined</span>'}</td>
-    <td>${r[3]}</td><td>${r[4]}</td></tr>`).join('');
+  detailClient=c;
+  document.getElementById('cdAv').textContent=initials(c.name); document.getElementById('biAv').textContent=initials(c.name);
+  document.getElementById('cdName').textContent=c.name; document.getElementById('cdSub').textContent=c.company+' · Writer: '+c.writer;
+  document.getElementById('cdActive').textContent=c.active?'Active':'Inactive'; document.getElementById('cdActive').className='banner '+(c.active?'banner-yes':'banner-no');
+  document.getElementById('cdSubsc').textContent=c.sub?'Subscribed':'Not subscribed'; document.getElementById('cdSubsc').className='banner '+(c.sub?'banner-yes':'banner-no');
+  const h=histories[c.name]||[['Sample post one…','18 Aug','approve','28k','6.1%'],['Sample post two…','12 Aug','decline','—','—'],['Sample post three…','7 Aug','approve','19k','4.8%']];
+  document.getElementById('cdHistory').innerHTML=h.map(r=>{
+    const clickable=r[2]==='approve';
+    return `<tr class="${clickable?'clickable':''}" ${clickable?`data-imp="${r[3]}" data-eng="${r[4]}" data-post="${esc(r[0])}" data-date="${r[1]}"`:''}>
+      <td style="max-width:230px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${esc(r[0])}</td><td>${r[1]}</td>
+      <td>${r[2]==='approve'?'<span class="banner banner-yes">Approved</span>':'<span class="banner banner-no">Declined</span>'}</td>
+      <td>${r[3]}</td><td>${r[4]}</td></tr>`; }).join('');
+  document.querySelectorAll('#cdHistory tr.clickable').forEach(r=>r.onclick=()=>openPostStats(r.dataset));
   document.querySelectorAll('#cdTabs .subtab').forEach((x,i)=>x.classList.toggle('active',i===0));
   document.querySelectorAll('#p-clientdetail .subpanel').forEach(p=>p.classList.toggle('on',p.id==='cd-overview'));
   goPage('clientdetail'); document.getElementById('pageTitle').textContent='Client Detail';
@@ -913,10 +1036,17 @@ document.querySelectorAll('#cdTabs .subtab').forEach(b=>b.onclick=()=>{
 });
 document.getElementById('saveBrand').onclick=()=>toast('Brand identity saved');
 document.getElementById('cdNewPost').onclick=()=>openComposer();
+document.getElementById('cdCopy').onclick=()=>{ if(detailClient){ copyText('https://app.brandaboutme.co/onboard/'+detailClient.link); toast('Invite link copied'); } };
 document.querySelectorAll('.chip-tog').forEach(c=>c.onclick=()=>c.classList.toggle('on'));
 
-/* add client / invite / reminder */
-const acModal=document.getElementById('addClientModal'), inviteModal=document.getElementById('inviteModal'), remModal=document.getElementById('reminderModal');
+/* post stats modal */
+const psModal=document.getElementById('postStatsModal');
+function openPostStats(d){ document.getElementById('psTitle').textContent=d.post.replace(/…$/,'')||'Post statistics'; document.getElementById('psSub').textContent='Published '+d.date+' 2026'; document.getElementById('psImp').textContent=d.imp; document.getElementById('psEng').textContent=d.eng; psModal.classList.add('open'); }
+document.getElementById('closePostStats').onclick=()=>psModal.classList.remove('open');
+psModal.onclick=e=>{ if(e.target===psModal) psModal.classList.remove('open'); };
+
+/* add client / invite */
+const acModal=document.getElementById('addClientModal'), inviteModal=document.getElementById('inviteModal');
 document.getElementById('openAddClient').onclick=()=>acModal.classList.add('open');
 document.getElementById('cancelAddClient').onclick=()=>acModal.classList.remove('open');
 acModal.onclick=e=>{ if(e.target===acModal) acModal.classList.remove('open'); };
@@ -924,8 +1054,8 @@ document.getElementById('saveAddClient').onclick=()=>{
   const name=document.getElementById('ac-name').value.trim(), company=document.getElementById('ac-company').value.trim();
   if(!name||!company){ toast('Add at least a name and company'); return; }
   const link=Math.random().toString(36).slice(2,10);
-  clients.unshift({name,company,active:false,meet:'—',writer:document.getElementById('ac-writer').value,sub:false,link,reach:'—',rate:'—'});
-  renderClients(); renderDashClients(); fillPickers(); acModal.classList.remove('open');
+  clients.unshift({name,company,active:false,writer:document.getElementById('ac-writer').value,sub:false,link,goal:4,done:0,sched:0});
+  renderClients(); acModal.classList.remove('open');
   ['ac-name','ac-email','ac-company'].forEach(id=>document.getElementById(id).value='');
   document.getElementById('inviteLink').textContent='https://app.brandaboutme.co/onboard/'+link;
   document.getElementById('inviteSub').textContent='An onboarding email is on its way to '+name+'. You can also share this personal link directly.';
@@ -933,14 +1063,9 @@ document.getElementById('saveAddClient').onclick=()=>{
 };
 document.getElementById('closeInvite').onclick=()=>inviteModal.classList.remove('open');
 document.getElementById('copyInvite').onclick=()=>{ copyText(document.getElementById('inviteLink').textContent); toast('Link copied'); };
-function openReminder(c){ document.getElementById('remSub').textContent=c.name+" hasn't activated yet. Send a nudge or copy their link for a personal note."; document.getElementById('remLink').textContent='https://app.brandaboutme.co/onboard/'+c.link; remModal.classList.add('open'); }
-document.getElementById('cancelRem').onclick=()=>remModal.classList.remove('open');
-remModal.onclick=e=>{ if(e.target===remModal) remModal.classList.remove('open'); };
-document.getElementById('copyRem').onclick=()=>{ copyText(document.getElementById('remLink').textContent); toast('Link copied'); };
-document.getElementById('sendRem').onclick=()=>{ remModal.classList.remove('open'); toast('Reminder sent'); };
 function copyText(t){ navigator.clipboard&&navigator.clipboard.writeText(t).catch(()=>{}); }
 
-/* ===== content manager: tabs + filters + sort ===== */
+/* ===== content manager ===== */
 let posts=[
   {company:'Vero Studio',client:'Lena M.',writer:'Matvei',content:'The spreadsheet is never the decision…',date:'2026-08-20',status:'Pending'},
   {company:'Northwind Co.',client:'Priya Nair',writer:'Tunde A.',content:'Most onboarding fails for one reason…',date:'2026-08-21',status:'Pending'},
@@ -956,44 +1081,34 @@ function statusBanner(s){
   if(s==='Pending')return '<span class="banner banner-warn">Pending</span>';
   if(s==='Approved')return '<span class="banner banner-purple">Approved</span>';
   if(s==='Published')return '<span class="banner banner-yes">Published</span>';
-  if(s==='Declined')return '<span class="banner banner-no">Declined</span>';
-  return '<span class="banner banner-purple">Comment</span>';
+  return '<span class="banner banner-no">Declined</span>';
 }
 function setContentTab(tab){
   contentTab=tab;
   document.querySelectorAll('#contentTabs .tab').forEach(t=>t.classList.toggle('active',t.dataset.tab===tab));
-  const studio=tab==='Studio';
-  document.getElementById('contentStudioWrap').style.display=studio?'block':'none';
-  document.getElementById('contentTableWrap').style.display=studio?'none':'block';
-  if(!studio) renderContent();
+  document.getElementById('contentTableWrap').style.display=(tab==='Ideas'||tab==='Media'||tab==='Studio')?'none':'block';
+  document.getElementById('contentIdeasWrap').style.display=tab==='Ideas'?'block':'none';
+  document.getElementById('contentMediaWrap').style.display=tab==='Media'?'block':'none';
+  document.getElementById('contentStudioWrap').style.display=tab==='Studio'?'block':'none';
+  if(tab!=='Ideas'&&tab!=='Media'&&tab!=='Studio') renderContent();
 }
 document.querySelectorAll('#contentTabs .tab').forEach(t=>t.onclick=()=>setContentTab(t.dataset.tab));
 function renderContent(){
   const filter=document.getElementById('contentSearch').value.toLowerCase();
-  const wf=document.getElementById('filterWriter').value;
-  const sort=document.getElementById('filterSort').value;
+  const wf=document.getElementById('filterWriter').value, sort=document.getElementById('filterSort').value;
   let rows=posts.filter(p=>!writerFilter||p.writer===writerFilter);
-  // counts
   const by=s=>rows.filter(p=>p.status===s).length;
-  document.getElementById('cAll').textContent=rows.length;
-  document.getElementById('cPending').textContent=by('Pending');
-  document.getElementById('cApproved').textContent=by('Approved');
-  document.getElementById('cPublished').textContent=by('Published');
-  document.getElementById('cDeclined').textContent=by('Declined');
-  document.getElementById('cComments').textContent=0;
-  if(contentTab!=='all'&&contentTab!=='Studio') rows=rows.filter(p=>p.status===contentTab);
+  document.getElementById('cAll').textContent=rows.length; document.getElementById('cPending').textContent=by('Pending');
+  document.getElementById('cApproved').textContent=by('Approved'); document.getElementById('cPublished').textContent=by('Published'); document.getElementById('cDeclined').textContent=by('Declined');
+  if(contentTab!=='all'&&!['Ideas','Media','Studio'].includes(contentTab)) rows=rows.filter(p=>p.status===contentTab);
   if(wf!=='All writers') rows=rows.filter(p=>p.writer===wf);
   rows=rows.filter(p=>(p.company+' '+p.client+' '+p.content+' '+fmtDate(p.date)).toLowerCase().includes(filter));
   if(sort.includes('Oldest')) rows.sort((a,b)=>new Date(a.date)-new Date(b.date));
   else if(sort.includes('A–Z')) rows.sort((a,b)=>a.company.localeCompare(b.company));
   else rows.sort((a,b)=>new Date(b.date)-new Date(a.date));
   const tbody=document.getElementById('contentBody');
-  if(!rows.length){ tbody.innerHTML='<tr class="empty-row"><td colspan="6">No posts match.</td></tr>'; return; }
-  tbody.innerHTML=rows.map(p=>`<tr>
-    <td><b>${esc(p.company)}</b></td><td>${esc(p.client)}</td>
-    <td style="color:var(--mut);max-width:260px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${esc(p.content)}</td>
-    <td>${fmtDate(p.date)}</td><td>${statusBanner(p.status)}</td>
-    <td class="row-actions"><button class="dots" style="pointer-events:none">✎</button></td></tr>`).join('');
+  if(!rows.length){ tbody.innerHTML='<tr class="empty-row"><td colspan="5">No posts match.</td></tr>'; return; }
+  tbody.innerHTML=rows.map(p=>`<tr><td><b>${esc(p.company)}</b></td><td>${esc(p.client)}</td><td style="color:var(--mut);max-width:260px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${esc(p.content)}</td><td>${fmtDate(p.date)}</td><td>${statusBanner(p.status)}</td></tr>`).join('');
 }
 document.getElementById('contentSearch').oninput=renderContent;
 document.getElementById('filterWriter').onchange=renderContent;
@@ -1003,7 +1118,6 @@ document.getElementById('filterSort').onchange=renderContent;
 const cpModal=document.getElementById('composerModal');
 function openComposer(){ cpModal.classList.add('open'); syncPreview(); }
 document.getElementById('openComposer').onclick=openComposer;
-document.getElementById('openComposer2').onclick=openComposer;
 document.getElementById('cancelComposer').onclick=()=>cpModal.classList.remove('open');
 cpModal.onclick=e=>{ if(e.target===cpModal) cpModal.classList.remove('open'); };
 const cpText=document.getElementById('cp-text'), lpBody=document.getElementById('lpBody'), cpClient=document.getElementById('cp-client'), lpName=document.getElementById('lpName');
@@ -1011,15 +1125,7 @@ function syncPreview(){ lpBody.textContent=cpText.value||'Your post will appear 
 cpText.oninput=syncPreview; cpClient.onchange=syncPreview;
 document.querySelectorAll('.attach-chip').forEach(b=>b.onclick=()=>{ const k=b.dataset.attach; document.getElementById('attThumb').textContent=k==='video'?'▷':'▧'; document.getElementById('attName').textContent=k==='video'?'clip.mp4':'image.jpg'; document.getElementById('attached').classList.add('show'); document.getElementById('lpMedia').classList.add('show'); });
 document.getElementById('removeAtt').onclick=()=>{ document.getElementById('attached').classList.remove('show'); document.getElementById('lpMedia').classList.remove('show'); };
-document.getElementById('saveComposer').onclick=()=>{
-  const vis=document.getElementById('cp-vis').value;
-  const [company,client]=cpClient.value.split('—').map(s=>s.trim());
-  const status=vis.startsWith('Draft')?'Pending':(vis.startsWith('Auto')?'Approved':'Pending');
-  const d=document.getElementById('cp-date').value;
-  posts.unshift({company,client,writer:writerFilter||'Matvei',content:cpText.value.slice(0,60)+'…',date:d||'2026-10-13',status});
-  renderContent(); cpModal.classList.remove('open'); toast('Post saved for '+client);
-};
-/* composer AI chat */
+document.getElementById('saveComposer').onclick=()=>{ const [company,client]=cpClient.value.split('—').map(s=>s.trim()); posts.unshift({company,client,writer:writerFilter||'Matvei',content:cpText.value.slice(0,60)+'…',date:'2026-10-22',status:'Pending'}); renderContent(); cpModal.classList.remove('open'); toast('Post saved for '+client); };
 const cpStream=document.getElementById('cpChatStream'), cpInput=document.getElementById('cpChatInput');
 function cpAdd(role,text,use){ const m=document.createElement('div'); m.className='cmsg '+role; m.innerHTML=`<div class="mav">${role==='user'?'RK':'AI'}</div><div class="bub">${esc(text)}${use?'<button class="use">↑ Use this draft</button>':''}</div>`; cpStream.appendChild(m); cpStream.scrollTop=cpStream.scrollHeight; if(use)m.querySelector('.use').onclick=()=>{ cpText.value=text; syncPreview(); toast('Draft moved to editor'); }; }
 function cpSend(){ const v=cpInput.value.trim(); if(!v)return; cpAdd('user',v); cpInput.value=''; cpInput.style.height='auto'; const client=cpClient.value.split('—')[1]?.trim()||'this client'; setTimeout(()=>cpAdd('ai',`Draft for ${client}, in their voice:\n\nI used to believe ${v.toLowerCase()} was simple. Fifteen years in, I know better — here's what changed my mind.`,true),500); }
@@ -1027,30 +1133,91 @@ document.getElementById('cpChatSend').onclick=cpSend;
 cpInput.addEventListener('keydown',e=>{ if(e.key==='Enter'&&!e.shiftKey){ e.preventDefault(); cpSend(); } });
 cpInput.addEventListener('input',()=>{ cpInput.style.height='auto'; cpInput.style.height=Math.min(cpInput.scrollHeight,90)+'px'; });
 
-/* ===== AI studio with history ===== */
-let chats=[
-  {title:'Hiring post — Vero',when:'Today',msgs:[{r:'user',t:'Draft a hiring post for Vero'},{r:'ai',t:'Here\u2019s a draft for Vero Studio, in Lena\u2019s voice: hiring for culture over credentials…'}]},
-  {title:'Rewrite warmer — Northwind',when:'Yesterday',msgs:[{r:'user',t:'Make this warmer'},{r:'ai',t:'Softened the opening and added a personal line…'}]},
-  {title:'5 angles — finance',when:'2 days ago',msgs:[{r:'user',t:'5 content angles for a finance consultant'},{r:'ai',t:'1) The advice I\u2019d give my 30-year-old self…'}]}
+/* media */
+document.getElementById('mediaGrid').innerHTML=[['IMG','headshot-2026.jpg','1.2 MB'],['PNG','q3-chart.png','420 KB'],['MP4','conference-clip.mp4','18 MB'],['IMG','team-offsite.jpg','2.1 MB'],['PDF','case-study.pdf','640 KB'],['PNG','li-banner.png','880 KB']].map(m=>`<div class="media-item"><div class="media-thumb">${m[0]}</div><div class="cap"><b>${m[1]}</b>${m[2]}</div></div>`).join('');
+
+/* ===== COMMENTS MANAGER (two-way sync: client + audience + editor) ===== */
+let threads=[
+  {id:1,client:'Lena M.',company:'Vero Studio',post:'Twenty years in finance taught me the spreadsheet is never the decision…',unread:2,kind:'audience',
+   msgs:[
+     {who:'audience',name:'Dayo A.',role:'Audience',t:'This is exactly why I left banking. Did you ever regret staying as long as you did?',time:'20 min ago'},
+     {who:'audience',name:'Marta K.',role:'Audience',t:'Saving this for my team.',time:'15 min ago'}
+   ]},
+  {id:2,client:'Lena M.',company:'Vero Studio',post:'Draft: "A hiring mistake I made at 30…"',unread:1,kind:'client',
+   msgs:[
+     {who:'editor',name:'Matvei',role:'Editor',t:'Here’s a draft on the hiring mistake — kept it warm. Happy to soften the opening if it feels sharp.',time:'3h ago'},
+     {who:'client',name:'Lena M.',role:'Client',t:'Can we soften the opening? It reads a bit harsh for me.',time:'1h ago'}
+   ]},
+  {id:3,client:'David R.',company:'Cedar & Co.',post:'Most onboarding fails for one reason: nobody owns week two…',unread:3,kind:'audience',
+   msgs:[
+     {who:'audience',name:'Sam P.',role:'Audience',t:'Week two is so underrated. What did you change specifically?',time:'2h ago'},
+     {who:'audience',name:'Lena M.',role:'Audience',t:'Great post David.',time:'2h ago'},
+     {who:'audience',name:'Ravi N.',role:'Audience',t:'Do you have a template for this?',time:'1h ago'}
+   ]},
+  {id:4,client:'Priya Nair',company:'Northwind Co.',post:'Draft: "What actually matters at 45…"',unread:0,kind:'client',
+   msgs:[
+     {who:'client',name:'Priya Nair',role:'Client',t:'Love this one. Approved — ship it.',time:'yesterday'},
+     {who:'editor',name:'Tunde A.',role:'Editor',t:'Scheduled for Monday 9am. Thanks Priya!',time:'yesterday'}
+   ]}
 ];
-let activeChat=0;
-const stream=document.getElementById('aiStream'), aiInput=document.getElementById('aiInput');
-function renderHistory(){ document.getElementById('histList').innerHTML=chats.map((c,i)=>`<button class="hist-item ${i===activeChat?'active':''}" data-i="${i}"><b>${esc(c.title)}</b><span>${c.when}</span></button>`).join(''); document.querySelectorAll('#histList .hist-item').forEach(b=>b.onclick=()=>{ activeChat=+b.dataset.i; renderHistory(); renderChat(); }); }
-function renderChat(){ const c=chats[activeChat]; stream.innerHTML=c.msgs.length?c.msgs.map(m=>`<div class="msg ${m.r}"><div class="mav">${m.r==='user'?'RK':'AI'}</div><div class="bubble">${esc(m.t)}</div></div>`).join(''):'<div class="msg ai"><div class="mav">AI</div><div class="bubble">New chat — what would you like to work on?</div></div>'; stream.scrollTop=stream.scrollHeight; }
-function aiSend(){ const v=aiInput.value.trim(); if(!v)return; const c=chats[activeChat]; c.msgs.push({r:'user',t:v}); if(c.title.startsWith('New chat')){ c.title=v.slice(0,28); renderHistory(); } aiInput.value=''; aiInput.style.height='auto'; renderChat(); const prov=document.getElementById('aiProvider').value; setTimeout(()=>{ c.msgs.push({r:'ai',t:`(via ${prov})\n\nHere's a draft: open with a hook, land one insight, close with a question. Tailor to a client's voice?`}); renderChat(); },500); }
-document.getElementById('aiSend').onclick=aiSend;
-aiInput.addEventListener('keydown',e=>{ if(e.key==='Enter'&&!e.shiftKey){ e.preventDefault(); aiSend(); } });
-aiInput.addEventListener('input',()=>{ aiInput.style.height='auto'; aiInput.style.height=Math.min(aiInput.scrollHeight,120)+'px'; });
-document.querySelectorAll('.ai-suggest').forEach(b=>b.onclick=()=>{ aiInput.value=b.textContent; aiSend(); });
-document.getElementById('newChat').onclick=()=>{ chats.unshift({title:'New chat',when:'Now',msgs:[]}); activeChat=0; renderHistory(); renderChat(); };
-document.getElementById('clearChat').onclick=()=>{ chats[activeChat].msgs=[]; renderChat(); };
+let activeThread=1, cmFilter='all';
+function renderThreads(){
+  let list=threads.filter(t=>{
+    if(cmFilter==='unread') return t.unread>0;
+    if(cmFilter==='reply') return t.msgs[t.msgs.length-1].who!=='editor';
+    if(cmFilter==='audience') return t.kind==='audience';
+    return true;
+  });
+  document.getElementById('cmThreads').innerHTML=list.map(t=>{
+    const last=t.msgs[t.msgs.length-1];
+    return `<button class="cm-thread ${t.id===activeThread?'active':''}" data-id="${t.id}">
+      <div class="t1"><span class="av">${initials(t.client)}</span><b>${esc(t.client)}</b>${t.unread?`<span class="unread">${t.unread}</span>`:''}</div>
+      <div class="snippet">${esc(last.name)}: ${esc(last.t)}</div>
+      <div class="meta">${esc(t.company)} · ${t.kind==='audience'?'Audience comments':'Client thread'} · ${esc(last.time)}</div>
+    </button>`;
+  }).join('')||'<div class="cm-empty" style="height:200px"><div style="font-size:1.6rem">◌</div>No threads in this filter</div>';
+  document.querySelectorAll('.cm-thread').forEach(b=>b.onclick=()=>{ activeThread=+b.dataset.id; const t=threads.find(x=>x.id===activeThread); if(t)t.unread=0; renderThreads(); renderPanel(); updateCmTag(); });
+}
+function renderPanel(){
+  const t=threads.find(x=>x.id===activeThread);
+  const panel=document.getElementById('cmPanel');
+  if(!t){ panel.innerHTML='<div class="cm-empty"><div style="font-size:1.8rem">◌</div>Select a thread to view the conversation</div>'; return; }
+  panel.innerHTML=`
+    <div class="cm-ctx">
+      <div class="lbl">${t.kind==='audience'?'Audience comments on a published post':'Comment thread on a draft'}</div>
+      <div class="post">"${esc(t.post)}"</div>
+      <div class="sub"><span>${esc(t.client)} · ${esc(t.company)}</span></div>
+      <div class="cm-sync">⇄ In sync with the client's view — they see your replies instantly</div>
+    </div>
+    <div class="cm-stream" id="cmStream"></div>
+    <div class="cm-reply"><textarea id="cmInput" rows="1" placeholder="${t.kind==='audience'?'Reply as '+t.client+' (editor-managed)…':'Reply to '+t.client+'…'}"></textarea><button class="btn btn-primary" id="cmSend">Send</button></div>`;
+  renderMsgs(t);
+  const input=document.getElementById('cmInput');
+  input.addEventListener('keydown',e=>{ if(e.key==='Enter'&&!e.shiftKey){ e.preventDefault(); sendCm(); } });
+  input.addEventListener('input',()=>{ input.style.height='auto'; input.style.height=Math.min(input.scrollHeight,120)+'px'; });
+  document.getElementById('cmSend').onclick=sendCm;
+}
+function renderMsgs(t){
+  document.getElementById('cmStream').innerHTML=t.msgs.map(m=>{
+    const side=m.who==='editor'?'editor':'client';
+    const av=m.who==='editor'?initials(m.name):initials(m.name);
+    return `<div class="cm-msg ${side}"><div class="av">${av}</div><div class="wrap"><div class="role">${esc(m.role)} · ${esc(m.name)}</div><div class="bub">${esc(m.t)}</div><div class="time">${esc(m.time)}</div></div></div>`;
+  }).join('');
+  const s=document.getElementById('cmStream'); s.scrollTop=s.scrollHeight;
+}
+function sendCm(){
+  const t=threads.find(x=>x.id===activeThread); const input=document.getElementById('cmInput'); const v=input.value.trim(); if(!v)return;
+  t.msgs.push({who:'editor',name:'Rhea K.',role:'Editor',t:v,time:'just now'}); input.value=''; input.style.height='auto';
+  renderMsgs(t); renderThreads(); toast('Reply sent — synced to the client');
+}
+document.querySelectorAll('#cmFilters button').forEach(b=>b.onclick=()=>{ document.querySelectorAll('#cmFilters button').forEach(x=>x.classList.toggle('on',x===b)); cmFilter=b.dataset.f; renderThreads(); });
+function updateCmTag(){ const total=threads.reduce((a,t)=>a+t.unread,0); const tag=document.getElementById('navCmTag'); tag.style.display=total?'inline':'none'; tag.textContent=total; }
 
 /* settings */
 document.querySelectorAll('#setNav button').forEach(b=>b.onclick=()=>{ document.querySelectorAll('#setNav button').forEach(x=>x.classList.toggle('active',x===b)); document.querySelectorAll('.set-panel').forEach(p=>p.classList.toggle('on',p.id==='set-'+b.dataset.set)); });
-document.getElementById('addMemberBtn').onclick=()=>toast('Invite flow opens here');
 
 /* init */
-renderNotif(); renderClients(); renderContent(); renderDashClients(); fillPickers(); renderHistory(); renderChat();
+renderNotif(); renderClients(); renderContent(); renderThreads(); renderPanel(); updateCmTag();
 </script>
 </body>
 </html>
