@@ -327,6 +327,58 @@
   .rate-row{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:12px;margin-bottom:18px}
   .rate{background:var(--panel);border:1px solid var(--line);border-radius:var(--r-md);padding:15px;box-shadow:var(--sh-card)}
   .rate .v{font:600 1.45rem 'Fraunces'} .rate .l{font-size:var(--fs-xs);color:var(--mut);margin-top:3px;display:flex;align-items:center}
+  /* client overview scorecard */
+  .cd-tabrow{display:flex;justify-content:space-between;align-items:flex-end;gap:16px;flex-wrap:wrap;border-bottom:1px solid var(--line);margin-bottom:8px}
+  .cd-tabrow .subtabs{border-bottom:0;margin-bottom:0}
+  .cd-tabrow .filter-sel{margin-bottom:8px}
+  .period-note{font-size:var(--fs-xs);color:var(--faint);margin-bottom:20px}
+  .health-card{display:grid;grid-template-columns:minmax(230px,.85fr) 1.5fr;gap:28px;align-items:center;margin-bottom:18px}
+  @media (max-width:880px){.health-card{grid-template-columns:1fr}}
+  .health-head{display:flex;gap:22px;align-items:center}
+  .health-ring{position:relative;width:120px;height:120px;flex-shrink:0}
+  .health-ring svg{width:100%;height:100%;transform:rotate(-90deg)}
+  .health-ring .track{stroke:var(--line);fill:none}
+  .health-ring .prog{stroke:var(--warn);fill:none;stroke-linecap:round;transition:stroke-dasharray .5s ease}
+  .health-ring .ctr{position:absolute;inset:0;display:flex;align-items:center;justify-content:center}
+  .health-ring .ctr .val{display:inline-flex;align-items:baseline;gap:2px}
+  .health-ring .n{font:600 2rem 'Fraunces';line-height:1} .health-ring .d{font-size:var(--fs-xs);color:var(--faint)}
+  .health-txt h3{font-size:var(--fs-h2);margin-bottom:7px}
+  .health-txt .delta{font-size:var(--fs-sm);color:var(--neg);font-weight:600;margin:8px 0 6px}
+  .health-txt .drag{font-size:var(--fs-sm);color:var(--mut);line-height:1.5}
+  .health-metrics{display:grid;grid-template-columns:repeat(3,1fr);gap:16px 24px}
+  @media (max-width:620px){.health-metrics{grid-template-columns:1fr 1fr}}
+  .hm .top{display:flex;justify-content:space-between;align-items:baseline;gap:8px}
+  .hm .top .lab{font-size:var(--fs-sm);color:var(--ink);font-weight:600} .hm .top .val{font:600 var(--fs-sm) 'Public Sans';color:var(--ink);white-space:nowrap}
+  .hm .bar{height:6px;border-radius:3px;background:var(--panel-2);margin:8px 0 5px;overflow:hidden}
+  .hm .bar i{display:block;height:100%;border-radius:3px}
+  .hm .cap{font-size:.7rem;color:var(--faint)}
+  .ov-two{display:grid;grid-template-columns:1.3fr 1fr;gap:18px;align-items:start;margin-bottom:18px}
+  @media (max-width:880px){.ov-two{grid-template-columns:1fr}}
+  .now-tag{font-size:.6rem;font-weight:700;letter-spacing:.1em;color:var(--warn);margin-left:8px}
+  .awaiting-lbl{font-size:.66rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--warn);margin-bottom:2px}
+  .pipe-item{display:flex;align-items:center;gap:12px;padding:12px 0;border-bottom:1px solid var(--line)}
+  .pipe-item:last-child{border:0}
+  .pipe-item .clock{width:30px;height:30px;border-radius:50%;background:var(--panel-2);display:flex;align-items:center;justify-content:center;color:var(--mut);flex-shrink:0;font-size:.78rem}
+  .pipe-item b{font-size:var(--fs-sm);font-weight:600;display:block} .pipe-item span{font-size:var(--fs-xs);color:var(--faint)}
+  .pipe-item .age{margin-left:auto;font-size:var(--fs-xs);font-weight:700;color:var(--warn)}
+  .decline-row{padding:11px 0;border-bottom:1px solid var(--line)} .decline-row:last-child{border:0}
+  .decline-row .dt{display:flex;justify-content:space-between;font-size:var(--fs-sm);margin-bottom:7px} .decline-row .dt b{font-weight:700;font-family:'Fraunces'}
+  .decline-row .db{height:7px;border-radius:4px;background:var(--panel-2);overflow:hidden}
+  .decline-row .db i{display:block;height:100%;background:var(--purple);border-radius:4px}
+  .acct-row{display:flex;justify-content:space-between;padding:12px 0;border-bottom:1px solid var(--line);font-size:var(--fs-sm)} .acct-row:last-child{border:0}
+  .acct-row .k{color:var(--mut)} .acct-row .v{font-weight:700}
+  .sample-note{font-size:var(--fs-xs);color:var(--faint);margin-top:16px}
+  /* lucide inline icons (shadcn icon set) */
+  .ico{width:1em;height:1em;display:inline-block;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;flex-shrink:0;vertical-align:-0.14em}
+  .nav .ic .ico{width:17px;height:17px} .icon-btn .ico{width:18px;height:18px} .search .mag .ico{width:16px;height:16px;display:block}
+  .pipe-item .clock .ico{width:15px;height:15px} .health-txt .delta .ico{width:14px;height:14px;margin-right:3px}
+  /* shadcn-style date picker */
+  .date-picker{display:inline-flex;align-items:center;gap:8px;border:1.5px solid var(--line-strong);background:var(--panel);border-radius:var(--r-sm);padding:0 10px 0 12px;height:38px;transition:border-color .15s,box-shadow .15s}
+  .date-picker:hover{border-color:var(--purple)}
+  .date-picker:focus-within{border-color:var(--purple);box-shadow:0 0 0 3px var(--purple-soft)}
+  .date-picker .cal{color:var(--mut);display:flex} .date-picker .cal .ico{width:16px;height:16px}
+  .date-picker .chev{color:var(--faint);display:flex} .date-picker .chev .ico{width:15px;height:15px}
+  .date-picker select{appearance:none;-webkit-appearance:none;border:0;background:none;outline:none;font:600 var(--fs-sm) 'Public Sans';color:var(--ink);padding:0 2px;cursor:pointer}
 
   .subtabs{display:flex;gap:2px;border-bottom:1px solid var(--line);margin-bottom:20px;overflow-x:auto}
   .subtab{background:none;border:0;padding:10px 14px;font-size:var(--fs-sm);font-weight:600;color:var(--mut);border-bottom:2px solid transparent;white-space:nowrap}
@@ -429,17 +481,17 @@
     <div class="role-switch"><button class="on" id="roleAdmin">Admin</button><button id="roleWriter">Writer</button></div>
     <div class="sect">Menu</div>
     <ul class="nav admin-nav" id="navAdmin">
-      <li><button class="active" data-page="dashboard"><span class="ic">▦</span><span class="lbl">Dashboard</span></button></li>
-      <li><button data-page="content"><span class="ic">▤</span><span class="lbl">Content Manager</span></button></li>
-      <li><button data-page="comments"><span class="ic">◌</span><span class="lbl">Comments Manager</span><span class="tag" id="navCmTag">4</span></button></li>
-      <li><button data-page="clients"><span class="ic">◉</span><span class="lbl">Client Management</span></button></li>
-      <li><button data-page="settings"><span class="ic">⚙</span><span class="lbl">Settings</span></button></li>
+      <li><button class="active" data-page="dashboard"><span class="ic"><svg class="ico" viewBox="0 0 24 24"><rect width="7" height="9" x="3" y="3" rx="1"/><rect width="7" height="5" x="14" y="3" rx="1"/><rect width="7" height="9" x="14" y="12" rx="1"/><rect width="7" height="5" x="3" y="16" rx="1"/></svg></span><span class="lbl">Dashboard</span></button></li>
+      <li><button data-page="content"><span class="ic"><svg class="ico" viewBox="0 0 24 24"><path d="M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7Z"/><path d="M14 2v5h5"/><path d="M16 13H8M16 17H8M10 9H8"/></svg></span><span class="lbl">Content Manager</span></button></li>
+      <li><button data-page="comments"><span class="ic"><svg class="ico" viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg></span><span class="lbl">Comments Manager</span><span class="tag" id="navCmTag">4</span></button></li>
+      <li><button data-page="clients"><span class="ic"><svg class="ico" viewBox="0 0 24 24"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg></span><span class="lbl">Client Management</span></button></li>
+      <li><button data-page="settings"><span class="ic"><svg class="ico" viewBox="0 0 24 24"><path d="M12.22 2h-.44a2 2 0 0 0-2 2v.18a2 2 0 0 1-1 1.73l-.43.25a2 2 0 0 1-2 0l-.15-.08a2 2 0 0 0-2.73.73l-.22.38a2 2 0 0 0 .73 2.73l.15.1a2 2 0 0 1 1 1.72v.51a2 2 0 0 1-1 1.74l-.15.09a2 2 0 0 0-.73 2.73l.22.38a2 2 0 0 0 2.73.73l.15-.08a2 2 0 0 1 2 0l.43.25a2 2 0 0 1 1 1.73V20a2 2 0 0 0 2 2h.44a2 2 0 0 0 2-2v-.18a2 2 0 0 1 1-1.73l.43-.25a2 2 0 0 1 2 0l.15.08a2 2 0 0 0 2.73-.73l.22-.39a2 2 0 0 0-.73-2.73l-.15-.08a2 2 0 0 1-1-1.74v-.5a2 2 0 0 1 1-1.74l.15-.09a2 2 0 0 0 .73-2.73l-.22-.38a2 2 0 0 0-2.73-.73l-.15.08a2 2 0 0 1-2 0l-.43-.25a2 2 0 0 1-1-1.73V4a2 2 0 0 0-2-2z"/><circle cx="12" cy="12" r="3"/></svg></span><span class="lbl">Settings</span></button></li>
     </ul>
     <ul class="nav writer-nav" id="navWriter">
-      <li><button class="active" data-page="dashboard"><span class="ic">▦</span><span class="lbl">My Dashboard</span></button></li>
-      <li><button data-page="content"><span class="ic">▤</span><span class="lbl">Content Manager</span></button></li>
-      <li><button data-page="comments"><span class="ic">◌</span><span class="lbl">Comments Manager</span></button></li>
-      <li><button data-page="clients"><span class="ic">◉</span><span class="lbl">My Clients</span></button></li>
+      <li><button class="active" data-page="dashboard"><span class="ic"><svg class="ico" viewBox="0 0 24 24"><rect width="7" height="9" x="3" y="3" rx="1"/><rect width="7" height="5" x="14" y="3" rx="1"/><rect width="7" height="9" x="14" y="12" rx="1"/><rect width="7" height="5" x="3" y="16" rx="1"/></svg></span><span class="lbl">My Dashboard</span></button></li>
+      <li><button data-page="content"><span class="ic"><svg class="ico" viewBox="0 0 24 24"><path d="M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7Z"/><path d="M14 2v5h5"/><path d="M16 13H8M16 17H8M10 9H8"/></svg></span><span class="lbl">Content Manager</span></button></li>
+      <li><button data-page="comments"><span class="ic"><svg class="ico" viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg></span><span class="lbl">Comments Manager</span></button></li>
+      <li><button data-page="clients"><span class="ic"><svg class="ico" viewBox="0 0 24 24"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg></span><span class="lbl">My Clients</span></button></li>
     </ul>
     <div class="side-foot">
       <div class="admin-chip"><div class="av" id="roleAv">RK</div><div><b id="roleName">Rhea K.</b><span id="roleDesc">Admin · BAM team</span></div></div>
@@ -450,8 +502,8 @@
     <div class="ptitle" id="pageTitle">Dashboard</div>
     <div class="spacer"></div>
     <button class="switch-view" id="switchView">↪ Switch to user view</button>
-    <button class="icon-btn" id="themeBtn" title="Toggle theme">☾</button>
-    <button class="icon-btn" id="bellBtn" title="Notifications"><span>◔</span><span class="badge-dot" id="notifCount">3</span></button>
+    <button class="icon-btn" id="themeBtn" title="Toggle theme"><svg class="ico" viewBox="0 0 24 24"><path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"/></svg></button>
+    <button class="icon-btn" id="bellBtn" title="Notifications"><svg class="ico" viewBox="0 0 24 24"><path d="M6 8a6 6 0 0 1 12 0c0 7 3 9 3 9H3s3-2 3-9"/><path d="M10.3 21a1.94 1.94 0 0 0 3.4 0"/></svg><span class="badge-dot" id="notifCount">3</span></button>
   </header>
 
   <div class="notif" id="notif">
@@ -553,7 +605,7 @@
       <!-- table view -->
       <div id="contentTableWrap">
         <div class="toolbar">
-          <div class="search"><span class="mag">⌕</span><input id="contentSearch" placeholder="Search by company, client, content or date…"></div>
+          <div class="search"><span class="mag"><svg class="ico" viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg></span><input id="contentSearch" placeholder="Search by company, client, content or date…"></div>
           <select class="filter-sel" id="filterWriter"><option>All writers</option><option>Matvei</option><option>Tunde A.</option><option>Jia L.</option></select>
           <select class="filter-sel" id="filterSort"><option>Sort: Most recent</option><option>Sort: Oldest</option><option>Sort: Company A–Z</option></select>
         </div>
@@ -574,7 +626,7 @@
 
       <!-- media view -->
       <div id="contentMediaWrap" style="display:none">
-        <div class="toolbar"><div class="search"><span class="mag">⌕</span><input placeholder="Search media…"></div><button class="btn btn-primary btn-sm" onclick="toast('Upload opens here')">Upload media</button></div>
+        <div class="toolbar"><div class="search"><span class="mag"><svg class="ico" viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg></span><input placeholder="Search media…"></div><button class="btn btn-primary btn-sm" onclick="toast('Upload opens here')">Upload media</button></div>
         <div class="media-grid" id="mediaGrid"></div>
       </div>
 
@@ -620,7 +672,7 @@
     <section class="page" id="p-clients">
       <div class="page-head"><div><h2 id="clientsTitle">Client Management</h2><p id="clientsSub">Everything about a client in one place — status, writer, pipeline, brand identity, post history and their team.</p></div>
         <button class="btn btn-primary btn-sm" id="openAddClient">＋ Add new client</button></div>
-      <div class="toolbar"><div class="search"><span class="mag">⌕</span><input id="clientSearch" placeholder="Search clients by name or company…"></div>
+      <div class="toolbar"><div class="search"><span class="mag"><svg class="ico" viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg></span><input id="clientSearch" placeholder="Search clients by name or company…"></div>
         <select class="filter-sel" id="clientWriterFilter"><option>All writers</option><option>Matvei</option><option>Tunde A.</option><option>Jia L.</option><option>Unassigned</option></select>
       </div>
       <p class="mut" style="font-size:var(--fs-xs);margin-bottom:10px">Tip: select a client's name to open their full workspace.</p>
@@ -636,56 +688,102 @@
         <div class="av" id="cdAv">LM</div>
         <div><h2 class="serif" id="cdName">Lena M.</h2><div class="sub" id="cdSub">Vero Studio · Writer: Matvei</div></div>
         <div style="margin-left:auto;display:flex;gap:8px;flex-wrap:wrap;align-items:center">
-          <span class="banner banner-yes" id="cdActive">Active</span><span class="banner banner-yes" id="cdSubsc">Subscribed</span>
-          <button class="btn btn-ghost btn-sm" id="cdCopy">⧉ Copy invite link</button>
-          <button class="btn btn-primary btn-sm" id="cdNewPost">＋ New post</button>
+          <span class="banner banner-warn" id="cdHealth">Health 59</span>
+          <span class="banner banner-yes" id="cdActive">Active</span>
         </div>
       </div>
 
-      <div class="subtabs" id="cdTabs">
-        <button class="subtab active" data-cd="overview">Overview</button>
-        <button class="subtab" data-cd="pipeline">Pipeline</button>
-        <button class="subtab" data-cd="brand">Brand identity</button>
-        <button class="subtab" data-cd="history">Post history</button>
-        <button class="subtab" data-cd="team">Customer team</button>
+      <div class="cd-tabrow">
+        <div class="subtabs" id="cdTabs">
+          <button class="subtab active" data-cd="overview">Overview</button>
+          <button class="subtab" data-cd="brand">Brand identity</button>
+          <button class="subtab" data-cd="history">Post history</button>
+          <button class="subtab" data-cd="stats">Statistics</button>
+          <button class="subtab" data-cd="team">Customer team</button>
+        </div>
+        <div class="date-picker">
+          <span class="cal"><svg class="ico" viewBox="0 0 24 24"><rect width="18" height="18" x="3" y="4" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg></span>
+          <select id="cdPeriod"><option>This month</option><option>Last 30 days</option><option>Last quarter</option></select>
+          <span class="chev"><svg class="ico" viewBox="0 0 24 24"><path d="m6 9 6 6 6-6"/></svg></span>
+        </div>
       </div>
+      <div class="period-note" id="cdPeriodNote">Showing 1 Oct – 16 Oct 2026 · compared with 1 Sep – 30 Sep</div>
 
-      <!-- overview -->
+      <!-- overview (scorecard) -->
       <div class="subpanel on" id="cd-overview">
-        <div class="rate-row">
-          <div class="rate"><div class="v">42</div><div class="l">Posts published</div></div>
-          <div class="rate"><div class="v" style="color:var(--pos)">88%</div><div class="l">Approval rate <span class="info">i<span class="tip">Drafts the client approved without changes, out of all drafts sent.</span></span></div></div>
-          <div class="rate"><div class="v" style="color:var(--neg)">12%</div><div class="l">Decline rate</div></div>
-          <div class="rate"><div class="v">612k</div><div class="l">Total impressions</div></div>
-          <div class="rate"><div class="v">6.2%</div><div class="l">Engagement rate <span class="info">i<span class="tip">Reactions + comments + reshares ÷ impressions.</span></span></div></div>
+        <!-- client health -->
+        <div class="card health-card">
+          <div class="health-head">
+            <div class="health-ring">
+              <svg viewBox="0 0 120 120">
+                <circle class="track" cx="60" cy="60" r="52" stroke-width="11"/>
+                <circle class="prog" cx="60" cy="60" r="52" stroke-width="11" stroke-dasharray="192.77 326.73"/>
+              </svg>
+              <div class="ctr"><div class="val"><span class="n">59</span><span class="d">/100</span></div></div>
+            </div>
+            <div class="health-txt">
+              <h3 class="serif">Client health</h3>
+              <span class="banner banner-warn">Needs attention</span>
+              <div class="delta"><svg class="ico" viewBox="0 0 24 24"><polyline points="22 17 13.5 8.5 8.5 13.5 2 7"/><polyline points="16 17 22 17 22 11"/></svg>−32 vs 91 in the previous period</div>
+              <div class="drag">Biggest drag: approval rate (67% of drafts approved).</div>
+            </div>
+          </div>
+          <div class="health-metrics">
+            <div class="hm"><div class="top"><span class="lab">Delivery vs plan</span><span class="val">15 / 30</span></div><div class="bar"><i style="width:50%;background:var(--warn)"></i></div><div class="cap">1 of 2 planned posts</div></div>
+            <div class="hm"><div class="top"><span class="lab">Approval rate</span><span class="val">5 / 25</span></div><div class="bar"><i style="width:20%;background:var(--neg)"></i></div><div class="cap">67% of drafts approved</div></div>
+            <div class="hm"><div class="top"><span class="lab">Revisions / post</span><span class="val">11 / 15</span></div><div class="bar"><i style="width:73%;background:var(--pos)"></i></div><div class="cap">1.0 change requests per post</div></div>
+            <div class="hm"><div class="top"><span class="lab">Client response time</span><span class="val">13 / 15</span></div><div class="bar"><i style="width:87%;background:var(--pos)"></i></div><div class="cap">1.5 days on average</div></div>
+            <div class="hm"><div class="top"><span class="lab">Content calls</span><span class="val">15 / 15</span></div><div class="bar"><i style="width:100%;background:var(--pos)"></i></div><div class="cap">Last content call 25 Sep</div></div>
+          </div>
         </div>
+
+        <!-- pipeline + why declined -->
+        <div class="ov-two">
+          <div class="card">
+            <div class="card-head"><h3 class="serif">Content pipeline <span class="now-tag">NOW</span></h3><button class="link" onclick="goPage('content')">Open in Content Manager →</button></div>
+            <div class="awaiting-lbl">Awaiting client · 2</div>
+            <div class="pipe-item"><div class="clock"><svg class="ico" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg></div><div style="flex:1"><b>"Saying no to our biggest client…"</b><span>Leadership · sent 11 Oct</span></div><span class="age">5 days</span><button class="btn btn-ghost btn-sm" onclick="toast('Reminder sent to Lena')">Remind</button></div>
+            <div class="pipe-item"><div class="clock"><svg class="ico" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg></div><div style="flex:1"><b>"What my first board meeting taught me…"</b><span>Founder life · sent 15 Oct</span></div><span class="age" style="color:var(--mut)">1 day</span><button class="btn btn-ghost btn-sm" onclick="toast('Reminder sent to Lena')">Remind</button></div>
+          </div>
+          <div class="card">
+            <div class="card-head"><h3 class="serif">Why drafts get declined</h3><span class="count-chip">1 declined of 3 decided</span></div>
+            <div class="decline-row"><div class="dt"><span class="mut">Tone</span><b>0</b></div><div class="db"><i style="width:0%"></i></div></div>
+            <div class="decline-row"><div class="dt"><span class="mut">Topic</span><b>0</b></div><div class="db"><i style="width:0%"></i></div></div>
+            <div class="decline-row"><div class="dt"><span class="mut">Facts</span><b>1</b></div><div class="db"><i style="width:100%"></i></div></div>
+          </div>
+        </div>
+
+        <!-- recent activity -->
         <div class="card">
           <div class="card-head"><h3 class="serif">Recent activity</h3></div>
           <div class="mini-row"><span class="av">✓</span><div><b>Approved a draft</b><div class="sub">"The spreadsheet is never the decision…"</div></div><div class="right faint" style="font-size:var(--fs-xs)">2 days ago</div></div>
           <div class="mini-row"><span class="av">✕</span><div><b>Declined a draft</b><div class="sub">"A hiring mistake I made at 30…" · asked for a softer tone</div></div><div class="right faint" style="font-size:var(--fs-xs)">6 days ago</div></div>
-          <div class="mini-row"><span class="av">◌</span><div><b>New audience comment</b><div class="sub">"This is exactly why I left banking…"</div></div><div class="right"><button class="link" data-page="comments">Reply</button></div></div>
+          <div class="mini-row"><span class="av">▲</span><div><b>Post hit 44k reach</b><div class="sub">"What actually matters at 45…"</div></div><div class="right faint" style="font-size:var(--fs-xs)">8 days ago</div></div>
         </div>
+
+        <!-- account -->
+        <div class="card" style="margin-top:18px">
+          <div class="card-head"><h3 class="serif">Account</h3></div>
+          <div class="acct-row"><span class="k">Plan</span><span class="v">4 posts / month</span></div>
+          <div class="acct-row"><span class="k">Client since</span><span class="v">Feb 2026 · 9 months</span></div>
+          <div class="acct-row"><span class="k">Last content call</span><span class="v">25 Sep · 21 days ago</span></div>
+        </div>
+        <div class="sample-note">Sample data. "Period" tiles follow the period picker; "Now" shows the current state.</div>
       </div>
 
-      <!-- per-client pipeline -->
-      <div class="subpanel" id="cd-pipeline">
-        <div class="card" style="margin-bottom:16px">
-          <div class="goal-head">
-            <div class="goal-ring" style="--deg:270deg"><i>3 / 4</i></div>
-            <div><h3 class="serif" style="font-size:var(--fs-h2)">On track for this week's goal</h3><div class="mut" style="font-size:var(--fs-sm)">3 approved, 1 scheduled, 0 still needed. Weekly goal: 4 posts.</div></div>
-            <button class="btn btn-ghost btn-sm" style="margin-left:auto" onclick="toast('Goal settings open here')">Edit goal</button>
-          </div>
-          <div class="goal-steps">
-            <div class="goal-step done"><span class="k">✓</span><div><b>Mon</b><span>Approved · published</span></div></div>
-            <div class="goal-step done"><span class="k">✓</span><div><b>Wed</b><span>Approved · published</span></div></div>
-            <div class="goal-step done"><span class="k">✓</span><div><b>Thu</b><span>Approved · scheduled</span></div></div>
-            <div class="goal-step sched"><span class="k">4</span><div><b>Fri</b><span>Scheduled · pending approval</span></div></div>
-          </div>
+      <!-- statistics (deeper, per-client) -->
+      <div class="subpanel" id="cd-stats">
+        <div class="rate-row">
+          <div class="rate"><div class="v">612k</div><div class="l">Total impressions</div></div>
+          <div class="rate"><div class="v">6.2%</div><div class="l">Engagement rate <span class="info">i<span class="tip">Reactions + comments + reshares ÷ impressions.</span></span></div></div>
+          <div class="rate"><div class="v" style="color:var(--pos)">88%</div><div class="l">Approval rate</div></div>
+          <div class="rate"><div class="v" style="color:var(--neg)">12%</div><div class="l">Decline rate</div></div>
+          <div class="rate"><div class="v">42</div><div class="l">Posts published</div></div>
         </div>
         <div class="card">
-          <div class="card-head"><h3 class="serif">Upcoming queue</h3><button class="btn btn-primary btn-sm" onclick="document.getElementById('openComposer').click()">＋ Add to pipeline</button></div>
-          <div class="mini-row"><span class="av" style="background:var(--purple);color:#fff">4</span><div><b>Fri 23 Aug · 09:00</b><div class="sub">"Why I still take notes by hand…" · awaiting approval</div></div><div class="right"><span class="banner banner-warn">Pending</span></div></div>
-          <div class="mini-row"><span class="av" style="background:var(--green);color:var(--green-deep)">5</span><div><b>Mon 26 Aug · 09:00</b><div class="sub">Idea slot — not drafted yet</div></div><div class="right"><button class="link" onclick="toast('Opening AI studio…')">Draft</button></div></div>
+          <div class="card-head"><h3 class="serif">How this client responds to drafts, over time</h3><span class="kicker">Last 6 weeks</span></div>
+          <div class="attn"><div class="ic up">▲</div><div class="body">Approval rate climbed from <b>79% → 88%</b> as the voice model improved. Revisions per post fell from <b>2.3 → 1.4</b>.</div></div>
+          <div class="attn"><div class="ic flat">⌁</div><div class="body">The one recent decline asked for a softer tone — logged against the "Warm" voice setting for the writer to watch.</div></div>
         </div>
       </div>
 
@@ -908,7 +1006,9 @@
 
 <script>
 const root=document.documentElement;
-document.getElementById('themeBtn').onclick=function(){ const dark=root.getAttribute('data-theme')==='dark'; root.setAttribute('data-theme',dark?'light':'dark'); this.textContent=dark?'☾':'☀'; };
+const _moon='<svg class="ico" viewBox="0 0 24 24"><path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"/></svg>';
+const _sun='<svg class="ico" viewBox="0 0 24 24"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></svg>';
+document.getElementById('themeBtn').onclick=function(){ const dark=root.getAttribute('data-theme')==='dark'; root.setAttribute('data-theme',dark?'light':'dark'); this.innerHTML=dark?_moon:_sun; };
 let toastTimer;
 function toast(m){ const t=document.getElementById('toast'); t.textContent=m; t.classList.add('show'); clearTimeout(toastTimer); toastTimer=setTimeout(()=>t.classList.remove('show'),2500); }
 function esc(s){ const d=document.createElement('div'); d.textContent=s; return d.innerHTML; }
@@ -1017,7 +1117,6 @@ function openClientDetail(c){
   document.getElementById('cdAv').textContent=initials(c.name); document.getElementById('biAv').textContent=initials(c.name);
   document.getElementById('cdName').textContent=c.name; document.getElementById('cdSub').textContent=c.company+' · Writer: '+c.writer;
   document.getElementById('cdActive').textContent=c.active?'Active':'Inactive'; document.getElementById('cdActive').className='banner '+(c.active?'banner-yes':'banner-no');
-  document.getElementById('cdSubsc').textContent=c.sub?'Subscribed':'Not subscribed'; document.getElementById('cdSubsc').className='banner '+(c.sub?'banner-yes':'banner-no');
   const h=histories[c.name]||[['Sample post one…','18 Aug','approve','28k','6.1%'],['Sample post two…','12 Aug','decline','—','—'],['Sample post three…','7 Aug','approve','19k','4.8%']];
   document.getElementById('cdHistory').innerHTML=h.map(r=>{
     const clickable=r[2]==='approve';
@@ -1035,9 +1134,11 @@ document.querySelectorAll('#cdTabs .subtab').forEach(b=>b.onclick=()=>{
   document.querySelectorAll('#p-clientdetail .subpanel').forEach(p=>p.classList.toggle('on',p.id==='cd-'+b.dataset.cd));
 });
 document.getElementById('saveBrand').onclick=()=>toast('Brand identity saved');
-document.getElementById('cdNewPost').onclick=()=>openComposer();
-document.getElementById('cdCopy').onclick=()=>{ if(detailClient){ copyText('https://app.brandaboutme.co/onboard/'+detailClient.link); toast('Invite link copied'); } };
 document.querySelectorAll('.chip-tog').forEach(c=>c.onclick=()=>c.classList.toggle('on'));
+document.getElementById('cdPeriod').onchange=function(){
+  const map={'This month':'Showing 1 Oct – 16 Oct 2026 · compared with 1 Sep – 30 Sep','Last 30 days':'Showing 22 Sep – 22 Oct 2026 · compared with 23 Aug – 21 Sep','Last quarter':'Showing 1 Aug – 31 Oct 2026 · compared with 1 May – 31 Jul'};
+  document.getElementById('cdPeriodNote').textContent=map[this.value]||'';
+};
 
 /* post stats modal */
 const psModal=document.getElementById('postStatsModal');
