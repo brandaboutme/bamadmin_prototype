@@ -12,12 +12,12 @@
     --green:#c9f59b; --green-deep:#3f6b1c; --linkedin:#0A66C2;
     --pos:#2e8b57; --neg:#c7503f; --warn:#c98a1b;
     --r-lg:16px; --r-md:12px; --r-sm:9px;
-    --fs-h1:1.5rem; --fs-h2:1.1rem; --fs-h3:.95rem; --fs-body:.9rem; --fs-sm:.82rem; --fs-xs:.74rem;
+    --fs-h1:1.55rem; --fs-h2:1.12rem; --fs-h3:.96rem; --fs-body:.92rem; --fs-sm:.85rem; --fs-xs:.78rem;
     --gap:18px;
     font-size:16px;
   }
   :root[data-theme="light"]{
-    --bg:#f6f4fb; --panel:#ffffff; --panel-2:#faf9fd; --ink:#111315; --mut:#5b5766; --faint:#8b8797;
+    --bg:#f6f4fb; --panel:#ffffff; --panel-2:#faf9fd; --ink:#111315; --mut:#4f4b59; --faint:#6e6a79;
     --line:#e7e4f0; --line-strong:#d8d4e6; --side:#111315; --side-ink:#ffffff; --side-mut:#a7a3b4;
     --sh-card:0 1px 2px rgba(17,19,21,.04),0 1px 1px rgba(17,19,21,.03); --sh-pop:0 16px 40px rgba(17,19,21,.16);
     --pos-soft:#e4f3ea; --neg-soft:#f8ebe9; --warn-soft:#fbf2dd;
@@ -160,7 +160,9 @@
   .search{flex:1;min-width:200px;max-width:340px;display:flex;align-items:center;gap:8px;background:var(--panel);border:1.5px solid var(--line-strong);border-radius:var(--r-sm);padding:9px 13px}
   .search input{border:0;background:none;outline:none;flex:1;font:400 var(--fs-body) 'Public Sans';color:var(--ink)}
   .search .mag{color:var(--faint)}
-  .filter-sel{border:1.5px solid var(--line-strong);background:var(--panel);color:var(--ink);border-radius:var(--r-sm);padding:9px 12px;font:600 var(--fs-sm) 'Public Sans';cursor:pointer}
+  .filter-sel,select.writer,.ai-provider,.chat-head select{appearance:none;-webkit-appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='14' height='14' viewBox='0 0 24 24' fill='none' stroke='%236e6a79' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 10px center;padding-right:30px}
+  .filter-sel{border:1.5px solid var(--line-strong);background-color:var(--panel);color:var(--ink);border-radius:var(--r-sm);padding:9px 30px 9px 12px;font:600 var(--fs-sm) 'Public Sans';cursor:pointer;transition:border-color .15s}
+  .filter-sel:hover{border-color:var(--purple)}
   .tbl-wrap{background:var(--panel);border:1px solid var(--line);border-radius:var(--r-lg);overflow:hidden;box-shadow:var(--sh-card)}
   table{width:100%;border-collapse:collapse}
   thead th{text-align:left;font-size:var(--fs-xs);font-weight:700;letter-spacing:.04em;text-transform:uppercase;color:var(--faint);padding:13px 16px;border-bottom:1px solid var(--line);background:var(--panel-2);white-space:nowrap}
@@ -479,6 +481,58 @@
   .toast{position:fixed;bottom:24px;left:50%;transform:translateX(-50%) translateY(20px);background:var(--ink);color:var(--bg);padding:12px 20px;border-radius:var(--r-md);font-size:var(--fs-sm);font-weight:600;box-shadow:var(--sh-pop);opacity:0;pointer-events:none;transition:opacity .25s,transform .25s;z-index:300}
   .toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
 
+  /* ===== v5: dashboard tiles + queue ===== */
+  .tiles{display:grid;grid-template-columns:repeat(auto-fit,minmax(185px,1fr));gap:14px;margin-bottom:var(--gap)}
+  .tile{background:var(--panel);border:1px solid var(--line);border-radius:var(--r-lg);padding:15px 17px;box-shadow:var(--sh-card);text-align:left;cursor:pointer;transition:border-color .15s,transform .1s;display:flex;flex-direction:column;gap:7px}
+  .tile:hover{border-color:var(--purple)} .tile:active{transform:scale(.99)}
+  .tile .tl{display:flex;align-items:center;gap:8px;font-size:var(--fs-sm);color:var(--mut);font-weight:600}
+  .tile .tl .ico{width:16px;height:16px;color:var(--purple-deep)}
+  .tile .tv{font:600 1.7rem 'Fraunces';line-height:1}
+  .tile .tsub{font-size:var(--fs-xs);color:var(--faint)}
+  .tile.urgent{border-color:var(--neg-soft)} .tile.urgent .tl .ico{color:var(--neg)}
+  .dash-grid{display:grid;grid-template-columns:1.55fr 1fr;gap:var(--gap);align-items:start}
+  @media (max-width:1000px){.dash-grid{grid-template-columns:1fr}}
+  .wait-badge{font-size:var(--fs-xs);font-weight:700;padding:3px 9px;border-radius:999px;white-space:nowrap;display:inline-block}
+  .wait-overdue{background:var(--neg-soft);color:var(--neg)}
+  .wait-warn{background:var(--warn-soft);color:var(--warn)}
+  .wait-ok{background:var(--purple-soft);color:var(--purple-deep)}
+  .excerpt{color:var(--mut);max-width:300px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+  /* quick actions */
+  .qa{display:flex;gap:5px}
+  .qa button{width:30px;height:30px;border-radius:7px;border:1.5px solid var(--line-strong);background:var(--panel);color:var(--mut);display:flex;align-items:center;justify-content:center;transition:border-color .15s,color .15s}
+  .qa button:hover{border-color:var(--purple);color:var(--purple-deep)}
+  .qa .ico{width:15px;height:15px}
+  .date-overdue{color:var(--neg);font-weight:700}
+  .badge-overdue{background:var(--neg-soft);color:var(--neg)} .badge-overdue::before{background:var(--neg)}
+  /* compose page */
+  .compose-head{display:flex;align-items:center;gap:14px;margin-bottom:18px;flex-wrap:wrap}
+  .compose-head h2{font-size:var(--fs-h1)}
+  .compose-head .actions{margin-left:auto;display:flex;gap:10px;align-items:center}
+  .autosave{font-size:var(--fs-xs);color:var(--faint);margin-top:4px}
+  /* comments segmented tabs + labels + reply-where */
+  .cm-listhead{display:flex;flex-direction:column;gap:9px;padding:12px;border-bottom:1px solid var(--line)}
+  .seg{display:inline-flex;background:var(--panel-2);border:1px solid var(--line);border-radius:var(--r-sm);padding:3px;gap:2px}
+  .seg button{flex:1;border:0;background:none;padding:7px 10px;border-radius:7px;font-size:var(--fs-xs);font-weight:700;color:var(--mut)}
+  .seg button.on{background:var(--panel);color:var(--purple-deep);box-shadow:var(--sh-card)}
+  .cm-unread{display:flex;align-items:center;gap:7px;font-size:var(--fs-xs);font-weight:600;color:var(--mut);cursor:pointer}
+  .cm-unread input{width:16px;height:16px;accent-color:var(--purple)}
+  .cm-label{font-size:.64rem;font-weight:700;text-transform:uppercase;letter-spacing:.05em;padding:2px 7px;border-radius:5px}
+  .cm-label.client{background:var(--purple-soft);color:var(--purple-deep)}
+  .cm-label.audience{background:#def1ec;color:#1b7a62}
+  :root[data-theme="dark"] .cm-label.audience{background:#133029;color:#7fd9bf}
+  .cm-thread .t-post{font-size:var(--fs-sm);font-weight:600;line-height:1.4;color:var(--ink);display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;margin:5px 0}
+  .cm-thread .t-meta{display:flex;align-items:center;gap:7px;font-size:var(--fs-xs);color:var(--mut)}
+  .cm-thread .t-meta .av{width:20px;height:20px;border-radius:50%;background:var(--purple-soft);color:var(--purple-deep);display:flex;align-items:center;justify-content:center;font:600 .58rem 'Fraunces';flex-shrink:0}
+  .cm-where{display:flex;gap:8px;align-items:center;font-size:var(--fs-xs);font-weight:600;padding:8px 12px;border-radius:var(--r-sm);margin-top:8px}
+  .cm-where .ico{width:15px;height:15px;flex-shrink:0}
+  .cm-where.public{background:#e6f1fb;color:#185fa5} :root[data-theme="dark"] .cm-where.public{background:#0c2740;color:#8cc0f0}
+  .cm-where.private{background:var(--purple-soft);color:var(--purple-deep)}
+  .cm-viewpost{border:1.5px solid var(--line-strong);background:var(--panel);color:var(--purple-deep);border-radius:var(--r-sm);padding:7px 12px;font-size:var(--fs-xs);font-weight:700;margin-top:10px;display:inline-flex;align-items:center;gap:7px}
+  .cm-viewpost:hover{border-color:var(--purple)} .cm-viewpost .ico{width:14px;height:14px}
+  .writer-static{font-size:var(--fs-sm);font-weight:600;color:var(--mut)}
+  body[data-role="writer"] .th-writer,body[data-role="writer"] .td-writer{display:none}
+  body[data-role="writer"] #filterWriter,body[data-role="writer"] #openAddClient,body[data-role="writer"] #clientWriterFilter{display:none}
+
   @media (max-width:900px){
     .app{grid-template-columns:1fr;grid-template-rows:auto 60px 1fr;grid-template-areas:"side" "top" "main"}
     .side{height:auto;position:static;flex-direction:row;align-items:center;gap:4px;padding:10px 12px;overflow-x:auto}
@@ -516,7 +570,7 @@
   </aside>
 
   <header class="top">
-    <div class="ptitle" id="pageTitle">Dashboard</div>
+    <div class="ptitle" id="pageTitle"></div>
     <div class="spacer"></div>
     <button class="switch-view" id="switchView">↪ Switch to user view</button>
     <button class="icon-btn" id="themeBtn" title="Toggle theme"><svg class="ico" viewBox="0 0 24 24"><path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"/></svg></button>
@@ -534,70 +588,36 @@
     <section class="page on" id="p-dashboard">
       <div class="page-head"><h2 id="dashTitle">Welcome back, Rhea</h2></div>
 
-      <div class="feed-grid">
-        <!-- LEFT: work -->
+      <!-- actionable KPI tiles (role-aware) -->
+      <div class="tiles" id="dashTiles"></div>
+
+      <div class="dash-grid">
+        <!-- LEFT: the single approval queue (urgent first) + pipeline graph -->
         <div class="stack">
           <div class="card">
-            <div class="card-head"><h3 class="serif">Needs attention</h3><span class="count-chip">Priority</span></div>
-            <div class="attn"><div class="ic down">!</div><div class="body"><b>23 posts pending approval</b> across 11 clients — oldest is 4 days old.</div><button class="go" data-goto="pending">Review →</button></div>
-            <div class="attn"><div class="ic flat">⌁</div><div class="body"><b>4 clients have gone quiet</b> — no post scheduled in 10+ days.</div><button class="go" data-goto="clients">View →</button></div>
-            <div class="attn"><div class="ic flat">◐</div><div class="body"><b>1 client is unassigned</b> — Flux Health needs a writer.</div><button class="go" data-goto="clients">Assign →</button></div>
-            <div class="attn"><div class="ic down">✎</div><div class="body"><b>6 client ideas are unreviewed</b> — turn them into drafts before they go stale.</div><button class="go" data-goto="ideas">Review →</button></div>
+            <div class="card-head"><h3 class="serif">Approval queue <span class="info">i<span class="tip">Every post waiting on a client, most urgent first. Posts past their publication date show as overdue. This is the one place pending work lives — no duplicates.</span></span></h3><button class="link" data-goto="pending">Open in Content Manager →</button></div>
+            <div class="tbl-wrap" style="box-shadow:none;border:0">
+              <table><thead><tr><th>Client</th><th>Post</th><th class="th-writer">Writer</th><th>Waiting</th><th></th></tr></thead><tbody id="queueBody"></tbody></table>
+            </div>
           </div>
 
-          <!-- content pipeline / goal tracking -->
           <div class="card">
-            <div class="card-head"><h3 class="serif">Content pipeline <span class="info">i<span class="tip">Each client has a weekly posting goal. This shows approved + scheduled posts against that goal, so you can see at a glance who's on track and who's behind.</span></span></h3><span class="count-chip">This week's goal</span></div>
-            <div class="pipe-row">
-              <div class="pipe-top"><span class="av">VS</span><b>Vero Studio</b><span class="goal">4 / 4 on track</span></div>
-              <div class="pipe-bar"><span class="pipe-seg done" style="width:75%"></span><span class="pipe-seg sched" style="width:25%"></span></div>
-            </div>
-            <div class="pipe-row">
-              <div class="pipe-top"><span class="av">NW</span><b>Northwind Co.</b><span class="goal" style="color:var(--warn)">2 / 4 behind</span></div>
-              <div class="pipe-bar"><span class="pipe-seg done" style="width:25%"></span><span class="pipe-seg sched" style="width:25%"></span><span class="pipe-seg gap" style="width:50%"></span></div>
-            </div>
-            <div class="pipe-row">
-              <div class="pipe-top"><span class="av">LP</span><b>Lumen Partners</b><span class="goal" style="color:var(--neg)">0 / 3 at risk</span></div>
-              <div class="pipe-bar"><span class="pipe-seg gap" style="width:100%"></span></div>
-            </div>
+            <div class="card-head"><h3 class="serif">Content pipeline <span class="info">i<span class="tip">Each client's weekly posting goal. Approved + scheduled posts against that goal — who's on track and who's behind.</span></span></h3><span class="count-chip">This week's goal</span></div>
+            <div id="dashPipeline"></div>
             <div class="pipe-legend"><span><i style="background:var(--green)"></i> Approved</span><span><i style="background:var(--purple)"></i> Scheduled</span><span><i style="background:var(--line-strong)"></i> Still needed</span></div>
-          </div>
-
-          <div class="card">
-            <div class="card-head"><h3 class="serif">Pending approvals</h3><button class="link" data-goto="pending">See all 23 →</button></div>
-            <div class="mini-row"><span class="av">LM</span><div><b>Lena M.</b><div class="sub">Vero Studio · "The spreadsheet is never…"</div></div><div class="right"><span class="banner banner-warn">4 days</span></div></div>
-            <div class="mini-row"><span class="av">PN</span><div><b>Priya Nair</b><div class="sub">Northwind · "Most onboarding fails…"</div></div><div class="right"><span class="banner banner-warn">2 days</span></div></div>
-            <div class="mini-row"><span class="av">DR</span><div><b>David R.</b><div class="sub">Cedar & Co. · "I used to think busy…"</div></div><div class="right"><span class="banner banner-purple">1 day</span></div></div>
-          </div>
-
-          <div class="card">
-            <div class="card-head"><h3 class="serif">Unreviewed client ideas</h3><button class="link" data-goto="ideas">Open all →</button></div>
-            <div class="mini-row"><span class="av">LM</span><div><b>Lena M.</b><div class="sub">"Panel I spoke on about AI in finance"</div></div><div class="right"><button class="link" data-goto="ideas">Draft it</button></div></div>
-            <div class="mini-row"><span class="av">AB</span><div><b>Amara B.</b><div class="sub">"A patient story that changed how I lead"</div></div><div class="right"><button class="link" data-goto="ideas">Draft it</button></div></div>
-            <div class="mini-row"><span class="av">DR</span><div><b>David R.</b><div class="sub">"Why we killed our best-selling product"</div></div><div class="right"><button class="link" data-goto="ideas">Draft it</button></div></div>
           </div>
         </div>
 
-        <!-- RIGHT: news + community -->
+        <!-- RIGHT: activity (news only) + watchlist (risk only) -->
         <div class="stack">
           <div class="card">
-            <div class="card-head"><h3 class="serif">Latest activity</h3><button class="link" id="openBell">Notifications →</button></div>
-            <div id="feedList"></div>
-          </div>
-
-          <!-- community management / new comments -->
-          <div class="card">
-            <div class="card-head"><h3 class="serif">New comments <span class="info">i<span class="tip">Community management: when a client's audience comments on a published post, or a client replies to an editor, it surfaces here and in Comments Manager.</span></span></h3><button class="link" data-page="comments">Open manager →</button></div>
-            <div class="comment-alert"><span class="av">◌</span><div class="body"><span class="who">New audience comment</span> on Vero Studio's "spreadsheet" post<div class="ctx">"This is exactly why I left banking…" · 20 min ago</div></div><button class="go" data-page="comments">Reply →</button></div>
-            <div class="comment-alert"><span class="av">LM</span><div class="body"><span class="who">Lena M. replied</span> to your note on her draft<div class="ctx">"Can we soften the opening?" · 1h ago</div></div><button class="go" data-page="comments">Open →</button></div>
-            <div class="comment-alert"><span class="av">◌</span><div class="body"><span class="who">3 new comments</span> on Cedar & Co.'s latest post<div class="ctx">Needs a reply from the editor · 2h ago</div></div><button class="go" data-page="comments">Reply →</button></div>
+            <div class="card-head"><h3 class="serif">Activity</h3><button class="link" id="openBell">Notifications →</button></div>
+            <div id="dashActivity"></div>
           </div>
 
           <div class="card">
-            <div class="card-head"><h3 class="serif">Clients to keep an eye on <span class="info">i<span class="tip">Ranked by a simple risk signal: days since last post, recent decline rate, and engagement falling below the client's own baseline. An early warning, not a priority list yet.</span></span></h3><span class="count-chip">Watchlist</span></div>
-            <div class="mini-row"><span class="av">LP</span><div><b>Lumen Partners</b><div class="sub">12 days quiet · engagement ▼ 12% vs baseline</div></div><div class="right"><span class="banner banner-no">High risk</span></div></div>
-            <div class="mini-row"><span class="av">OL</span><div><b>Orbit Labs</b><div class="sub">Inactive subscription · 2 declines in a row</div></div><div class="right"><span class="banner banner-no">High risk</span></div></div>
-            <div class="mini-row"><span class="av">NW</span><div><b>Northwind Co.</b><div class="sub">Approvals slowing down this week</div></div><div class="right"><span class="banner banner-warn">Watch</span></div></div>
+            <div class="card-head"><h3 class="serif">Clients to watch <span class="info">i<span class="tip">Ranked by a simple risk signal: days quiet, recent declines, engagement below the client's baseline. An early warning, not a priority list yet.</span></span></h3><span class="count-chip">Watchlist</span></div>
+            <div id="dashWatch"></div>
           </div>
         </div>
       </div>
@@ -614,6 +634,7 @@
         <button class="tab" data-tab="Approved">Approved <span class="cnt" id="cApproved">0</span></button>
         <button class="tab" data-tab="Published">Published <span class="cnt" id="cPublished">0</span></button>
         <button class="tab" data-tab="Declined">Declined <span class="cnt" id="cDeclined">0</span></button>
+        <button class="tab" data-tab="Drafts">Drafts <span class="cnt" id="cDrafts">0</span></button>
         <button class="tab" data-tab="Ideas">Content ideas <span class="cnt" id="cIdeas">3</span></button>
         <button class="tab" data-tab="Media">Media library</button>
         <button class="tab" data-tab="Studio">AI studio</button>
@@ -623,11 +644,20 @@
       <div id="contentTableWrap">
         <div class="toolbar">
           <div class="search"><span class="mag"><svg class="ico" viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg></span><input id="contentSearch" placeholder="Search by company, client, content or date…"></div>
+          <select class="filter-sel" id="filterClient"></select>
           <select class="filter-sel" id="filterWriter"><option>All writers</option><option>Matvei</option><option>Tunde A.</option><option>Jia L.</option></select>
           <select class="filter-sel" id="filterSort"><option>Sort: Most recent</option><option>Sort: Oldest</option><option>Sort: Company A–Z</option></select>
         </div>
         <div class="tbl-wrap">
-          <table><thead><tr><th>Company</th><th>Client</th><th>Post content</th><th>Publication date</th><th>Status</th></tr></thead><tbody id="contentBody"></tbody></table>
+          <table><thead><tr><th>Company</th><th>Client</th><th>Post content</th><th>Publication date</th><th>Status</th><th></th></tr></thead><tbody id="contentBody"></tbody></table>
+        </div>
+      </div>
+
+      <!-- drafts view -->
+      <div id="contentDraftsWrap" style="display:none">
+        <p class="mut" style="font-size:var(--fs-sm);margin-bottom:16px">Saved drafts are kept automatically if you leave the composer. Pick one up where you left off.</p>
+        <div class="tbl-wrap">
+          <table><thead><tr><th>Client</th><th>Draft</th><th>Last edited</th><th></th></tr></thead><tbody id="draftsBody"></tbody></table>
         </div>
       </div>
 
@@ -668,16 +698,60 @@
       </div>
     </section>
 
+    <!-- ===================== COMPOSE (full page, not a modal) ===================== -->
+    <section class="page" id="p-compose">
+      <button class="back-link" id="composeBack">← Back to Content Manager</button>
+      <div class="compose-head">
+        <div><h2 class="serif" id="composeTitle">Create post</h2><div class="autosave" id="composeAutosave">Drafts are saved automatically if you leave this page.</div></div>
+        <div class="actions">
+          <button class="btn btn-ghost btn-sm" id="composeSaveDraft">Save draft</button>
+          <button class="btn btn-primary btn-sm" id="composeSchedule">Schedule post</button>
+        </div>
+      </div>
+      <div class="composer-grid">
+        <div class="composer">
+          <div class="field" style="margin-bottom:12px"><label for="cp-client">Post for client</label>
+            <select id="cp-client"></select></div>
+          <label style="display:block;font-size:var(--fs-sm);font-weight:600;margin-bottom:6px">Content</label>
+          <textarea id="cp-text"></textarea>
+          <div class="attach-row"><button class="attach-chip" data-attach="image">⇧ Attach image</button><button class="attach-chip" data-attach="video">▷ Attach video</button><button class="attach-chip" data-attach="library">▧ From library</button></div>
+          <div class="attached" id="attached"><div class="thumb" id="attThumb">▧</div><div><b id="attName">image.jpg</b><div style="color:var(--faint);font-size:var(--fs-xs)">Attached</div></div><button id="removeAtt">✕</button></div>
+          <div class="field-2" style="margin-top:16px"><div class="field"><label for="cp-date">Schedule date</label><input id="cp-date" type="date"></div><div class="field"><label for="cp-time">Time</label><input id="cp-time" type="time" value="09:00"></div></div>
+          <div class="field"><label for="cp-vis">Visibility</label><select id="cp-vis"><option>Client approval required (recommended)</option><option>Auto-publish on schedule</option><option>Draft only — don't schedule</option></select></div>
+        </div>
+        <div>
+          <div class="col-label">Brainstorm with AI</div>
+          <div class="chat">
+            <div class="chat-head"><select id="cpAiProvider"><option>Claude Opus 4.8</option><option>Claude Sonnet 5.5</option><option>GPT-5.1</option></select><span class="mut" style="font-size:var(--fs-xs);margin-left:auto">Uses brand identity</span></div>
+            <div class="chat-stream" id="cpChatStream"><div class="cmsg ai"><div class="mav">AI</div><div class="bub">Tell me the angle and I'll draft it in this client's voice. Send any draft straight to the editor.</div></div></div>
+            <div class="chat-in"><textarea id="cpChatInput" rows="1" placeholder="e.g. a post about hiring for culture…"></textarea><button class="btn btn-primary btn-sm" id="cpChatSend">Send</button></div>
+          </div>
+        </div>
+        <div>
+          <div class="col-label">Live preview</div>
+          <div class="lp-preview">
+            <div class="lp-head"><div class="av" id="lpAv">LM</div><div><b id="lpName">Lena M.</b><span id="lpRole">Vero Studio · now</span></div></div>
+            <div class="lp-body" id="lpBody"></div>
+            <div class="lp-media" id="lpMedia">Media attached</div>
+            <div class="lp-foot"><span>♡ Like</span><span>◌ Comment</span><span>↺ Repost</span></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
     <!-- ===================== COMMENTS MANAGER ===================== -->
     <section class="page" id="p-comments">
       <div class="page-head"><div><h2>Comments Manager</h2><p>One shared thread per post. Comments from the client, their audience and your editors all appear here — in sync with what the client sees on their side.</p></div></div>
       <div class="cm-grid">
         <div class="cm-list">
-          <div class="filters" id="cmFilters">
-            <button class="on" data-f="all">All</button>
-            <button data-f="unread">Unread</button>
-            <button data-f="reply">Needs reply</button>
-            <button data-f="audience">Audience</button>
+          <div class="cm-listhead">
+            <div class="seg" id="cmSeg">
+              <button class="on" data-f="all">All</button>
+              <button data-f="client">Client feedback</button>
+              <button data-f="audience">Audience</button>
+            </div>
+            <select class="filter-sel" id="cmClientFilter"></select>
+            <label class="cm-unread"><input type="checkbox" id="cmUnreadOnly"> Unread only</label>
           </div>
           <div class="cm-threads" id="cmThreads"></div>
         </div>
@@ -889,8 +963,8 @@
               <div class="card-head"><h3 class="serif">Admin team members</h3><button class="btn btn-primary btn-sm" onclick="toast('Invite flow opens here')">＋ Invite member</button></div>
               <div class="team-row"><div class="av">RK</div><div><b>Rhea K.</b><span>rhea@bam.co</span></div><span class="role-tag">Admin</span></div>
               <div class="team-row"><div class="av">M</div><div><b>Matvei</b><span>matvei@bam.co</span></div><span class="role-tag">Writer · 6 clients</span></div>
-              <div class="team-row"><div class="av">TA</div><div><b>Tunde A.</b><span>tunde@bam.co</span></div><span class="role-tag">Writer · 5 clients</span></div>
-              <div class="team-row"><div class="av">JL</div><div><b>Jia L.</b><span>jia@bam.co</span></div><span class="role-tag">Writer · 4 clients</span></div>
+              <div class="team-row"><div class="av">TA</div><div><b>Tunde A.</b><span>tunde@bam.co</span></div><span class="role-tag">Writer · 3 clients</span></div>
+              <div class="team-row"><div class="av">JL</div><div><b>Jia L.</b><span>jia@bam.co</span></div><span class="role-tag">Writer · 2 clients</span></div>
             </div>
           </div>
           <div class="set-panel" id="set-roles">
@@ -968,41 +1042,17 @@
   </div>
 </div>
 
-<!-- Composer -->
-<div class="modal-bg" id="composerModal">
-  <div class="modal wide" role="dialog">
-    <h3 class="serif">Create post</h3>
-    <div class="msub">Write it yourself, brainstorm with AI on the right, preview as the client, then schedule.</div>
-    <div class="composer-grid">
-      <div class="composer">
-        <div class="field" style="margin-bottom:12px"><label for="cp-client">Post for client</label>
-          <select id="cp-client"><option>Vero Studio — Lena M.</option><option>Northwind Co. — Priya Nair</option><option>Lumen Partners — Sam O.</option></select></div>
-        <label style="display:block;font-size:var(--fs-sm);font-weight:600;margin-bottom:6px">Content</label>
-        <textarea id="cp-text">Twenty years in finance taught me one uncomfortable truth: the spreadsheet is never the decision. The decision is always about people.</textarea>
-        <div class="attach-row"><button class="attach-chip" data-attach="image">⇧ Attach image</button><button class="attach-chip" data-attach="video">▷ Attach video</button><button class="attach-chip" data-attach="library">▧ From library</button></div>
-        <div class="attached" id="attached"><div class="thumb" id="attThumb">▧</div><div><b id="attName">image.jpg</b><div style="color:var(--faint);font-size:var(--fs-xs)">Attached</div></div><button id="removeAtt">✕</button></div>
-        <div class="field-2" style="margin-top:16px"><div class="field"><label for="cp-date">Schedule date</label><input id="cp-date" type="date"></div><div class="field"><label for="cp-time">Time</label><input id="cp-time" type="time" value="09:00"></div></div>
-        <div class="field"><label for="cp-vis">Visibility</label><select id="cp-vis"><option>Client approval required (recommended)</option><option>Auto-publish on schedule</option><option>Draft only — don't schedule</option></select></div>
-      </div>
-      <div>
-        <div class="col-label">Brainstorm with AI</div>
-        <div class="chat">
-          <div class="chat-head"><select id="cpAiProvider"><option>Claude Opus 4.8</option><option>Claude Sonnet 5.5</option><option>GPT-5.1</option></select><span class="mut" style="font-size:var(--fs-xs);margin-left:auto">Uses brand identity</span></div>
-          <div class="chat-stream" id="cpChatStream"><div class="cmsg ai"><div class="mav">AI</div><div class="bub">Tell me the angle and I'll draft it in this client's voice. Send any draft straight to the editor.</div></div></div>
-          <div class="chat-in"><textarea id="cpChatInput" rows="1" placeholder="e.g. a post about hiring for culture…"></textarea><button class="btn btn-primary btn-sm" id="cpChatSend">Send</button></div>
-        </div>
-      </div>
-      <div>
-        <div class="col-label">Live preview</div>
-        <div class="lp-preview">
-          <div class="lp-head"><div class="av">LM</div><div><b id="lpName">Lena M.</b><span>Founder, Vero Studio · now</span></div></div>
-          <div class="lp-body" id="lpBody"></div>
-          <div class="lp-media" id="lpMedia">Media attached</div>
-          <div class="lp-foot"><span>♡ Like</span><span>◌ Comment</span><span>↺ Repost</span></div>
-        </div>
-      </div>
+<!-- Post preview modal (shared: content quick-action + comments "view full post") -->
+<div class="modal-bg" id="postPreviewModal">
+  <div class="modal mid" role="dialog">
+    <h3 class="serif">Post preview</h3>
+    <div class="msub" id="ppWho">Lena M. · Vero Studio</div>
+    <div class="lp-preview">
+      <div class="lp-head"><div class="av" id="ppAv">LM</div><div><b id="ppName">Lena M.</b><span id="ppSub">Vero Studio</span></div></div>
+      <div class="lp-body" id="ppBody"></div>
+      <div class="lp-foot"><span>♡ Like</span><span>◌ Comment</span><span>↺ Repost</span></div>
     </div>
-    <div class="modal-foot"><button class="btn btn-ghost" id="cancelComposer">Cancel</button><button class="btn btn-primary" id="saveComposer">Schedule post</button></div>
+    <div class="modal-foot"><button class="btn btn-ghost" id="closePostPreview">Close</button><button class="btn btn-primary" id="ppEdit">Open in editor</button></div>
   </div>
 </div>
 
@@ -1044,19 +1094,90 @@ let toastTimer;
 function toast(m){ const t=document.getElementById('toast'); t.textContent=m; t.classList.add('show'); clearTimeout(toastTimer); toastTimer=setTimeout(()=>t.classList.remove('show'),2500); }
 function esc(s){ const d=document.createElement('div'); d.textContent=s; return d.innerHTML; }
 function initials(n){ return n.split(' ').map(w=>w[0]).join('').slice(0,2).toUpperCase(); }
+const TODAY=new Date('2026-10-28T00:00:00');
+
+/* lucide snippets for feed/tiles */
+const IC={
+  up:'<svg class="ico" viewBox="0 0 24 24"><polyline points="22 7 13.5 15.5 8.5 10.5 2 17"/><polyline points="16 7 22 7 22 13"/></svg>',
+  check:'<svg class="ico" viewBox="0 0 24 24"><path d="M20 6 9 17l-5-5"/></svg>',
+  user:'<svg class="ico" viewBox="0 0 24 24"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><line x1="19" y1="8" x2="19" y2="14"/><line x1="22" y1="11" x2="16" y2="11"/></svg>',
+  clock:'<svg class="ico" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>',
+  msg:'<svg class="ico" viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>',
+  bulb:'<svg class="ico" viewBox="0 0 24 24"><path d="M9 18h6M10 22h4M12 2a7 7 0 0 0-4 12.7c.6.5 1 1.3 1 2.3h6c0-1 .4-1.8 1-2.3A7 7 0 0 0 12 2z"/></svg>',
+  alert:'<svg class="ico" viewBox="0 0 24 24"><path d="M10.3 3.9 1.8 18a2 2 0 0 0 1.7 3h17a2 2 0 0 0 1.7-3L13.7 3.9a2 2 0 0 0-3.4 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>',
+  usersoff:'<svg class="ico" viewBox="0 0 24 24"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/></svg>',
+  eye:'<svg class="ico" viewBox="0 0 24 24"><path d="M2 12s4-7 10-7 10 7 10 7-4 7-10 7-10-7-10-7z"/><circle cx="12" cy="12" r="3"/></svg>',
+  edit:'<svg class="ico" viewBox="0 0 24 24"><path d="M12 20h9"/><path d="M16.5 3.5a2.1 2.1 0 0 1 3 3L7 19l-4 1 1-4z"/></svg>',
+  globe:'<svg class="ico" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15 15 0 0 1 0 20 15 15 0 0 1 0-20z"/></svg>',
+  lock:'<svg class="ico" viewBox="0 0 24 24"><rect width="18" height="11" x="3" y="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>',
+  ext:'<svg class="ico" viewBox="0 0 24 24"><path d="M15 3h6v6"/><path d="M10 14 21 3"/><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/></svg>'
+};
+
+/* ===== DATA ===== */
+const writers=['Matvei','Tunde A.','Jia L.','Unassigned'];
+let clients=[
+ {name:'Lena M.',company:'Vero Studio',active:true,writer:'Matvei',sub:true,link:'ab12cd34',goal:4,done:3,sched:1,risk:null,quiet:0},
+ {name:'David R.',company:'Cedar & Co.',active:true,writer:'Matvei',sub:true,link:'mn34op56',goal:4,done:4,sched:0,risk:null,quiet:0},
+ {name:'Grace O.',company:'Meridian',active:true,writer:'Matvei',sub:true,link:'gr11aa01',goal:3,done:1,sched:1,risk:null,quiet:0},
+ {name:'Tomas W.',company:'Halo Health',active:true,writer:'Matvei',sub:true,link:'to22bb02',goal:3,done:0,sched:1,risk:'watch',quiet:6},
+ {name:'Bisi A.',company:'Kano Logistics',active:true,writer:'Matvei',sub:true,link:'bi33cc03',goal:2,done:2,sched:0,risk:null,quiet:0},
+ {name:'Nadia P.',company:'Brightline',active:true,writer:'Matvei',sub:true,link:'na44dd04',goal:3,done:0,sched:0,risk:'high',quiet:11},
+ {name:'Priya Nair',company:'Northwind Co.',active:true,writer:'Tunde A.',sub:true,link:'ef56gh78',goal:4,done:1,sched:1,risk:'watch',quiet:4},
+ {name:'Ken T.',company:'Orbit Labs',active:false,writer:'Tunde A.',sub:false,link:'uv12wx34',goal:3,done:0,sched:0,risk:'high',quiet:14},
+ {name:'Omar S.',company:'Delta Fund',active:true,writer:'Tunde A.',sub:true,link:'om55ee05',goal:2,done:1,sched:1,risk:null,quiet:0},
+ {name:'Sam O.',company:'Lumen Partners',active:false,writer:'Jia L.',sub:false,link:'ij90kl12',goal:3,done:0,sched:0,risk:'high',quiet:12},
+ {name:'Yuki T.',company:'Pine & Co.',active:true,writer:'Jia L.',sub:true,link:'yu66ff06',goal:2,done:2,sched:0,risk:null,quiet:0},
+ {name:'Amara B.',company:'Flux Health',active:true,writer:'Unassigned',sub:true,link:'qr78st90',goal:2,done:1,sched:1,risk:null,quiet:0}
+];
+let posts=[
+ {company:'Vero Studio',client:'Lena M.',writer:'Matvei',content:'The spreadsheet is never the decision — it is always about people. Twenty years in finance taught me that the hard way, and it changed how I lead every meeting since.',date:'2026-10-24',status:'Pending',waiting:6},
+ {company:'Cedar & Co.',client:'David R.',writer:'Matvei',content:'Why we killed our best-selling product, and what it taught us about actually listening to customers instead of our own roadmap.',date:'2026-10-26',status:'Pending',waiting:5},
+ {company:'Northwind Co.',client:'Priya Nair',writer:'Tunde A.',content:'Most onboarding fails for one reason: nobody owns week two. Here is the simple fix that doubled our activation.',date:'2026-10-30',status:'Pending',waiting:3},
+ {company:'Vero Studio',client:'Lena M.',writer:'Matvei',content:'What my first board meeting taught me about the power of staying quiet until the right moment.',date:'2026-11-01',status:'Pending',waiting:1},
+ {company:'Halo Health',client:'Tomas W.',writer:'Matvei',content:'A patient story that changed how I lead — anonymised, but the lesson about trust applies to any team.',date:'2026-10-29',status:'Pending',waiting:2},
+ {company:'Flux Health',client:'Amara B.',writer:'Unassigned',content:'What 10 years in healthcare taught me about building trust before you build anything else.',date:'2026-10-31',status:'Approved',waiting:0},
+ {company:'Meridian',client:'Grace O.',writer:'Matvei',content:'The hiring metric everyone ignores — and why it predicts retention better than any interview.',date:'2026-11-03',status:'Approved',waiting:0},
+ {company:'Cedar & Co.',client:'David R.',writer:'Matvei',content:'I used to think busy meant important. Then a mentor asked me one question that changed how I spend every day.',date:'2026-10-20',status:'Published',waiting:0},
+ {company:'Vero Studio',client:'Lena M.',writer:'Matvei',content:'Why I still take notes by hand in a world of AI copilots. Slow thinking is a feature, not a bug.',date:'2026-10-14',status:'Published',waiting:0},
+ {company:'Lumen Partners',client:'Sam O.',writer:'Jia L.',content:'A client asked me why I still take notes by hand. The answer surprised both of us.',date:'2026-10-12',status:'Declined',waiting:0}
+];
+let ideas=[
+ {client:'Lena M.',company:'Vero Studio',title:'Panel I spoke on about AI in finance',note:'Amazing insights on the future of automation — worth a reflective post.'},
+ {client:'Amara B.',company:'Flux Health',title:'A patient story that changed how I lead',note:'Anonymised, but a strong leadership angle from the clinic floor.'},
+ {client:'David R.',company:'Cedar & Co.',title:'Why we killed our best-selling product',note:'Contrarian take — high engagement potential.'}
+];
+let activity=[
+ {icon:'up',title:"Vero Studio's post hit 32k impressions",sub:'+140% vs baseline · yesterday',client:'Lena M.'},
+ {icon:'check',title:'David R. approved a draft',sub:'Cedar & Co. · yesterday',client:'David R.'},
+ {icon:'up',title:'Meridian gained 210 followers this week',sub:'Grace O. · 2 days ago',client:'Grace O.'},
+ {icon:'user',title:'New client added — Omar S.',sub:'Assigned to Tunde · 2 days ago',client:'Omar S.'}
+];
+let drafts=[];
+let draftSeq=1;
+
+/* helpers */
+function clientByName(n){ return clients.find(c=>c.name===n); }
+function clientWriter(n){ const c=clientByName(n); return c?c.writer:'Unassigned'; }
+function visibleClients(){ return writerFilter?clients.filter(c=>c.writer===writerFilter):clients; }
+function scopedPosts(){ return writerFilter?posts.filter(p=>p.writer===writerFilter):posts; }
+function scopedThreads(){ return writerFilter?threads.filter(t=>clientWriter(t.client)===writerFilter):threads; }
+function scopedIdeas(){ return writerFilter?ideas.filter(i=>clientWriter(i.client)===writerFilter):ideas; }
+function scopedActivity(){ return writerFilter?activity.filter(a=>clientWriter(a.client)===writerFilter):activity; }
+function isOverdue(p){ return (p.status==='Pending'||p.status==='Approved') && new Date(p.date+'T00:00:00')<TODAY; }
+function threadNeedsReply(t){ return t.msgs[t.msgs.length-1].who!=='editor'; }
+function fmtDate(d){ return new Date(d).toLocaleDateString('en-GB',{day:'numeric',month:'short',year:'numeric'}); }
 
 /* notifications */
 let notifications=[
-  {ic:'◉',title:'New client added — Priya Nair',sub:'Assigned to Matvei · 5h ago',unread:true},
-  {ic:'▲',title:"Vero's last post hit 32k impressions",sub:'+140% vs their baseline · yesterday',unread:true},
-  {ic:'◌',title:'New audience comment on Vero post',sub:'Needs an editor reply · 20 min ago',unread:true},
-  {ic:'✓',title:'David R. approved a draft',sub:'Cedar & Co. · yesterday',unread:false}
+ {ic:'◉',title:'New client added — Omar S.',sub:'Assigned to Tunde · 2 days ago',unread:true},
+ {ic:'▲',title:"Vero's last post hit 32k impressions",sub:'+140% vs their baseline · yesterday',unread:true},
+ {ic:'◌',title:'New audience comment on Vero post',sub:'Needs an editor reply · 20 min ago',unread:true},
+ {ic:'✓',title:'David R. approved a draft',sub:'Cedar & Co. · yesterday',unread:false}
 ];
 function renderNotif(){
   const unread=notifications.filter(n=>n.unread).length;
   const badge=document.getElementById('notifCount'); badge.style.display=unread?'flex':'none'; badge.textContent=unread;
   document.getElementById('notifList').innerHTML=notifications.map(n=>`<div class="item ${n.unread?'unread':''}"><div class="ni">${n.ic}</div><div><b>${esc(n.title)}</b><span>${esc(n.sub)}</span></div></div>`).join('');
-  document.getElementById('feedList').innerHTML=notifications.slice(0,4).map(n=>`<div class="feed-item"><div class="ic">${n.ic}</div><div><b style="font-weight:600;font-size:var(--fs-sm)">${esc(n.title)}</b><div class="when">${esc(n.sub)}</div></div></div>`).join('');
 }
 const bell=document.getElementById('bellBtn'), notif=document.getElementById('notif');
 bell.onclick=e=>{ e.stopPropagation(); notif.classList.toggle('open'); };
@@ -1071,7 +1192,8 @@ function setRole(role){
   body.setAttribute('data-role',role);
   roleAdmin.classList.toggle('on',role==='admin'); roleWriter.classList.toggle('on',role==='writer');
   if(role==='writer'){
-    document.getElementById('roleAv').textContent='M'; document.getElementById('roleName').textContent='Matvei'; document.getElementById('roleDesc').textContent='Writer · 6 clients';
+    const n=clients.filter(c=>c.writer==='Matvei').length;
+    document.getElementById('roleAv').textContent='M'; document.getElementById('roleName').textContent='Matvei'; document.getElementById('roleDesc').textContent='Writer · '+n+' clients';
     document.getElementById('dashTitle').textContent='Welcome back, Matvei';
     document.getElementById('clientsTitle').textContent='My Clients'; document.getElementById('clientsSub').textContent='Clients assigned to you — pipeline, brand identity, history and their team.';
     writerFilter='Matvei';
@@ -1081,17 +1203,24 @@ function setRole(role){
     document.getElementById('clientsTitle').textContent='Client Management'; document.getElementById('clientsSub').textContent='Everything about a client in one place — status, writer, pipeline, brand identity, post history and their team.';
     writerFilter=null;
   }
-  goPage('dashboard'); renderClients(); renderContent();
+  fillClientFilter(); fillCmClientFilter();
+  goPage('dashboard'); renderDashboard(); renderClients(); renderContent(); renderThreads(); renderPanel(); updateCmTag();
 }
 roleAdmin.onclick=()=>setRole('admin'); roleWriter.onclick=()=>setRole('writer');
 
-/* nav */
+/* nav + filter preservation + compose autosave guard */
 const pages=document.querySelectorAll('.page');
-const titles={dashboard:'Dashboard',content:'Content Manager',comments:'Comments Manager',clients:'Client Management',clientdetail:'Client Detail',settings:'Settings'};
+let curPage='dashboard', skipAutosave=false;
 function goPage(name){
+  if(curPage==='compose' && name!=='compose' && !skipAutosave){ if(document.getElementById('cp-text').value.trim()){ autoSaveDraft(); toast('Saved to Drafts'); } }
   pages.forEach(p=>p.classList.toggle('on',p.id==='p-'+name));
   document.querySelectorAll('.nav button').forEach(b=>b.classList.toggle('active',b.dataset.page===name));
-  document.getElementById('pageTitle').textContent=(body.getAttribute('data-role')==='writer'&&name==='clients')?'My Clients':(titles[name]||'');
+  document.getElementById('pageTitle').textContent='';
+  curPage=name;
+  if(name==='dashboard') renderDashboard();
+  if(name==='content') renderContent();
+  if(name==='comments'){ renderThreads(); renderPanel(); }
+  if(name==='clients') renderClients(document.getElementById('clientSearch').value,document.getElementById('clientWriterFilter').value);
   window.scrollTo({top:0});
 }
 document.querySelectorAll('[data-page]').forEach(el=>el.addEventListener('click',()=>goPage(el.dataset.page)));
@@ -1103,42 +1232,86 @@ document.querySelectorAll('[data-goto]').forEach(el=>el.addEventListener('click'
 }));
 document.getElementById('switchView').onclick=()=>toast('Switching to user view…');
 
+/* ===== DASHBOARD ===== */
+function waitBadge(p){
+  if(isOverdue(p)) return `<span class="wait-badge wait-overdue">Overdue · ${p.waiting}d</span>`;
+  if(p.waiting>=3) return `<span class="wait-badge wait-warn">${p.waiting} days</span>`;
+  return `<span class="wait-badge wait-ok">${p.waiting} day${p.waiting===1?'':'s'}</span>`;
+}
+function renderDashboard(){
+  const pend=scopedPosts().filter(p=>p.status==='Pending');
+  const overdue=pend.filter(isOverdue).length;
+  const commentsReply=scopedThreads().filter(threadNeedsReply).length;
+  const quiet=visibleClients().filter(c=>c.active&&(c.done+c.sched===0)).length;
+  const unassigned=clients.filter(c=>c.writer==='Unassigned').length;
+  const ideasN=scopedIdeas().length;
+  const tiles=[
+    {ic:IC.alert,label:'Needs approval',val:pend.length,sub:overdue?overdue+' overdue':'all within window',urgent:overdue>0,go:()=>{goPage('content');setContentTab('Pending');}},
+    {ic:IC.msg,label:'New comments',val:commentsReply,sub:'awaiting your reply',urgent:false,go:()=>goPage('comments')},
+    {ic:IC.bulb,label:'Unreviewed ideas',val:ideasN,sub:'from your clients',urgent:false,go:()=>{goPage('content');setContentTab('Ideas');}},
+    {ic:IC.clock,label:'Clients quiet',val:quiet,sub:'no post scheduled',urgent:false,go:()=>goPage('clients')}
+  ];
+  if(!writerFilter) tiles.push({ic:IC.usersoff,label:'Unassigned',val:unassigned,sub:'need a writer',urgent:unassigned>0,go:()=>goPage('clients')});
+  const tc=document.getElementById('dashTiles');
+  tc.innerHTML=tiles.map((t,i)=>`<button class="tile ${t.urgent?'urgent':''}" data-i="${i}"><span class="tl">${t.ic}${esc(t.label)}</span><span class="tv">${t.val}</span><span class="tsub">${esc(t.sub)}</span></button>`).join('');
+  tc.querySelectorAll('.tile').forEach((b,i)=>b.onclick=tiles[i].go);
+
+  /* approval queue: overdue first, then waiting desc */
+  const q=pend.slice().sort((a,b)=>{ const ao=isOverdue(a)?1:0,bo=isOverdue(b)?1:0; if(ao!==bo)return bo-ao; return b.waiting-a.waiting; });
+  const qb=document.getElementById('queueBody');
+  qb.innerHTML=q.length?q.map((p,i)=>`<tr>
+    <td><div class="cell-name"><span class="av">${initials(p.client)}</span><div><b style="color:var(--ink)">${esc(p.client)}</b><span>${esc(p.company)}</span></div></div></td>
+    <td class="excerpt" title="${esc(p.content)}">${esc(p.content)}</td>
+    <td class="td-writer">${esc(p.writer)}</td>
+    <td>${waitBadge(p)}</td>
+    <td><button class="btn btn-ghost btn-sm" data-qi="${i}">Review</button></td></tr>`).join(''):'<tr class="empty-row"><td colspan="5">Nothing waiting — approval queue is clear.</td></tr>';
+  qb.querySelectorAll('[data-qi]').forEach((b,i)=>b.onclick=()=>openPostPreview(q[i]));
+
+  /* pipeline: most behind first */
+  const pl=visibleClients().slice().sort((a,b)=>((a.done+a.sched)/a.goal)-((b.done+b.sched)/b.goal)).slice(0,6);
+  document.getElementById('dashPipeline').innerHTML=pl.map(c=>{
+    const donePct=Math.round(c.done/c.goal*100), schedPct=Math.round(c.sched/c.goal*100), tot=c.done+c.sched;
+    const label=tot>=c.goal?'on track':(tot===0?'at risk':'behind');
+    const col=label==='on track'?'var(--pos)':(label==='at risk'?'var(--neg)':'var(--warn)');
+    return `<div class="pipe-row"><div class="pipe-top"><span class="av">${initials(c.company)}</span><b>${esc(c.company)}</b><span class="goal" style="color:${col}">${tot} / ${c.goal} ${label}</span></div>
+      <div class="pipe-bar"><span class="pipe-seg done" style="width:${donePct}%"></span><span class="pipe-seg sched" style="width:${schedPct}%"></span><span class="pipe-seg gap" style="width:${Math.max(0,100-donePct-schedPct)}%"></span></div></div>`;
+  }).join('');
+
+  /* watchlist: risk only */
+  const w=visibleClients().filter(c=>c.risk).sort((a,b)=>(b.risk==='high'?1:0)-(a.risk==='high'?1:0)).slice(0,5);
+  document.getElementById('dashWatch').innerHTML=w.length?w.map(c=>`<div class="mini-row"><span class="av">${initials(c.company)}</span><div><b>${esc(c.company)}</b><div class="sub">${c.quiet?c.quiet+' days quiet':'engagement below baseline'}${c.sub===false?' · subscription inactive':''}</div></div><div class="right"><span class="banner ${c.risk==='high'?'banner-no':'banner-warn'}">${c.risk==='high'?'High risk':'Watch'}</span></div></div>`).join(''):'<div class="mut" style="font-size:var(--fs-sm);padding:8px 0">No clients at risk right now.</div>';
+
+  /* activity: news only */
+  document.getElementById('dashActivity').innerHTML=scopedActivity().map(a=>`<div class="feed-item"><div class="ic">${IC[a.icon]||IC.check}</div><div><b style="font-weight:600;font-size:var(--fs-sm)">${esc(a.title)}</b><div class="when">${esc(a.sub)}</div></div></div>`).join('');
+}
+
 /* ===== clients ===== */
-const writers=['Matvei','Tunde A.','Jia L.','Unassigned'];
-let clients=[
-  {name:'Lena M.',company:'Vero Studio',active:true,writer:'Matvei',sub:true,link:'ab12cd34',goal:4,done:3,sched:1},
-  {name:'Priya Nair',company:'Northwind Co.',active:true,writer:'Tunde A.',sub:true,link:'ef56gh78',goal:4,done:1,sched:1},
-  {name:'Sam O.',company:'Lumen Partners',active:false,writer:'Jia L.',sub:false,link:'ij90kl12',goal:3,done:0,sched:0},
-  {name:'David R.',company:'Cedar & Co.',active:true,writer:'Matvei',sub:true,link:'mn34op56',goal:4,done:4,sched:0},
-  {name:'Amara B.',company:'Flux Health',active:true,writer:'Unassigned',sub:true,link:'qr78st90',goal:2,done:1,sched:1},
-  {name:'Ken T.',company:'Orbit Labs',active:false,writer:'Tunde A.',sub:false,link:'uv12wx34',goal:3,done:0,sched:0}
-];
-function visibleClients(){ return writerFilter?clients.filter(c=>c.writer===writerFilter):clients; }
 function pipeMini(c){
-  const donePct=Math.round(c.done/c.goal*100), schedPct=Math.round(c.sched/c.goal*100);
-  const label=(c.done+c.sched>=c.goal)?'on track':(c.done+c.sched===0?'at risk':'behind');
+  const donePct=Math.round(c.done/c.goal*100), schedPct=Math.round(c.sched/c.goal*100), tot=c.done+c.sched;
+  const label=tot>=c.goal?'on track':(tot===0?'at risk':'behind');
   const col=label==='on track'?'var(--pos)':(label==='at risk'?'var(--neg)':'var(--warn)');
-  return `<div class="pipe-mini"><div class="track"><i class="done" style="width:${donePct}%"></i><i class="sched" style="width:${schedPct}%"></i></div><b style="color:${col}">${c.done+c.sched}/${c.goal} ${label}</b></div>`;
+  return `<div class="pipe-mini"><div class="track"><i class="done" style="width:${donePct}%"></i><i class="sched" style="width:${schedPct}%"></i></div><b style="color:${col}">${tot}/${c.goal} ${label}</b></div>`;
 }
 function renderClients(filter='',wf='All writers'){
   const tbody=document.getElementById('clientBody');
   let rows=visibleClients().filter(c=>(c.name+' '+c.company).toLowerCase().includes(filter.toLowerCase()));
-  if(wf!=='All writers') rows=rows.filter(c=>c.writer===wf);
+  if(!writerFilter && wf!=='All writers') rows=rows.filter(c=>c.writer===wf);
   if(!rows.length){ tbody.innerHTML='<tr class="empty-row"><td colspan="4">No clients match.</td></tr>'; return; }
-  tbody.innerHTML=rows.map(c=>{ const idx=clients.indexOf(c); const opts=writers.map(w=>`<option ${w===c.writer?'selected':''}>${w}</option>`).join('');
+  tbody.innerHTML=rows.map(c=>{ const idx=clients.indexOf(c);
+    const writerCell=writerFilter?`<span class="writer-static">${esc(c.writer)}</span>`:`<select class="writer" data-idx="${idx}">${writers.map(w=>`<option ${w===c.writer?'selected':''}>${w}</option>`).join('')}</select>`;
     return `<tr class="clickable" data-idx="${idx}">
       <td><div class="cell-name"><span class="av">${initials(c.name)}</span><div><b>${esc(c.name)}</b><span>${esc(c.company)}</span></div></div></td>
       <td><span class="banner ${c.active?'banner-yes':'banner-no'}">${c.active?'Yes':'No'}</span></td>
       <td>${pipeMini(c)}</td>
-      <td><select class="writer" data-idx="${idx}">${opts}</select></td></tr>`;
+      <td>${writerCell}</td></tr>`;
   }).join('');
-  tbody.querySelectorAll('select.writer').forEach(s=>{ s.onclick=e=>e.stopPropagation(); s.onchange=e=>{ e.stopPropagation(); clients[+s.dataset.idx].writer=s.value; toast('Writer reassigned to '+s.value); }; });
+  tbody.querySelectorAll('select.writer').forEach(s=>{ s.onclick=e=>e.stopPropagation(); s.onchange=e=>{ e.stopPropagation(); clients[+s.dataset.idx].writer=s.value; toast('Writer reassigned to '+s.value); renderDashboard(); }; });
   tbody.querySelectorAll('tr.clickable').forEach(r=>r.onclick=()=>openClientDetail(clients[+r.dataset.idx]));
 }
 document.getElementById('clientSearch').oninput=e=>renderClients(e.target.value,document.getElementById('clientWriterFilter').value);
 document.getElementById('clientWriterFilter').onchange=e=>renderClients(document.getElementById('clientSearch').value,e.target.value);
 
-/* client detail */
+/* client detail (unchanged logic) */
 const histories={
   'Lena M.':[['The spreadsheet is never the decision…','18 Aug','approve','32k','7.1%'],['Why I still take notes by hand…','14 Aug','approve','21k','5.4%'],['A hiring mistake I made at 30…','10 Aug','decline','—','—'],['What actually matters at 45…','6 Aug','approve','44k','8.3%']]
 };
@@ -1158,7 +1331,7 @@ function openClientDetail(c){
   document.querySelectorAll('#cdHistory tr.clickable').forEach(r=>r.onclick=()=>openPostStats(r.dataset));
   document.querySelectorAll('#cdTabs .subtab').forEach((x,i)=>x.classList.toggle('active',i===0));
   document.querySelectorAll('#p-clientdetail .subpanel').forEach(p=>p.classList.toggle('on',p.id==='cd-overview'));
-  goPage('clientdetail'); document.getElementById('pageTitle').textContent='Client Detail';
+  goPage('clientdetail');
 }
 document.querySelectorAll('#cdTabs .subtab').forEach(b=>b.onclick=()=>{
   document.querySelectorAll('#cdTabs .subtab').forEach(x=>x.classList.toggle('active',x===b));
@@ -1166,7 +1339,8 @@ document.querySelectorAll('#cdTabs .subtab').forEach(b=>b.onclick=()=>{
 });
 document.getElementById('saveBrand').onclick=()=>toast('Brand identity saved');
 document.querySelectorAll('.chip-tog').forEach(c=>c.onclick=()=>c.classList.toggle('on'));
-/* ===== date-picker popover ===== */
+
+/* date-picker popover */
 const cdDate=document.getElementById('cdDate'), cdDateBtn=document.getElementById('cdDateBtn');
 const periodMap={
   'This month':'Showing 1 Oct – 16 Oct 2026 · compared with 1 Sep – 30 Sep',
@@ -1174,33 +1348,22 @@ const periodMap={
   'Last 90 days':'Showing 24 Jul – 22 Oct 2026 · compared with 25 Apr – 23 Jul',
   'Since start':'Showing 1 Feb – 22 Oct 2026 · all time'
 };
-function setPeriodNote(text){
-  const cmp=document.getElementById('cdCompare').checked;
-  document.getElementById('cdPeriodNote').textContent=cmp?text:text.replace(/ · compared with .*/,'').replace(/ · all time/,'');
-}
+function setPeriodNote(text){ const cmp=document.getElementById('cdCompare').checked; document.getElementById('cdPeriodNote').textContent=cmp?text:text.replace(/ · compared with .*/,'').replace(/ · all time/,''); }
 cdDateBtn.onclick=e=>{ e.stopPropagation(); cdDate.classList.toggle('open'); };
 document.addEventListener('click',e=>{ if(!e.target.closest('#cdDate')) cdDate.classList.remove('open'); });
 document.querySelectorAll('#cdDatePanel .dp-opt').forEach(o=>o.onclick=()=>{
   document.querySelectorAll('#cdDatePanel .dp-opt').forEach(x=>x.classList.toggle('active',x===o));
-  const p=o.dataset.period;
-  document.getElementById('cdDateLabel').textContent=p;
-  setPeriodNote(periodMap[p]||'');
-  cdDate.classList.remove('open');
+  const p=o.dataset.period; document.getElementById('cdDateLabel').textContent=p; setPeriodNote(periodMap[p]||''); cdDate.classList.remove('open');
 });
 document.getElementById('cdApply').onclick=()=>{
   const from=document.getElementById('cdFrom').value, to=document.getElementById('cdTo').value;
   if(!from||!to){ toast('Pick both a start and end date'); return; }
-  const fmt=d=>new Date(d).toLocaleDateString('en-GB',{day:'numeric',month:'short',year:'numeric'});
   document.querySelectorAll('#cdDatePanel .dp-opt').forEach(x=>x.classList.remove('active'));
   document.getElementById('cdDateLabel').textContent='Custom';
   const cmp=document.getElementById('cdCompare').checked;
-  document.getElementById('cdPeriodNote').textContent='Showing '+fmt(from)+' – '+fmt(to)+(cmp?' · compared with previous period':'');
-  cdDate.classList.remove('open');
+  document.getElementById('cdPeriodNote').textContent='Showing '+fmtDate(from)+' – '+fmtDate(to)+(cmp?' · compared with previous period':''); cdDate.classList.remove('open');
 };
-document.getElementById('cdCompare').onchange=()=>{
-  const active=document.querySelector('#cdDatePanel .dp-opt.active');
-  if(active) setPeriodNote(periodMap[active.dataset.period]||'');
-};
+document.getElementById('cdCompare').onchange=()=>{ const active=document.querySelector('#cdDatePanel .dp-opt.active'); if(active) setPeriodNote(periodMap[active.dataset.period]||''); };
 
 /* post stats modal */
 const psModal=document.getElementById('postStatsModal');
@@ -1217,8 +1380,8 @@ document.getElementById('saveAddClient').onclick=()=>{
   const name=document.getElementById('ac-name').value.trim(), company=document.getElementById('ac-company').value.trim();
   if(!name||!company){ toast('Add at least a name and company'); return; }
   const link=Math.random().toString(36).slice(2,10);
-  clients.unshift({name,company,active:false,writer:document.getElementById('ac-writer').value,sub:false,link,goal:4,done:0,sched:0});
-  renderClients(); acModal.classList.remove('open');
+  clients.unshift({name,company,active:false,writer:document.getElementById('ac-writer').value,sub:false,link,goal:4,done:0,sched:0,risk:null,quiet:0});
+  fillClientFilter(); renderClients(); renderDashboard(); acModal.classList.remove('open');
   ['ac-name','ac-email','ac-company'].forEach(id=>document.getElementById(id).value='');
   document.getElementById('inviteLink').textContent='https://app.brandaboutme.co/onboard/'+link;
   document.getElementById('inviteSub').textContent='An onboarding email is on its way to '+name+'. You can also share this personal link directly.';
@@ -1229,17 +1392,11 @@ document.getElementById('copyInvite').onclick=()=>{ copyText(document.getElement
 function copyText(t){ navigator.clipboard&&navigator.clipboard.writeText(t).catch(()=>{}); }
 
 /* ===== content manager ===== */
-let posts=[
-  {company:'Vero Studio',client:'Lena M.',writer:'Matvei',content:'The spreadsheet is never the decision…',date:'2026-08-20',status:'Pending'},
-  {company:'Northwind Co.',client:'Priya Nair',writer:'Tunde A.',content:'Most onboarding fails for one reason…',date:'2026-08-21',status:'Pending'},
-  {company:'Cedar & Co.',client:'David R.',writer:'Matvei',content:'I used to think busy meant important…',date:'2026-08-18',status:'Published'},
-  {company:'Flux Health',client:'Amara B.',writer:'Unassigned',content:'What 10 years in healthcare taught me…',date:'2026-08-22',status:'Approved'},
-  {company:'Lumen Partners',client:'Sam O.',writer:'Jia L.',content:'A client asked me why I still take notes…',date:'2026-08-19',status:'Declined'},
-  {company:'Vero Studio',client:'Lena M.',writer:'Matvei',content:'Why I still take notes by hand…',date:'2026-08-14',status:'Published'},
-  {company:'Cedar & Co.',client:'David R.',writer:'Matvei',content:'Why we killed our best-selling product…',date:'2026-08-23',status:'Pending'}
-];
 let contentTab='all';
-function fmtDate(d){ return new Date(d).toLocaleDateString('en-GB',{day:'numeric',month:'short',year:'numeric'}); }
+function fillClientFilter(){
+  const sel=document.getElementById('filterClient');
+  sel.innerHTML='<option>All clients</option>'+visibleClients().map(c=>`<option value="${esc(c.name)}">${esc(c.name)} · ${esc(c.company)}</option>`).join('');
+}
 function statusBanner(s){
   if(s==='Pending')return '<span class="banner banner-warn">Pending</span>';
   if(s==='Approved')return '<span class="banner banner-purple">Approved</span>';
@@ -1249,138 +1406,228 @@ function statusBanner(s){
 function setContentTab(tab){
   contentTab=tab;
   document.querySelectorAll('#contentTabs .tab').forEach(t=>t.classList.toggle('active',t.dataset.tab===tab));
-  document.getElementById('contentTableWrap').style.display=(tab==='Ideas'||tab==='Media'||tab==='Studio')?'none':'block';
+  const special=['Drafts','Ideas','Media','Studio'];
+  document.getElementById('contentTableWrap').style.display=special.includes(tab)?'none':'block';
+  document.getElementById('contentDraftsWrap').style.display=tab==='Drafts'?'block':'none';
   document.getElementById('contentIdeasWrap').style.display=tab==='Ideas'?'block':'none';
   document.getElementById('contentMediaWrap').style.display=tab==='Media'?'block':'none';
   document.getElementById('contentStudioWrap').style.display=tab==='Studio'?'block':'none';
-  if(tab!=='Ideas'&&tab!=='Media'&&tab!=='Studio') renderContent();
+  if(tab==='Drafts') renderDrafts();
+  else if(!special.includes(tab)) renderContent();
 }
 document.querySelectorAll('#contentTabs .tab').forEach(t=>t.onclick=()=>setContentTab(t.dataset.tab));
 function renderContent(){
   const filter=document.getElementById('contentSearch').value.toLowerCase();
+  const cf=document.getElementById('filterClient').value;
   const wf=document.getElementById('filterWriter').value, sort=document.getElementById('filterSort').value;
-  let rows=posts.filter(p=>!writerFilter||p.writer===writerFilter);
+  let rows=scopedPosts();
   const by=s=>rows.filter(p=>p.status===s).length;
   document.getElementById('cAll').textContent=rows.length; document.getElementById('cPending').textContent=by('Pending');
   document.getElementById('cApproved').textContent=by('Approved'); document.getElementById('cPublished').textContent=by('Published'); document.getElementById('cDeclined').textContent=by('Declined');
-  if(contentTab!=='all'&&!['Ideas','Media','Studio'].includes(contentTab)) rows=rows.filter(p=>p.status===contentTab);
-  if(wf!=='All writers') rows=rows.filter(p=>p.writer===wf);
+  document.getElementById('cDrafts').textContent=drafts.length; document.getElementById('cIdeas').textContent=scopedIdeas().length;
+  if(!['all','Drafts','Ideas','Media','Studio'].includes(contentTab)) rows=rows.filter(p=>p.status===contentTab);
+  if(cf&&cf!=='All clients') rows=rows.filter(p=>p.client===cf);
+  if(!writerFilter && wf!=='All writers') rows=rows.filter(p=>p.writer===wf);
   rows=rows.filter(p=>(p.company+' '+p.client+' '+p.content+' '+fmtDate(p.date)).toLowerCase().includes(filter));
   if(sort.includes('Oldest')) rows.sort((a,b)=>new Date(a.date)-new Date(b.date));
   else if(sort.includes('A–Z')) rows.sort((a,b)=>a.company.localeCompare(b.company));
   else rows.sort((a,b)=>new Date(b.date)-new Date(a.date));
   const tbody=document.getElementById('contentBody');
-  if(!rows.length){ tbody.innerHTML='<tr class="empty-row"><td colspan="5">No posts match.</td></tr>'; return; }
-  tbody.innerHTML=rows.map(p=>`<tr><td><b>${esc(p.company)}</b></td><td>${esc(p.client)}</td><td style="color:var(--mut);max-width:260px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${esc(p.content)}</td><td>${fmtDate(p.date)}</td><td>${statusBanner(p.status)}</td></tr>`).join('');
+  if(!rows.length){ tbody.innerHTML='<tr class="empty-row"><td colspan="6">No posts match.</td></tr>'; return; }
+  tbody.innerHTML=rows.map((p,i)=>{
+    const ov=isOverdue(p);
+    const dateCell=ov?`<span class="date-overdue">${fmtDate(p.date)}</span>`:fmtDate(p.date);
+    const statusCell=ov?'<span class="banner badge-overdue">Overdue</span>':statusBanner(p.status);
+    return `<tr>
+      <td><b>${esc(p.company)}</b></td><td>${esc(p.client)}</td>
+      <td class="excerpt" title="${esc(p.content)}">${esc(p.content)}</td>
+      <td>${dateCell}</td><td>${statusCell}</td>
+      <td><div class="qa">
+        <button title="Preview" data-act="prev" data-i="${i}">${IC.eye}</button>
+        <button title="Edit" data-act="edit" data-i="${i}">${IC.edit}</button>
+        <button title="Comments" data-act="cmt" data-i="${i}">${IC.msg}</button>
+      </div></td></tr>`;
+  }).join('');
+  tbody.querySelectorAll('[data-act]').forEach(b=>b.onclick=()=>{ const p=rows[+b.dataset.i]; const a=b.dataset.act;
+    if(a==='prev') openPostPreview(p);
+    else if(a==='edit') openComposer({client:p.client,company:p.company,content:p.content});
+    else if(a==='cmt'){ goPage('comments'); const sel=document.getElementById('cmClientFilter'); if([...sel.options].some(o=>o.value===p.client)) sel.value=p.client; renderThreads(); }
+  });
 }
 document.getElementById('contentSearch').oninput=renderContent;
+document.getElementById('filterClient').onchange=renderContent;
 document.getElementById('filterWriter').onchange=renderContent;
 document.getElementById('filterSort').onchange=renderContent;
 
-/* composer */
-const cpModal=document.getElementById('composerModal');
-function openComposer(){ cpModal.classList.add('open'); syncPreview(); }
-document.getElementById('openComposer').onclick=openComposer;
-document.getElementById('cancelComposer').onclick=()=>cpModal.classList.remove('open');
-cpModal.onclick=e=>{ if(e.target===cpModal) cpModal.classList.remove('open'); };
-const cpText=document.getElementById('cp-text'), lpBody=document.getElementById('lpBody'), cpClient=document.getElementById('cp-client'), lpName=document.getElementById('lpName');
-function syncPreview(){ lpBody.textContent=cpText.value||'Your post will appear here…'; lpName.textContent=cpClient.value.split('—')[1]?.trim()||'Client'; }
+/* drafts */
+function renderDrafts(){
+  document.getElementById('cDrafts').textContent=drafts.length;
+  const tb=document.getElementById('draftsBody');
+  if(!drafts.length){ tb.innerHTML='<tr class="empty-row"><td colspan="4">No saved drafts yet.</td></tr>'; return; }
+  tb.innerHTML=drafts.map((d,i)=>`<tr>
+    <td>${esc(d.client)}</td>
+    <td class="excerpt" title="${esc(d.content)}">${esc(d.content)||'(empty)'}</td>
+    <td>${esc(d.edited)}</td>
+    <td><div class="qa"><button title="Edit" data-di="${i}">${IC.edit}</button><button title="Delete" data-del="${i}">✕</button></div></td></tr>`).join('');
+  tb.querySelectorAll('[data-di]').forEach(b=>b.onclick=()=>openComposer(drafts[+b.dataset.di]));
+  tb.querySelectorAll('[data-del]').forEach(b=>b.onclick=()=>{ drafts.splice(+b.dataset.del,1); renderDrafts(); });
+}
+
+/* ===== compose page ===== */
+const cpText=document.getElementById('cp-text'), lpBody=document.getElementById('lpBody'), cpClient=document.getElementById('cp-client'), lpName=document.getElementById('lpName'), lpRole=document.getElementById('lpRole'), lpAv=document.getElementById('lpAv');
+let composeDraftId=null;
+function fillComposeClients(sel){
+  cpClient.innerHTML=visibleClients().map(c=>`<option value="${esc(c.name)}">${esc(c.company)} — ${esc(c.name)}</option>`).join('');
+  if(sel){ [...cpClient.options].forEach(o=>{ if(o.value===sel) cpClient.value=sel; }); }
+}
+function syncPreview(){ lpBody.textContent=cpText.value||'Your post will appear here…'; const name=cpClient.value||'Client'; lpName.textContent=name; lpAv.textContent=initials(name); const c=clientByName(name); lpRole.textContent=(c?c.company:'')+' · now'; }
+function openComposer(src){
+  fillComposeClients(src&&src.client);
+  if(src&&src.id){ composeDraftId=src.id; } else { composeDraftId=null; }
+  cpText.value=src?(src.content||''):'';
+  if(src&&src.date) document.getElementById('cp-date').value=/\d{4}-\d{2}-\d{2}/.test(src.date)?src.date:'';
+  document.getElementById('composeTitle').textContent=(src&&src.id)?'Edit draft':'Create post';
+  document.getElementById('attached').classList.remove('show'); document.getElementById('lpMedia').classList.remove('show');
+  syncPreview(); goPage('compose');
+}
+document.getElementById('openComposer').onclick=()=>openComposer();
+document.getElementById('composeBack').onclick=()=>goPage('content');
 cpText.oninput=syncPreview; cpClient.onchange=syncPreview;
 document.querySelectorAll('.attach-chip').forEach(b=>b.onclick=()=>{ const k=b.dataset.attach; document.getElementById('attThumb').textContent=k==='video'?'▷':'▧'; document.getElementById('attName').textContent=k==='video'?'clip.mp4':'image.jpg'; document.getElementById('attached').classList.add('show'); document.getElementById('lpMedia').classList.add('show'); });
 document.getElementById('removeAtt').onclick=()=>{ document.getElementById('attached').classList.remove('show'); document.getElementById('lpMedia').classList.remove('show'); };
-document.getElementById('saveComposer').onclick=()=>{ const [company,client]=cpClient.value.split('—').map(s=>s.trim()); posts.unshift({company,client,writer:writerFilter||'Matvei',content:cpText.value.slice(0,60)+'…',date:'2026-10-22',status:'Pending'}); renderContent(); cpModal.classList.remove('open'); toast('Post saved for '+client); };
+function autoSaveDraft(){
+  const content=cpText.value.trim(); if(!content) return false;
+  const client=cpClient.value||'—';
+  if(composeDraftId){ const d=drafts.find(x=>x.id===composeDraftId); if(d){ d.client=client; d.content=content; d.edited='just now'; } }
+  else { composeDraftId=draftSeq++; drafts.unshift({id:composeDraftId,client,content,edited:'just now',date:document.getElementById('cp-date').value}); }
+  document.getElementById('composeAutosave').textContent='Saved to Drafts just now.';
+  return true;
+}
+document.getElementById('composeSaveDraft').onclick=()=>{ if(autoSaveDraft()){ toast('Saved to Drafts'); } else { toast('Nothing to save yet'); } };
+document.getElementById('composeSchedule').onclick=()=>{
+  const content=cpText.value.trim(); if(!content){ toast('Write the post first'); return; }
+  const client=cpClient.value, c=clientByName(client); const vis=document.getElementById('cp-vis').value;
+  const status=vis.startsWith('Draft')?'Pending':'Pending';
+  const d=document.getElementById('cp-date').value;
+  posts.unshift({company:c?c.company:'—',client,writer:(c?c.writer:writerFilter)||'Matvei',content,date:d||'2026-10-28',status,waiting:0});
+  if(composeDraftId){ const idx=drafts.findIndex(x=>x.id===composeDraftId); if(idx>-1) drafts.splice(idx,1); }
+  composeDraftId=null; cpText.value='';
+  skipAutosave=true; goPage('content'); skipAutosave=false; setContentTab('Pending');
+  toast('Post scheduled for '+client);
+};
 const cpStream=document.getElementById('cpChatStream'), cpInput=document.getElementById('cpChatInput');
 function cpAdd(role,text,use){ const m=document.createElement('div'); m.className='cmsg '+role; m.innerHTML=`<div class="mav">${role==='user'?'RK':'AI'}</div><div class="bub">${esc(text)}${use?'<button class="use">↑ Use this draft</button>':''}</div>`; cpStream.appendChild(m); cpStream.scrollTop=cpStream.scrollHeight; if(use)m.querySelector('.use').onclick=()=>{ cpText.value=text; syncPreview(); toast('Draft moved to editor'); }; }
-function cpSend(){ const v=cpInput.value.trim(); if(!v)return; cpAdd('user',v); cpInput.value=''; cpInput.style.height='auto'; const client=cpClient.value.split('—')[1]?.trim()||'this client'; setTimeout(()=>cpAdd('ai',`Draft for ${client}, in their voice:\n\nI used to believe ${v.toLowerCase()} was simple. Fifteen years in, I know better — here's what changed my mind.`,true),500); }
+function cpSend(){ const v=cpInput.value.trim(); if(!v)return; cpAdd('user',v); cpInput.value=''; cpInput.style.height='auto'; const client=cpClient.value||'this client'; setTimeout(()=>cpAdd('ai',`Draft for ${client}, in their voice:\n\nI used to believe ${v.toLowerCase()} was simple. Fifteen years in, I know better — here's what changed my mind.`,true),500); }
 document.getElementById('cpChatSend').onclick=cpSend;
 cpInput.addEventListener('keydown',e=>{ if(e.key==='Enter'&&!e.shiftKey){ e.preventDefault(); cpSend(); } });
 cpInput.addEventListener('input',()=>{ cpInput.style.height='auto'; cpInput.style.height=Math.min(cpInput.scrollHeight,90)+'px'; });
 
+/* ===== post preview modal ===== */
+const ppModal=document.getElementById('postPreviewModal');
+let ppPost=null;
+function openPostPreview(p){ ppPost=p; document.getElementById('ppWho').textContent=p.client+' · '+p.company; document.getElementById('ppAv').textContent=initials(p.client); document.getElementById('ppName').textContent=p.client; document.getElementById('ppSub').textContent=p.company+' · now'; document.getElementById('ppBody').textContent=p.content; ppModal.classList.add('open'); }
+document.getElementById('closePostPreview').onclick=()=>ppModal.classList.remove('open');
+ppModal.onclick=e=>{ if(e.target===ppModal) ppModal.classList.remove('open'); };
+document.getElementById('ppEdit').onclick=()=>{ ppModal.classList.remove('open'); if(ppPost) openComposer({client:ppPost.client,company:ppPost.company,content:ppPost.content}); };
+
 /* media */
 document.getElementById('mediaGrid').innerHTML=[['IMG','headshot-2026.jpg','1.2 MB'],['PNG','q3-chart.png','420 KB'],['MP4','conference-clip.mp4','18 MB'],['IMG','team-offsite.jpg','2.1 MB'],['PDF','case-study.pdf','640 KB'],['PNG','li-banner.png','880 KB']].map(m=>`<div class="media-item"><div class="media-thumb">${m[0]}</div><div class="cap"><b>${m[1]}</b>${m[2]}</div></div>`).join('');
 
-/* ===== COMMENTS MANAGER (two-way sync: client + audience + editor) ===== */
+/* ===== COMMENTS MANAGER ===== */
 let threads=[
-  {id:1,client:'Lena M.',company:'Vero Studio',post:'Twenty years in finance taught me the spreadsheet is never the decision…',unread:2,kind:'audience',
-   msgs:[
-     {who:'audience',name:'Dayo A.',role:'Audience',t:'This is exactly why I left banking. Did you ever regret staying as long as you did?',time:'20 min ago'},
-     {who:'audience',name:'Marta K.',role:'Audience',t:'Saving this for my team.',time:'15 min ago'}
-   ]},
-  {id:2,client:'Lena M.',company:'Vero Studio',post:'Draft: "A hiring mistake I made at 30…"',unread:1,kind:'client',
-   msgs:[
-     {who:'editor',name:'Matvei',role:'Editor',t:'Here’s a draft on the hiring mistake — kept it warm. Happy to soften the opening if it feels sharp.',time:'3h ago'},
-     {who:'client',name:'Lena M.',role:'Client',t:'Can we soften the opening? It reads a bit harsh for me.',time:'1h ago'}
-   ]},
-  {id:3,client:'David R.',company:'Cedar & Co.',post:'Most onboarding fails for one reason: nobody owns week two…',unread:3,kind:'audience',
-   msgs:[
-     {who:'audience',name:'Sam P.',role:'Audience',t:'Week two is so underrated. What did you change specifically?',time:'2h ago'},
-     {who:'audience',name:'Lena M.',role:'Audience',t:'Great post David.',time:'2h ago'},
-     {who:'audience',name:'Ravi N.',role:'Audience',t:'Do you have a template for this?',time:'1h ago'}
-   ]},
-  {id:4,client:'Priya Nair',company:'Northwind Co.',post:'Draft: "What actually matters at 45…"',unread:0,kind:'client',
-   msgs:[
-     {who:'client',name:'Priya Nair',role:'Client',t:'Love this one. Approved — ship it.',time:'yesterday'},
-     {who:'editor',name:'Tunde A.',role:'Editor',t:'Scheduled for Monday 9am. Thanks Priya!',time:'yesterday'}
-   ]}
+  {id:1,client:'Lena M.',company:'Vero Studio',kind:'audience',unread:2,
+   post:'The spreadsheet is never the decision — it is always about people.',
+   postFull:'Twenty years in finance taught me the spreadsheet is never the decision — it is always about people. Here is what changed how I lead.',
+   msgs:[{who:'audience',name:'Dayo A.',role:'Audience',t:'This is exactly why I left banking. Did you ever regret staying as long as you did?',time:'20 min ago'},{who:'audience',name:'Marta K.',role:'Audience',t:'Saving this for my team.',time:'15 min ago'}]},
+  {id:2,client:'Lena M.',company:'Vero Studio',kind:'client',unread:1,
+   post:'Draft: "A hiring mistake I made at 30…"',
+   postFull:'A hiring mistake I made at 30 taught me more than any success. Here is the uncomfortable lesson.',
+   msgs:[{who:'editor',name:'Matvei',role:'Editor',t:'Here is a draft on the hiring mistake — kept it warm. Happy to soften the opening if it feels sharp.',time:'3h ago'},{who:'client',name:'Lena M.',role:'Client',t:'Can we soften the opening? It reads a bit harsh for me.',time:'1h ago'}]},
+  {id:3,client:'David R.',company:'Cedar & Co.',kind:'audience',unread:3,
+   post:'Most onboarding fails for one reason: nobody owns week two…',
+   postFull:'Most onboarding fails for one reason: nobody owns week two. Here is the simple fix that doubled our activation.',
+   msgs:[{who:'audience',name:'Sam P.',role:'Audience',t:'Week two is so underrated. What did you change specifically?',time:'2h ago'},{who:'audience',name:'Lena M.',role:'Audience',t:'Great post David.',time:'2h ago'},{who:'audience',name:'Ravi N.',role:'Audience',t:'Do you have a template for this?',time:'1h ago'}]},
+  {id:4,client:'Priya Nair',company:'Northwind Co.',kind:'client',unread:0,
+   post:'Draft: "What actually matters at 45…"',
+   postFull:'What actually matters at 45 — the career advice nobody gives you because it is not flashy.',
+   msgs:[{who:'client',name:'Priya Nair',role:'Client',t:'Love this one. Approved — ship it.',time:'yesterday'},{who:'editor',name:'Tunde A.',role:'Editor',t:'Scheduled for Monday 9am. Thanks Priya!',time:'yesterday'}]}
 ];
 let activeThread=1, cmFilter='all';
+function fillCmClientFilter(){
+  const sel=document.getElementById('cmClientFilter');
+  const names=[...new Set(scopedThreads().map(t=>t.client))];
+  sel.innerHTML='<option>All clients</option>'+names.map(n=>`<option value="${esc(n)}">${esc(n)}</option>`).join('');
+}
 function renderThreads(){
-  let list=threads.filter(t=>{
-    if(cmFilter==='unread') return t.unread>0;
-    if(cmFilter==='reply') return t.msgs[t.msgs.length-1].who!=='editor';
-    if(cmFilter==='audience') return t.kind==='audience';
+  const cf=document.getElementById('cmClientFilter').value;
+  const unreadOnly=document.getElementById('cmUnreadOnly').checked;
+  let list=scopedThreads().filter(t=>{
+    if(cmFilter==='client'&&t.kind!=='client') return false;
+    if(cmFilter==='audience'&&t.kind!=='audience') return false;
+    if(cf&&cf!=='All clients'&&t.client!==cf) return false;
+    if(unreadOnly&&t.unread===0) return false;
     return true;
   });
-  document.getElementById('cmThreads').innerHTML=list.map(t=>{
+  if(!list.find(t=>t.id===activeThread) && list.length) activeThread=list[0].id;
+  document.getElementById('cmThreads').innerHTML=list.length?list.map(t=>{
     const last=t.msgs[t.msgs.length-1];
     return `<button class="cm-thread ${t.id===activeThread?'active':''}" data-id="${t.id}">
-      <div class="t1"><span class="av">${initials(t.client)}</span><b>${esc(t.client)}</b>${t.unread?`<span class="unread">${t.unread}</span>`:''}</div>
-      <div class="snippet">${esc(last.name)}: ${esc(last.t)}</div>
-      <div class="meta">${esc(t.company)} · ${t.kind==='audience'?'Audience comments':'Client thread'} · ${esc(last.time)}</div>
+      <div class="t1"><span class="cm-label ${t.kind}">${t.kind==='audience'?'Audience':'Client'}</span>${t.unread?`<span class="unread">${t.unread}</span>`:''}</div>
+      <div class="t-post">${esc(t.post)}</div>
+      <div class="t-meta"><span class="av">${initials(t.client)}</span>${esc(t.client)} · ${esc(t.company)} · ${esc(last.time)}</div>
     </button>`;
-  }).join('')||'<div class="cm-empty" style="height:200px"><div style="font-size:1.6rem">◌</div>No threads in this filter</div>';
+  }).join(''):'<div class="cm-empty" style="height:200px"><div style="font-size:1.6rem">◌</div>No conversations in this filter</div>';
   document.querySelectorAll('.cm-thread').forEach(b=>b.onclick=()=>{ activeThread=+b.dataset.id; const t=threads.find(x=>x.id===activeThread); if(t)t.unread=0; renderThreads(); renderPanel(); updateCmTag(); });
 }
 function renderPanel(){
   const t=threads.find(x=>x.id===activeThread);
   const panel=document.getElementById('cmPanel');
-  if(!t){ panel.innerHTML='<div class="cm-empty"><div style="font-size:1.8rem">◌</div>Select a thread to view the conversation</div>'; return; }
+  if(!t){ panel.innerHTML='<div class="cm-empty"><div style="font-size:1.8rem">◌</div>Select a conversation to view it</div>'; return; }
+  const where=t.kind==='audience'
+    ? `<div class="cm-where public">${IC.globe} Your reply posts publicly on LinkedIn as ${esc(t.client)}</div>`
+    : `<div class="cm-where private">${IC.lock} Visible only to ${esc(t.client)} in their dashboard</div>`;
+  const sendLabel=t.kind==='audience'?'Reply publicly':'Send to client';
+  const placeholder=t.kind==='audience'?('Write a public reply as '+t.client+'…'):('Reply to '+t.client+'…');
   panel.innerHTML=`
     <div class="cm-ctx">
-      <div class="lbl">${t.kind==='audience'?'Audience comments on a published post':'Comment thread on a draft'}</div>
+      <div class="lbl">${t.kind==='audience'?'Audience comments on a published post':'Feedback thread on a draft'}</div>
       <div class="post">"${esc(t.post)}"</div>
       <div class="sub"><span>${esc(t.client)} · ${esc(t.company)}</span></div>
-      <div class="cm-sync">⇄ In sync with the client's view — they see your replies instantly</div>
+      ${where}
+      <button class="cm-viewpost" id="cmViewPost">${IC.ext} View full post</button>
     </div>
     <div class="cm-stream" id="cmStream"></div>
-    <div class="cm-reply"><textarea id="cmInput" rows="1" placeholder="${t.kind==='audience'?'Reply as '+t.client+' (editor-managed)…':'Reply to '+t.client+'…'}"></textarea><button class="btn btn-primary" id="cmSend">Send</button></div>`;
+    <div class="cm-reply"><textarea id="cmInput" rows="1" placeholder="${placeholder}"></textarea><button class="btn btn-primary" id="cmSend">${sendLabel}</button></div>`;
   renderMsgs(t);
   const input=document.getElementById('cmInput');
   input.addEventListener('keydown',e=>{ if(e.key==='Enter'&&!e.shiftKey){ e.preventDefault(); sendCm(); } });
   input.addEventListener('input',()=>{ input.style.height='auto'; input.style.height=Math.min(input.scrollHeight,120)+'px'; });
   document.getElementById('cmSend').onclick=sendCm;
+  document.getElementById('cmViewPost').onclick=()=>openPostPreview({client:t.client,company:t.company,content:t.postFull});
 }
 function renderMsgs(t){
   document.getElementById('cmStream').innerHTML=t.msgs.map(m=>{
     const side=m.who==='editor'?'editor':'client';
-    const av=m.who==='editor'?initials(m.name):initials(m.name);
-    return `<div class="cm-msg ${side}"><div class="av">${av}</div><div class="wrap"><div class="role">${esc(m.role)} · ${esc(m.name)}</div><div class="bub">${esc(m.t)}</div><div class="time">${esc(m.time)}</div></div></div>`;
+    return `<div class="cm-msg ${side}"><div class="av">${initials(m.name)}</div><div class="wrap"><div class="role">${esc(m.role)} · ${esc(m.name)}</div><div class="bub">${esc(m.t)}</div><div class="time">${esc(m.time)}</div></div></div>`;
   }).join('');
   const s=document.getElementById('cmStream'); s.scrollTop=s.scrollHeight;
 }
 function sendCm(){
   const t=threads.find(x=>x.id===activeThread); const input=document.getElementById('cmInput'); const v=input.value.trim(); if(!v)return;
   t.msgs.push({who:'editor',name:'Rhea K.',role:'Editor',t:v,time:'just now'}); input.value=''; input.style.height='auto';
-  renderMsgs(t); renderThreads(); toast('Reply sent — synced to the client');
+  renderMsgs(t); renderThreads(); toast(t.kind==='audience'?'Reply posted publicly':'Sent to '+t.client);
 }
-document.querySelectorAll('#cmFilters button').forEach(b=>b.onclick=()=>{ document.querySelectorAll('#cmFilters button').forEach(x=>x.classList.toggle('on',x===b)); cmFilter=b.dataset.f; renderThreads(); });
-function updateCmTag(){ const total=threads.reduce((a,t)=>a+t.unread,0); const tag=document.getElementById('navCmTag'); tag.style.display=total?'inline':'none'; tag.textContent=total; }
+document.querySelectorAll('#cmSeg button').forEach(b=>b.onclick=()=>{ document.querySelectorAll('#cmSeg button').forEach(x=>x.classList.toggle('on',x===b)); cmFilter=b.dataset.f; renderThreads(); renderPanel(); });
+document.getElementById('cmClientFilter').onchange=()=>{ renderThreads(); renderPanel(); };
+document.getElementById('cmUnreadOnly').onchange=()=>{ renderThreads(); renderPanel(); };
+function updateCmTag(){ const total=scopedThreads().reduce((a,t)=>a+t.unread,0); const tag=document.getElementById('navCmTag'); if(tag){ tag.style.display=total?'inline':'none'; tag.textContent=total; } }
 
 /* settings */
 document.querySelectorAll('#setNav button').forEach(b=>b.onclick=()=>{ document.querySelectorAll('#setNav button').forEach(x=>x.classList.toggle('active',x===b)); document.querySelectorAll('.set-panel').forEach(p=>p.classList.toggle('on',p.id==='set-'+b.dataset.set)); });
 
 /* init */
-renderNotif(); renderClients(); renderContent(); renderThreads(); renderPanel(); updateCmTag();
+fillClientFilter(); fillCmClientFilter();
+renderNotif(); renderDashboard(); renderClients(); renderContent(); renderThreads(); renderPanel(); updateCmTag();
 </script>
 </body>
 </html>
